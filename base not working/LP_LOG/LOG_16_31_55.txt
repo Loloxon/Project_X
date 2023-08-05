@@ -1,0 +1,45 @@
+############################################################################
+##
+## Processing LOG
+##
+## Project : D:\My_Projects\Hyper-K\Reliability\Relia test\Relia test.PrjPcb
+## Date    : 28.07.2023 16_31_55
+##
+############################################################################
+#  Config:D:\My_Projects\Hyper-K\Reliability\Relia test\_scripts\mPMT\Add Parameters to Capacitors.txt
+##
+# Processing:D:\My_Projects\Hyper-K\Reliability\Relia test\NuPrism_MCPMT - QUAD ADC - Rev2.SchDoc
+#	For:C
+#		Parameter:SN_CATEGORY
+		Parameter:SN_ACT_CAP_TMPRT
+		Parameter:SN_CAP_TMPRT_CLC_MTHD
+		Parameter:SN_INRMTT_OPRT_RTIO
+		Parameter:SN_OPRT_VLTG
+		Parameter:SN_TMPRT_RISE_SLF_HTNG
+		Parameter:SN_CAP_TYP
+		Parameter:SN_QUAL_GRD
+		Parameter:SN_RTD_VLTG
+# Processing:D:\My_Projects\Hyper-K\Reliability\Relia test\NuPrism_MCPMT - ADA4945-1 and Filter - Rev2.SchDoc
+		Parameter:SN_CATEGORY
+		Parameter:SN_ACT_CAP_TMPRT
+		Parameter:SN_CAP_TMPRT_CLC_MTHD
+		Parameter:SN_INRMTT_OPRT_RTIO
+		Parameter:SN_OPRT_VLTG
+		Parameter:SN_TMPRT_RISE_SLF_HTNG
+		Parameter:SN_CAP_TYP
+		Parameter:SN_QUAL_GRD
+		Parameter:SN_RTD_VLTG
+# Processing:D:\My_Projects\Hyper-K\Reliability\Relia test\NuPrism_MCPMT - ADC and Amplifier ADA4945-1 - Rev2.SchDoc
+		Parameter:SN_CATEGORY
+		Parameter:SN_ACT_CAP_TMPRT
+		Parameter:SN_CAP_TMPRT_CLC_MTHD
+		Parameter:SN_INRMTT_OPRT_RTIO
+		Parameter:SN_OPRT_VLTG
+		Parameter:SN_TMPRT_RISE_SLF_HTNG
+		Parameter:SN_CAP_TYP
+		Parameter:SN_QUAL_GRD
+		Parameter:SN_RTD_VLTG
+
+
+## LOG end
+############################################################################

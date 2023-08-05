@@ -1,0 +1,3 @@
+#
+'D5' 'SN_CATEGORY' 'Dioda' 'ON'
+#

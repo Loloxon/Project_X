@@ -1,0 +1,14 @@
+#
+'selected' 'SN_CATEGORY' 'IC,*Digital' 'OFF'
+'selected' 'SN_VIRT_JNCT_TMPRT' '?' 'OFF'
+'selected' 'SN_INRMTT_OPRT_RTIO' '?' 'OFF'
+'selected' 'SN_JNCT_TMPRT_CLC_MTHD' '?' 'OFF'
+'selected' 'SN_OPRT_PWR_DSSP' '?' 'OFF'
+'selected' 'SN_OPRT_VLTG' '?' 'OFF'
+'selected' 'SN_TMPRT_RISE_SLF_HTNG' '?' 'OFF'
+'selected' 'SN_BICMOS_IC_TYP' '?' 'OFF'
+'selected' 'SN_BIPLR_IC_TYP' '?' 'OFF'
+'selected' 'SN_CMOS_IC_TYP' '?' 'OFF'
+'selected' 'SN_DEGR_INTGRT' '?' 'OFF'
+'selected' 'SN_DIG_IC_TCHNLG' '?' 'OFF'
+#

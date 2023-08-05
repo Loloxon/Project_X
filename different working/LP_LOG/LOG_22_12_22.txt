@@ -1,0 +1,31 @@
+############################################################################
+##
+## Processing LOG
+##
+## Project : D:\jobs\My_jobs_2023\praca_naukowa\projekt_Paw³a_Rajdy\materia³y_od_Paw³a_R\Pobrane_z_dysku\example_a\reliability_example_a.PrjPcb
+## Date    : 03.08.2023 22_12_22
+##
+############################################################################
+#  Config:D:\jobs\My_jobs_2023\praca_naukowa\projekt_Paw³a_Rajdy\materia³y_od_Paw³a_R\Pobrane_z_dysku\example_a\scripts\RS_SN29500_inductor.txt
+##
+# Processing:D:\jobs\My_jobs_2023\praca_naukowa\projekt_Paw³a_Rajdy\materia³y_od_Paw³a_R\Pobrane_z_dysku\example_a\ETHERNET.SchDoc
+#	For:Ferrite
+#		Parameter:SN_CATEGORY
+		Parameter:SN_ACT_IND_TMPRT
+		Parameter:SN_INRMTT_OPRT_RTIO
+		Parameter:SN_JNCT_TMPRT_CLC_MTHD
+		Parameter:SN_OPRT_PWR_DSSP
+		Parameter:SN_TMPRT_RISE_SLF_HTNG
+		Parameter:SN_INDCTR_TYP
+# Processing:D:\jobs\My_jobs_2023\praca_naukowa\projekt_Paw³a_Rajdy\materia³y_od_Paw³a_R\Pobrane_z_dysku\example_a\FTDI.SchDoc
+		Parameter:SN_CATEGORY
+		Parameter:SN_ACT_IND_TMPRT
+		Parameter:SN_INRMTT_OPRT_RTIO
+		Parameter:SN_JNCT_TMPRT_CLC_MTHD
+		Parameter:SN_OPRT_PWR_DSSP
+		Parameter:SN_TMPRT_RISE_SLF_HTNG
+		Parameter:SN_INDCTR_TYP
+
+
+## LOG end
+############################################################################

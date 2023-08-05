@@ -1,0 +1,6 @@
+[0804/204115:INFO:CONSOLE(0)] "The source list for Content Security Policy directive 'script-src' contains an invalid source: ''report-sample''. It will be ignored.", source: https://www.altium.com/ad-start/ (0)
+[0804/204115:INFO:CONSOLE(0)] "Unrecognized Content-Security-Policy directive 'worker-src'.
+", source: https://www.altium.com/ad-start/ (0)
+[0804/223442:WARNING:dns_config_service_win.cc(665)] Failed to read DnsConfig.
+[0804/223447:WARNING:dns_config_service_win.cc(665)] Failed to read DnsConfig.
+[0804/225829:WARNING:dns_config_service_win.cc(665)] Failed to read DnsConfig.

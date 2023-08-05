@@ -1,0 +1,53 @@
+#
+# Siemens 29500 standard
+#
+# Version 4.0 
+# Date 22.03.2018
+# kasperek@agh.edu.pl
+#
+#
+# Parameter configuration file for RS_ComponentParameters script
+# Syntax:
+# Line starting with # - its a comment line
+# Each line introduce one  parameter and should have exact four words (string type)
+#
+# First ASCII string is the Altium component type selector. 'All' denotes global ( for each component) parameter..#
+# Second ASCII string is the LambaPredict MILHBK217 Parameter Name
+# Third ASCII string is the Parameter Value
+# Fourth - (last one) ASCII string is the Visibility atribute (ON/OFF)
+#
+# Note that spaces are not allowed in "Altium component type" field! In "Parameter Value" field spaces are allowed but
+# should be coded by '*'
+# ===================================================================
+#
+#
+#
+'All' 'SN_CATEGORY' '?' 'ON'
+#
+# 23 categorries (22 - #'LF_Transistor' )
+#
+'C' 'SN_CATEGORY' 'Capacitor' 'OFF'
+'ConnSocket' 'SN_CATEGORY' 'Connector*or*Socket' 'OFF'
+'Diode' 'SN_CATEGORY' 'Diode' 'OFF'
+'ElctrConnection' 'SN_CATEGORY' 'Electrical*Connection' 'OFF'
+'Relay' 'SN_CATEGORY' 'General*Purpose*Relay' 'OFF'
+'ADC' 'SN_CATEGORY' 'IC,*AD*Converter' 'OFF'
+'IC_Analog' 'SN_CATEGORY' 'IC,*Analog' 'OFF'
+'IC_HFAnalog' 'SN_CATEGORY' 'IC,*Analog,*High*Frequency' 'OFF'
+'IC_Digital' 'SN_CATEGORY' 'IC,*Digital' 'OFF'
+'IC_PLD' 'SN_CATEGORY' 'IC,*Erasable*Programmable*ASIC' 'OFF'
+'IC_MEM' 'SN_CATEGORY' 'IC,*Memory' 'OFF'
+'Microcontroller' 'SN_CATEGORY' 'IC,*Microcontroller' 'OFF'
+'IC_DSP' 'SN_CATEGORY' 'IC,*Signal*Processor' 'OFF'
+'IC_Telecom' 'SN_CATEGORY' 'IC,*Telecom' 'OFF'
+'L' 'SN_CATEGORY' 'Inductor' 'OFF'
+'Relay' 'SN_CATEGORY' 'Low*Duty*Relay' 'OFF'
+'PHOTO' 'SN_CATEGORY' 'Optical*Semiconductor*SigRcvr' 'OFF'
+'Optocoupler' 'SN_CATEGORY' 'Optocoupler' 'OFF'
+'B' 'SN_CATEGORY' 'Passive*Component' 'OFF'
+'R' 'SN_CATEGORY' 'Resistor' 'OFF'
+'PowerSemi' 'SN_CATEGORY' 'Semiconductor,*Power' 'OFF'
+'Switch_Button' 'SN_CATEGORY' 'Switch*or*Button' 'OFF'
+'T' 'SN_CATEGORY' 'Inductor' 'OFF'
+#'LF_Transistor' 'SN_CATEGORY' 'Transistor,*Low*Frequency' 'OFF'
+# Data end

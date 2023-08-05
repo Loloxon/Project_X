@@ -1,0 +1,63 @@
+############################################################################
+##
+## Processing LOG
+##
+## Project : D:\My_Projects\Hyper-K\Reliability\Relia test\Relia test.PrjPcb
+## Date    : 26.07.2023 18_58_41
+##
+############################################################################
+#  Config:D:\My_Projects\Hyper-K\Reliability\Relia test\_scripts\mPMT\RS_SN29500_categories.txt
+##
+# Processing:D:\My_Projects\Hyper-K\Reliability\Relia test\NuPrism_MCPMT - ADA4945-1 and Filter - Rev2.SchDoc
+#	For:All
+#		Parameter:SN_CATEGORY
+#	For:C
+#		Parameter:SN_CATEGORY
+#	For:ConnSocket
+#		Parameter:SN_CATEGORY
+#	For:Diode
+#		Parameter:SN_CATEGORY
+#	For:ElctrConnection
+#		Parameter:SN_CATEGORY
+#	For:Relay
+#		Parameter:SN_CATEGORY
+#	For:ADC
+#		Parameter:SN_CATEGORY
+#	For:IC_Analog
+#		Parameter:SN_CATEGORY
+#	For:IC_HFAnalog
+#		Parameter:SN_CATEGORY
+#	For:IC_Digital
+#		Parameter:SN_CATEGORY
+#	For:IC_PLD
+#		Parameter:SN_CATEGORY
+#	For:IC_MEM
+#		Parameter:SN_CATEGORY
+#	For:Microcontroller
+#		Parameter:SN_CATEGORY
+#	For:IC_DSP
+#		Parameter:SN_CATEGORY
+#	For:IC_Telecom
+#		Parameter:SN_CATEGORY
+#	For:L
+#		Parameter:SN_CATEGORY
+#	For:Relay
+#		Parameter:SN_CATEGORY
+#	For:PHOTO
+#		Parameter:SN_CATEGORY
+#	For:Optocoupler
+#		Parameter:SN_CATEGORY
+#	For:B
+#		Parameter:SN_CATEGORY
+#	For:R
+#		Parameter:SN_CATEGORY
+#	For:PowerSemi
+#		Parameter:SN_CATEGORY
+#	For:Switch_Button
+#		Parameter:SN_CATEGORY
+#	For:T
+#		Parameter:SN_CATEGORY
+
+
+## LOG end
+############################################################################

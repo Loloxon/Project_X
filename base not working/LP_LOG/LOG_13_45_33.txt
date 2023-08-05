@@ -1,0 +1,17 @@
+############################################################################
+##
+## Processing LOG
+##
+## Project : D:\My_Projects\Hyper-K\Reliability\Relia test\Relia test.PrjPcb
+## Date    : 26.07.2023 13_45_33
+##
+############################################################################
+#  Config:D:\My_Projects\Hyper-K\Reliability\Relia test\_scripts\RS_SN29500_category.txt
+##
+# Processing:D:\My_Projects\Hyper-K\Reliability\Relia test\NuPrism_MCPMT - ADA4945-1 and Filter - Rev2.SchDoc
+#	For:All
+#		Parameter:SN_CATEGORY
+
+
+## LOG end
+############################################################################

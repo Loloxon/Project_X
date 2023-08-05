@@ -1,0 +1,36 @@
+############################################################################
+##
+## Processing LOG
+##
+## Project : D:\My_Projects\Hyper-K\Reliability\Relia test\Relia test.PrjPcb
+## Date    : 28.07.2023 16_54_09
+##
+############################################################################
+#  Config:D:\My_Projects\Hyper-K\Reliability\Relia test\_scripts\mPMT\Add Common Categories to all components.txt
+##
+# Processing:D:\My_Projects\Hyper-K\Reliability\Relia test\NuPrism_MCPMT - QUAD ADC - Rev2.SchDoc
+#	For:All
+#		Parameter:SN_CATEGORY
+		Parameter:SN_ENVRNMT_CHR
+		Parameter:SN_ENVRNMT_DEP_FCTR
+		Parameter:SN_MEAN_AMBNT_TMPRT
+		Parameter:SN_WAIT_ST_TMPRT
+		Parameter:SN_ADJSTMNT_FCTR
+# Processing:D:\My_Projects\Hyper-K\Reliability\Relia test\NuPrism_MCPMT - ADA4945-1 and Filter - Rev2.SchDoc
+		Parameter:SN_CATEGORY
+		Parameter:SN_ENVRNMT_CHR
+		Parameter:SN_ENVRNMT_DEP_FCTR
+		Parameter:SN_MEAN_AMBNT_TMPRT
+		Parameter:SN_WAIT_ST_TMPRT
+		Parameter:SN_ADJSTMNT_FCTR
+# Processing:D:\My_Projects\Hyper-K\Reliability\Relia test\NuPrism_MCPMT - ADC and Amplifier ADA4945-1 - Rev2.SchDoc
+		Parameter:SN_CATEGORY
+		Parameter:SN_ENVRNMT_CHR
+		Parameter:SN_ENVRNMT_DEP_FCTR
+		Parameter:SN_MEAN_AMBNT_TMPRT
+		Parameter:SN_WAIT_ST_TMPRT
+		Parameter:SN_ADJSTMNT_FCTR
+
+
+## LOG end
+############################################################################

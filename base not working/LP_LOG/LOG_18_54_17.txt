@@ -1,0 +1,19 @@
+############################################################################
+##
+## Processing LOG
+##
+## Project : D:\My_Projects\Hyper-K\Reliability\Relia test\Relia test.PrjPcb
+## Date    : 26.07.2023 18_54_17
+##
+############################################################################
+#  Config:D:\My_Projects\Hyper-K\Reliability\Relia test\_scripts\mPMT\RS_SN29500_non_standard_designators.txt
+##
+# Processing:D:\My_Projects\Hyper-K\Reliability\Relia test\NuPrism_MCPMT - ADA4945-1 and Filter - Rev2.SchDoc
+#	For:All
+#		Parameter:SN_CATEGORY
+#	For:AMP1
+#		Parameter:SN_CATEGORY
+
+
+## LOG end
+############################################################################

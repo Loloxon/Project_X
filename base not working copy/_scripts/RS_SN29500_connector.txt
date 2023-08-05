@@ -1,0 +1,7 @@
+#
+'J5' 'SN_CATEGORY' 'Connector*or*Socket' 'OFF'
+'J5' 'SN_INRMTT_OPRT_RTIO' '?' 'OFF'
+'J5' 'SN_CNNCTR_SCKT_TYP' '?' 'OFF'
+'J5' 'SN_CNTCT_MATERL' '?' 'OFF'
+'J5' 'SN_NR_CNCTD_CNTCTS' '?' 'OFF'
+#

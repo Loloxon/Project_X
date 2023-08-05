@@ -1,0 +1,89 @@
+Bill of Material for 
+On 04.08.2023 at 21:09:16
+
+ Comment             Pattern     Quantity  Components
+------------------------------------------------------------------------------
+                     0603             4    R3_AMP1, R3_AMP2, R3_AMP3    Do not put           
+                                           R3_AMP4
+                     0603 - Inductor    4    L11_AMP1, L11_AMP2, L11_AMP3 Do not put           
+                                           L11_AMP4
+ 06035A5R6JAT2A      0603             8    C26_AMP1, C26_AMP2, C26_AMP3 5.6 pF ±5% 50V Ceramic Capacitor C0G, NP0 0603 
+                                           C26_AMP4, C27_AMP1, C27_AMP2
+                                           C27_AMP3, C27_AMP4
+ ADA4932-1YCPZ       QFN50P300X300X100-16N_ALT    4    AMP1_AMP1, AMP1_AMP2         High Speed, ±0.1 µV/°C Offset Drift, Fully Differential ADC Driver 
+                                           AMP1_AMP3, AMP1_AMP4
+ ADC3424IRTQT        VQFN56           1    ADC1                         12 Bit Analog to Digital Converter 4 Input 4 Pipelined 56-QFN (8x8) 
+ BLM15PX600SN1D      0402             9    B1, B1_AMP1, B1_AMP2, B1_AMP3 60 Ohms @ 100MHz Ferrite Bead 0402 2.5A 
+                                           B1_AMP4, B2_AMP1, B2_AMP2
+                                           B2_AMP3, B2_AMP4
+ C0402C104K4RACTU    0402            26    C1, C2, C5, C6_AMP1, C6_AMP2 SMD/SMT 0402 16V 0.1uF X7R 10% 
+                                           C6_AMP3, C6_AMP4, C8, C9, C13
+                                           C14, C15, C16, C17, C18, C19
+                                           C20, C21, C21_AMP1, C21_AMP2
+                                           C21_AMP3, C21_AMP4, C25_AMP1
+                                           C25_AMP2, C25_AMP3, C25_AMP4
+ C0603C330J1GAC7867  0603             8    C5_AMP1, C5_AMP2, C5_AMP3    33 pF ±5% 100V Ceramic Capacitor C0G, NP0 0603 
+                                           C5_AMP4, C13_AMP1, C13_AMP2
+                                           C13_AMP3, C13_AMP4
+ C0603C560J5GAC7867  0603             4    C8_AMP1, C8_AMP2, C8_AMP3    56 pF ±5% 50V Ceramic Capacitor C0G, NP0 0603 (1608 Metric) 
+                                           C8_AMP4
+ CC0402BRNPO9BN4R7   0402             4    C12_AMP1, C12_AMP2, C12_AMP3 4.7pF ±0.1pF 50V Ceramic Capacitor C0G, NP0 0402 
+                                           C12_AMP4
+ CC0603JPNPO9BN180   0603             4    C7_AMP1, C7_AMP2, C7_AMP3    18 pF ±5% 50V Ceramic Capacitor C0G, NP0 0603 
+                                           C7_AMP4
+ CC0603JRNPO9BN161   0603             4    C11_AMP1, C11_AMP2, C11_AMP3 160 pF ±5% 50V Ceramic Capacitor C0G, NP0 0603 (1608 Metric) 
+                                           C11_AMP4
+ CC0603JRNPO9BN620   0603             4    C9_AMP1, C9_AMP2, C9_AMP3    62 pF ±5% 50V Ceramic Capacitor C0G, NP0 0603 (1608 Metric) 
+                                           C9_AMP4
+ CC0603JRNPO9BN680   0603             4    C10_AMP1, C10_AMP2, C10_AMP3 CAP CER 68PF 50V C0G/NPO 0603 (1608 Metric) 
+                                           C10_AMP4
+ CL05A106MQ5NRNC     0402            19    C10, C11, C12, C18_AMP1      10 µF ±20% 6.3V Ceramic Capacitor X5R 0402 (1005 Metric) 
+                                           C18_AMP2, C18_AMP3, C18_AMP4
+                                           C19_AMP1, C19_AMP2, C19_AMP3
+                                           C19_AMP4, C22_AMP1, C22_AMP2
+                                           C22_AMP3, C22_AMP4, C23_AMP1
+                                           C23_AMP2, C23_AMP3, C23_AMP4
+ ERJ-PB3B3650V       0603             8    R4_AMP1, R4_AMP2, R4_AMP3    Thick Film Resistors - SMD 0603 Anti-Surge Res. 0.1%, 365ohm 
+                                           R4_AMP4, R12_AMP1, R12_AMP2
+                                           R12_AMP3, R12_AMP4
+ LQW18AN39NJ00D      0603 - Inductor_2    8    L5_AMP1, L5_AMP2, L5_AMP3    39 nH Unshielded Wirewound Inductor 400 mA 260mOhm Max 0603 (1608 Metric) 
+                                           L5_AMP4, L10_AMP1, L10_AMP2
+                                           L10_AMP3, L10_AMP4
+ LQW18ANR20J8ZD      0603 - Inductor    8    L1_AMP1, L1_AMP2, L1_AMP3    200 nH Unshielded Wirewound Inductor 120 mA 2.40Ohm Max 0603 
+                                           L1_AMP4, L6_AMP1, L6_AMP2
+                                           L6_AMP3, L6_AMP4
+ LQW18ANR30G80D      0603 - Inductor    8    L2_AMP1, L2_AMP2, L2_AMP3    300 nH Unshielded Wirewound Inductor 220 mA 3.12Ohm Max 0603 
+                                           L2_AMP4, L7_AMP1, L7_AMP2
+                                           L7_AMP3, L7_AMP4
+ LQW18CNR33J00D      0603 - Inductor    8    L3_AMP1, L3_AMP2, L3_AMP3    330 nH Unshielded Drum Core, Wirewound Inductor 630 mA 250mOhm Max 0603 
+                                           L3_AMP4, L8_AMP1, L8_AMP2
+                                           L8_AMP3, L8_AMP4
+ MLJ1608WR39JT000    0603 - inductor    8    L4_AMP1, L4_AMP2, L4_AMP3    390 nH Shielded Multilayer Inductor 450 mA 364mOhm Max 0603 (1608 Metric) 
+                                           L4_AMP4, L9_AMP1, L9_AMP2
+                                           L9_AMP3, L9_AMP4
+ RC0402FR-0710RL     0402             8    R6_AMP1, R6_AMP2, R6_AMP3    10 Ohms ±1% 0.063W, 1/16W Chip Resistor 0402 
+                                           R6_AMP4, R15_AMP1, R15_AMP2
+                                           R15_AMP3, R15_AMP4
+ RC0603FR-07102RL    0603             4    R10_AMP1, R10_AMP2, R10_AMP3 102 Ohms ±1% 0.1W, 1/10W Chip Resistor 0603 
+                                           R10_AMP4
+ RC0603FR-0751RL     0603             8    R1_AMP1, R1_AMP2, R1_AMP3    Thick Film Resistors - SMD 51 OHM 1% 
+                                           R1_AMP4, R16_AMP1, R16_AMP2
+                                           R16_AMP3, R16_AMP4
+ RC0603FR-101K4L     0603             4    R9_AMP1, R9_AMP2, R9_AMP3    1.4 kOhms ±1% 0.1W, 1/10W Chip Resistor 0603 (1608 Metric) Thick Film 
+                                           R9_AMP4
+ RMCF0402FT100R      0402             1    R1                           100 Ohms ±1% 0.063W, 1/16W Chip Resistor 0402 (1005 Metric) 
+ RMCF0402FT15R0      0402             8    R2_AMP1, R2_AMP2, R2_AMP3    15 Ohms ±1% 0.063W, 1/16W Chip Resistor 0402 (1005 Metric) 
+                                           R2_AMP4, R17_AMP1, R17_AMP2
+                                           R17_AMP3, R17_AMP4
+ RMCF0402FT49R9      0402             8    R7_AMP1, R7_AMP2, R7_AMP3    49.9 Ohms ±1% 0.063W, 1/16W Chip Resistor 0402 (1005 Metric) 
+                                           R7_AMP4, R14_AMP1, R14_AMP2
+                                           R14_AMP3, R14_AMP4
+ RT0603BRD07820RL    0603             8    R5_AMP1, R5_AMP2, R5_AMP3    820 Ohms ±0.1% 0.1W, 1/10W Chip Resistor 0603 (1608 Metric) Thin Film 
+                                           R5_AMP4, R13_AMP1, R13_AMP2
+                                           R13_AMP3, R13_AMP4
+ TMK105CBJ225KV-F    0402            14    C6, C7, C20_AMP1, C20_AMP2   SMD/SMT 0402 25V 2.2uF 10% X5R 
+                                           C20_AMP3, C20_AMP4, C22, C23
+                                           C24, C24_AMP1, C24_AMP2
+                                           C24_AMP3, C24_AMP4, C25
+ WBC4-4L             WBC4-4WL         4    T1_AMP1, T1_AMP2, T1_AMP3    Audio Transformers / Signal Transformers WBC SMT Mini Wdebnd 1:4 0.250-800 MHz 
+                                           T1_AMP4

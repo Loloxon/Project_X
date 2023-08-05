@@ -1,0 +1,31 @@
+############################################################################
+##
+## Processing LOG
+##
+## Project : C:\Users\Loloxon\OneDrive\Desktop\Project_X\different working\reliability_example_a.PrjPcb
+## Date    : 05.08.2023 16_36_53
+##
+############################################################################
+#  Config:C:\Users\Loloxon\OneDrive\Desktop\Project_X\different working\scripts\RS_SN29500_inductor.txt
+##
+# Processing:C:\Users\Loloxon\OneDrive\Desktop\Project_X\different working\ETHERNET.SchDoc
+#	For:Ferrite
+#		Parameter:SN_CATEGORY
+		Parameter:SN_ACT_IND_TMPRT
+		Parameter:SN_INRMTT_OPRT_RTIO
+		Parameter:SN_JNCT_TMPRT_CLC_MTHD
+		Parameter:SN_OPRT_PWR_DSSP
+		Parameter:SN_TMPRT_RISE_SLF_HTNG
+		Parameter:SN_INDCTR_TYP
+# Processing:C:\Users\Loloxon\OneDrive\Desktop\Project_X\different working\FTDI.SchDoc
+		Parameter:SN_CATEGORY
+		Parameter:SN_ACT_IND_TMPRT
+		Parameter:SN_INRMTT_OPRT_RTIO
+		Parameter:SN_JNCT_TMPRT_CLC_MTHD
+		Parameter:SN_OPRT_PWR_DSSP
+		Parameter:SN_TMPRT_RISE_SLF_HTNG
+		Parameter:SN_INDCTR_TYP
+
+
+## LOG end
+############################################################################

@@ -1,0 +1,317 @@
+#
+# Siemens 29500 standard
+#
+# Version 4.0 
+# Date 22.03.2018
+# kasperek@agh.edu.pl
+#
+#
+# Parameter configuration file for RS_ComponentParameters script
+# Syntax:
+# Line starting with # - its a comment line
+# Each line introduce one  parameter and should have exact four words (string type)
+#
+# First ASCII string is the Altium component type selector. 'All' denotes global ( for each component) parameter..#
+# Second ASCII string is the LambaPredict MILHBK217 Parameter Name
+# Third ASCII string is the Parameter Value
+# Fourth - (last one) ASCII string is the Visibility atribute (ON/OFF)
+#
+# Note that spaces are not allowed in "Altium component type" field! In "Parameter Value" field spaces are allowed but
+# should be coded by '*'
+# ===================================================================
+#
+#
+#
+'All' 'SN_CATEGORY' '?' 'ON'
+'All' 'SN_ENVRNMT_CHR' '?' 'ON'
+'All' 'SN_ENVRNMT_DEP_FCTR' '?' 'ON'
+'All' 'SN_MEAN_AMBNT_TMPRT' '?' 'ON'
+'All' 'SN_WAIT_ST_TMPRT' '?' 'ON'
+'All' 'SN_ADJSTMNT_FCTR' '?' 'ON'
+#
+#
+'Capacitor' 'SN_CATEGORY' 'Capacitor' 'OFF'
+'Capacitor' 'SN_ACT_CAP_TMPRT' '?' 'OFF'
+'Capacitor' 'SN_CAP_TMPRT_CLC_MTHD' '?' 'OFF'
+'Capacitor' 'SN_INRMTT_OPRT_RTIO' '?' 'OFF'
+'Capacitor' 'SN_OPRT_VLTG' '?' 'OFF'
+'Capacitor' 'SN_TMPRT_RISE_SLF_HTNG' '?' 'OFF'
+'Capacitor' 'SN_CAP_TYP' '?' 'OFF'
+'Capacitor' 'SN_QUAL_GRD' '?' 'OFF'
+'Capacitor' 'SN_RTD_VLTG' '?' 'OFF'
+#
+#
+'CircBreak' 'SN_CATEGORY' 'Circuit*Breaker' 'OFF'
+'CircBreak' 'SN_INRMTT_OPRT_RTIO' '?' 'OFF'
+'CircBreak' 'SN_OPRT_CRRNT' '?' 'OFF'
+'CircBreak' 'SN_OPRT_VLTG' '?' 'OFF'
+'CircBreak' 'SN_SWTCH_RATE' '?' 'OFF'
+'CircBreak' 'SN_CRCT_BRK_TYP' '?' 'OFF'
+'CircBreak' 'SN_PRTCTC_TYP' '?' 'OFF'
+'CircBreak' 'SN_RTD_OPRT_CRRNT' '?' 'OFF'
+'CircBreak' 'SN_SUPPRTNG_STRCTR_TYP' '?' 'OFF'
+#
+#
+'ConnSocket' 'SN_CATEGORY' 'Connector*or*Socket' 'OFF'
+'ConnSocket' 'SN_INRMTT_OPRT_RTIO' '?' 'OFF'
+'ConnSocket' 'SN_CNNCTR_SCKT_TYP' '?' 'OFF'
+'ConnSocket' 'SN_CNTCT_MATERL' '?' 'OFF'
+'ConnSocket' 'SN_NR_CNCTD_CNTCTS' '?' 'OFF'
+#
+#
+'Contactor' 'SN_CATEGORY' 'Contactor' 'OFF'
+'Contactor' 'SN_OPRT_CRRNT' '?' 'OFF'
+'Contactor' 'SN_OPRT_VLTG' '?' 'OFF'
+'Contactor' 'SN_SWTCH_RATE' '?' 'OFF'
+'Contactor' 'SN_TMPRT_DEP_RTIO' '?' 'OFF'
+'Contactor' 'SN_CNNCTR_TYP' '?' 'OFF'
+'Contactor' 'SN_RTD_OPRT_CRRNT' '?' 'OFF'
+#
+#
+'Diode' 'SN_CATEGORY' 'Diode' 'OFF'
+'Diode' 'SN_ACT_JNCT_TMPRT' '?' 'OFF'
+'Diode' 'SN_DRFT_TYP' '?' 'OFF'
+'Diode' 'SN_INRMTT_OPRT_RTIO' '?' 'OFF'
+'Diode' 'SN_JNCT_TMPRT_CLC_MTHD' '?' 'OFF'
+'Diode' 'SN_OPRT_PWR_DSSP' '?' 'OFF'
+'Diode' 'SN_TMPRT_RISE_SLF_HTNG' '?' 'OFF'
+'Diode' 'SN_DIOD_TYP' '?' 'OFF'
+#
+#
+'ElctrConnection' 'SN_CATEGORY' 'Electrical*Connection' 'OFF'
+'ElctrConnection' 'SN_INRMTT_OPRT_RTIO' '?' 'OFF'
+'ElctrConnection' 'SN_ELCTR_CNNCTN_TYP' '?' 'OFF'
+#
+#
+'Relay' 'SN_CATEGORY' 'General*Purpose*Relay' 'OFF'
+'Relay' 'SN_FAILR_CRIT' '?' 'OFF'
+'Relay' 'SN_INRMTT_OPRT_RTIO' '?' 'OFF'
+'Relay' 'SN_LOAD_TYP' '?' 'OFF'
+'Relay' 'SN_NR_CNCTD_CNTCTS' '?' 'OFF'
+'Relay' 'SN_OPRT_CRRNT_TYP' '?' 'OFF'
+'Relay' 'SN_OPRT_CRRNT' '?' 'OFF'
+'Relay' 'SN_OPRT_SWTCH_VLG' '?' 'OFF'
+'Relay' 'SN_CNTCT_COATNG' '?' 'OFF'
+'Relay' 'SN_CNTCT_PLL_FRC' '?' 'OFF'
+'Relay' 'SN_CNTCT_TIP' '?' 'OFF'
+'Relay' 'SN_PRTCTC_TYP' '?' 'OFF'
+'Relay' 'SN_SUPPRTNG_STRCTR_TYP' '?' 'OFF'
+#
+#
+'ADC' 'SN_CATEGORY' 'IC,*AD*Converter' 'OFF'
+'ADC' 'SN_VIRT_JNCT_TMPRT' '?' 'OFF'
+'ADC' 'SN_DRFT_TYP' '?' 'OFF'
+'ADC' 'SN_INRMTT_OPRT_RTIO' '?' 'OFF'
+'ADC' 'SN_JNCT_TMPRT_CLC_MTHD' '?' 'OFF'
+'ADC' 'SN_OPRT_PWR_DSSP' '?' 'OFF'
+'ADC' 'SN_TMPRT_RISE_SLF_HTNG' '?' 'OFF'
+'ADC' 'SN_AD_CNVTR_TYP' '?' 'OFF'
+'ADC' 'SN_DEGR_INTGRT' '?' 'OFF'
+#
+#
+'IC_Analog' 'SN_CATEGORY' 'IC,*Analog' 'OFF'
+'IC_Analog' 'SN_VIRT_JNCT_TMPRT' '?' 'OFF'
+'IC_Analog' 'SN_DRFT_TYP' '?' 'OFF'
+'IC_Analog' 'SN_INRMTT_OPRT_RTIO' '?' 'OFF'
+'IC_Analog' 'SN_JNCT_TMPRT_CLC_MTHD' '?' 'OFF'
+'IC_Analog' 'SN_OPRT_PWR_DSSP' '?' 'OFF'
+'IC_Analog' 'SN_OPRT_VLTG' '?' 'OFF'
+'IC_Analog' 'SN_TMPRT_RISE_SLF_HTNG' '?' 'OFF'
+'IC_Analog' 'SN_ANLG_IC_TYP' '?' 'OFF'
+'IC_Analog' 'SN_DEGR_INTGRT' '?' 'OFF'
+'IC_Analog' 'SN_RTD_VLTG' '?' 'OFF'
+#
+#
+'IC_HFAnalog' 'SN_CATEGORY' 'IC,*Analog,*High*Frequency' 'OFF'
+'IC_HFAnalog' 'SN_VIRT_JNCT_TMPRT' '?' 'OFF'
+'IC_HFAnalog' 'SN_DRFT_TYP' '?' 'OFF'
+'IC_HFAnalog' 'SN_INRMTT_OPRT_RTIO' '?' 'OFF'
+'IC_HFAnalog' 'SN_JNCT_TMPRT_CLC_MTHD' '?' 'OFF'
+'IC_HFAnalog' 'SN_OPRT_PWR_DSSP' '?' 'OFF'
+'IC_HFAnalog' 'SN_OPRT_VLTG' '?' 'OFF'
+'IC_HFAnalog' 'SN_TMPRT_RISE_SLF_HTNG' '?' 'OFF'
+'IC_HFAnalog' 'SN_DEGR_INTGRT' '?' 'OFF'
+'IC_HFAnalog' 'SN_HF_ANLG_IC_TYP' '?' 'OFF'
+#
+#
+'IC_Digital' 'SN_CATEGORY' 'IC,*Digital' 'OFF'
+'IC_Digital' 'SN_VIRT_JNCT_TMPRT' '?' 'OFF'
+'IC_Digital' 'SN_INRMTT_OPRT_RTIO' '?' 'OFF'
+'IC_Digital' 'SN_JNCT_TMPRT_CLC_MTHD' '?' 'OFF'
+'IC_Digital' 'SN_OPRT_PWR_DSSP' '?' 'OFF'
+'IC_Digital' 'SN_OPRT_VLTG' '?' 'OFF'
+'IC_Digital' 'SN_TMPRT_RISE_SLF_HTNG' '?' 'OFF'
+'IC_Digital' 'SN_BICMOS_IC_TYP' '?' 'OFF'
+'IC_Digital' 'SN_BIPLR_IC_TYP' '?' 'OFF'
+'IC_Digital' 'SN_CMOS_IC_TYP' '?' 'OFF'
+'IC_Digital' 'SN_DEGR_INTGRT' '?' 'OFF'
+'IC_Digital' 'SN_DIG_IC_TCHNLG' '?' 'OFF'
+#
+#
+'IC_PLD' 'SN_CATEGORY' 'IC,*Erasable*Programmable*ASIC' 'OFF'
+'IC_PLD' 'SN_VIRT_JNCT_TMPRT' '?' 'OFF'
+'IC_PLD' 'SN_INRMTT_OPRT_RTIO' '?' 'OFF'
+'IC_PLD' 'SN_JNCT_TMPRT_CLC_MTHD' '?' 'OFF'
+'IC_PLD' 'SN_OPRT_PWR_DSSP' '?' 'OFF'
+'IC_PLD' 'SN_TMPRT_RISE_SLF_HTNG' '?' 'OFF'
+'IC_PLD' 'SN_DEGR_INTGRT' '?' 'OFF'
+'IC_PLD' 'SN_ERSBLE_PRGMBL_ASIC_TYP' '?' 'OFF'
+#
+#
+'IC_MEM' 'SN_CATEGORY' 'IC,*Memory' 'OFF'
+'IC_MEM' 'SN_VIRT_JNCT_TMPRT' '?' 'OFF'
+'IC_MEM' 'SN_INRMTT_OPRT_RTIO' '?' 'OFF'
+'IC_MEM' 'SN_JNCT_TMPRT_CLC_MTHD' '?' 'OFF'
+'IC_MEM' 'SN_OPRT_PWR_DSSP' '?' 'OFF'
+'IC_MEM' 'SN_TMPRT_RISE_SLF_HTNG' '?' 'OFF'
+'IC_MEM' 'SN_CMPLXT' '?' 'OFF'
+'IC_MEM' 'SN_MEM_TYP_TCHNLG' '?' 'OFF'
+#
+#
+'Microcontroller' 'SN_CATEGORY' 'IC,*Microcontroller' 'OFF'
+'Microcontroller' 'SN_VIRT_JNCT_TMPRT' '?' 'OFF'
+'Microcontroller' 'SN_INRMTT_OPRT_RTIO' '?' 'OFF'
+'Microcontroller' 'SN_JNCT_TMPRT_CLC_MTHD' '?' 'OFF'
+'Microcontroller' 'SN_OPRT_PWR_DSSP' '?' 'OFF'
+'Microcontroller' 'SN_OPRT_VLTG' '?' 'OFF'
+'Microcontroller' 'SN_TMPRT_RISE_SLF_HTNG' '?' 'OFF'
+'Microcontroller' 'SN_DEGR_INTGRT' '?' 'OFF'
+'Microcontroller' 'SN_MCRCNTRL_TYP' '?' 'OFF'
+#
+#
+'IC_DSP' 'SN_CATEGORY' 'IC,*Signal*Processor' 'OFF'
+'IC_DSP' 'SN_VIRT_JNCT_TMPRT' '?' 'OFF'
+'IC_DSP' 'SN_INRMTT_OPRT_RTIO' '?' 'OFF'
+'IC_DSP' 'SN_JNCT_TMPRT_CLC_MTHD' '?' 'OFF'
+'IC_DSP' 'SN_OPRT_PWR_DSSP' '?' 'OFF'
+'IC_DSP' 'SN_TMPRT_RISE_SLF_HTNG' '?' 'OFF'
+'IC_DSP' 'SN_DEGR_INTGRT' '?' 'OFF'
+'IC_DSP' 'SN_SGNL_PRCSSR_TYP' '?' 'OFF'
+#
+#
+'IC_Telecom' 'SN_CATEGORY' 'IC,*Telecom' 'OFF'
+'IC_Telecom' 'SN_VIRT_JNCT_TMPRT' '?' 'OFF'
+'IC_Telecom' 'SN_DRFT_TYP' '?' 'OFF'
+'IC_Telecom' 'SN_INRMTT_OPRT_RTIO' '?' 'OFF'
+'IC_Telecom' 'SN_JNCT_TMPRT_CLC_MTHD' '?' 'OFF'
+'IC_Telecom' 'SN_OPRT_PWR_DSSP' '?' 'OFF'
+'IC_Telecom' 'SN_TMPRT_RISE_SLF_HTNG' '?' 'OFF'
+'IC_Telecom' 'SN_DEGR_INTGRT' '?' 'OFF'
+'IC_Telecom' 'SN_TLCOM_TYP' '?' 'OFF'
+#
+#
+'Inductor' 'SN_CATEGORY' 'Inductor' 'OFF'
+'Inductor' 'SN_ACT_IND_TMPRT' '?' 'OFF'
+'Inductor' 'SN_INRMTT_OPRT_RTIO' '?' 'OFF'
+'Inductor' 'SN_JNCT_TMPRT_CLC_MTHD' '?' 'OFF'
+'Inductor' 'SN_OPRT_PWR_DSSP' '?' 'OFF'
+'Inductor' 'SN_TMPRT_RISE_SLF_HTNG' '?' 'OFF'
+'Inductor' 'SN_INDCTR_TYP' '?' 'OFF'
+#
+#
+'OPTO' 'SN_CATEGORY' 'Light*Barrier' 'OFF'
+'OPTO' 'SN_ACT_JNCT_TMPRT' '?' 'OFF'
+'OPTO' 'SN_INRMTT_OPRT_RTIO' '?' 'OFF'
+'OPTO' 'SN_JNCT_TMPRT_CLC_MTHD' '?' 'OFF'
+'OPTO' 'SN_OPRT_PWR_DSSP' '?' 'OFF'
+'OPTO' 'SN_TMPRT_RISE_SLF_HTNG' '?' 'OFF'
+'OPTO' 'SN_DSCR_SEMI_QUALITY' '?' 'OFF'
+#
+#
+'LED' 'SN_CATEGORY' 'Light*Emitting*Semiconductor' 'OFF'
+'LED' 'SN_ACT_JNCT_TMPRT' '?' 'OFF'
+'LED' 'SN_INRMTT_OPRT_RTIO' '?' 'OFF'
+'LED' 'SN_JNCT_TMPRT_CLC_MTHD' '?' 'OFF'
+'LED' 'SN_OPRT_CRRNT' '?' 'OFF'
+'LED' 'SN_TMPRT_RISE_SLF_HTNG' '?' 'OFF'
+'LED' 'SN_LGHT_EMIT_SMCNDCTR_CNSTRCT' '?' 'OFF'
+'LED' 'SN_LGHT_EMIT_SMCNDCTR_TYP' '?' 'OFF'
+'LED' 'SN_RTD_CRRNT' '?' 'OFF'
+#
+#
+'Relay' 'SN_CATEGORY' 'Low*Duty*Relay' 'OFF'
+'Relay' 'SN_FAILR_CRIT' '?' 'OFF'
+'Relay' 'SN_INRMTT_OPRT_RTIO' '?' 'OFF'
+'Relay' 'SN_LOAD_TYP' '?' 'OFF'
+'Relay' 'SN_NR_CNCTD_CNTCTS' '?' 'OFF'
+'Relay' 'SN_OPRT_CRRNT' '?' 'OFF'
+'Relay' 'SN_OPRT_SWTCH_VLG' '?' 'OFF'
+'Relay' 'SN_L_DUTY_SEALCLSS' '?' 'OFF'
+'Relay' 'SN_PRTCTC_TYP' '?' 'OFF'
+'Relay' 'SN_SUPPRTNG_STRCTR_TYP' '?' 'OFF'
+#
+#
+'PHOTO' 'SN_CATEGORY' 'Optical*Semiconductor*SigRcvr' 'OFF'
+'PHOTO' 'SN_ACT_JNCT_TMPRT' '?' 'OFF'
+'PHOTO' 'SN_INRMTT_OPRT_RTIO' '?' 'OFF'
+'PHOTO' 'SN_JNCT_TMPRT_CLC_MTHD' '?' 'OFF'
+'PHOTO' 'SN_OPRT_PWR_DSSP' '?' 'OFF'
+'PHOTO' 'SN_OPRT_VLTG' '?' 'OFF'
+'PHOTO' 'SN_TMPRT_RISE_SLF_HTNG' '?' 'OFF'
+'PHOTO' 'SN_OPT_SEM_SGNL_RCV_CNSTRCT' '?' 'OFF'
+'PHOTO' 'SN_OPT_SEM_SGNL_RCV_TYP' '?' 'OFF'
+'PHOTO' 'SN_RTD_VLTG' '?' 'OFF'
+#
+#
+'Optocoupler' 'SN_CATEGORY' 'Optocoupler' 'OFF'
+'Optocoupler' 'SN_ACT_JNCT_TMPRT' '?' 'OFF'
+'Optocoupler' 'SN_INRMTT_OPRT_RTIO' '?' 'OFF'
+'Optocoupler' 'SN_JNCT_TMPRT_CLC_MTHD' '?' 'OFF'
+'Optocoupler' 'SN_OPRT_PWR_DSSP' '?' 'OFF'
+'Optocoupler' 'SN_TMPRT_RISE_SLF_HTNG' '?' 'OFF'
+'Optocoupler' 'SN_OPTCPLR_TYP' '?' 'OFF'
+#
+#
+#'Passive' 'SN_CATEGORY' 'Passive*Component' 'OFF'
+#'Passive Component' 'SN_INRMTT_OPRT_RTIO' '?' 'OFF'
+#'Passive Component' 'SN_PSSV_TYP' '?' 'OFF'
+#
+#
+'Pushbutton' 'SN_CATEGORY' 'Pushbutton' 'OFF'
+'Pushbutton' 'SN_AVR_FRQ_OPRT' '?' 'OFF'
+'Pushbutton' 'SN_OPRT_CRRNT' '?' 'OFF'
+'Pushbutton' 'SN_PSHBTTN_TYP' '?' 'OFF'
+'Pushbutton' 'SN_RTD_OPRT_CRRNT' '?' 'OFF'
+#
+#
+'Resistor' 'SN_CATEGORY' 'Resistor' 'OFF'
+'Resistor' 'SN_ACT_SRFC_TMPRT' '?' 'OFF'
+'Resistor' 'SN_INRMTT_OPRT_RTIO' '?' 'OFF'
+'Resistor' 'SN_OPRT_PWR_DSSP' '?' 'OFF'
+'Resistor' 'SN_RES_TMPRT_CLC_MTHD' '?' 'OFF'
+'Resistor' 'SN_MAX_TMPRT' '?' 'OFF'
+'Resistor' 'SN_RTD_PWR_DSSP' '?' 'OFF'
+'Resistor' 'SN_RES_TYP' '?' 'OFF'
+#
+#
+'PowerSemi' 'SN_CATEGORY' 'Semiconductor,*Power' 'OFF'
+'PowerSemi' 'SN_ACT_JNCT_TMPRT' '?' 'OFF'
+'PowerSemi' 'SN_INRMTT_OPRT_RTIO' '?' 'OFF'
+'PowerSemi' 'SN_JNCT_TMPRT_CLC_MTHD' '?' 'OFF'
+'PowerSemi' 'SN_OPRT_PWR_DSSP' '?' 'OFF'
+'PowerSemi' 'SN_TMPRT_RISE_SLF_HTNG' '?' 'OFF'
+'PowerSemi' 'SN_PWR_SMCNDCTR_TYP' '?' 'OFF'
+#
+#
+'Switch_Button' 'SN_CATEGORY' 'Switch*or*Button' 'OFF'
+'Switch_Button' 'SN_LOAD_TYP' '?' 'OFF'
+'Switch_Button' 'SN_NR_CNCTD_CNTCT_PNTS' '?' 'OFF'
+'Switch_Button' 'SN_OPRT_CRRNT_TYP' '?' 'OFF'
+'Switch_Button' 'SN_OPRT_CRRNT' '?' 'OFF'
+'Switch_Button' 'SN_OPRT_SWTCH_VLG' '?' 'OFF'
+'Switch_Button' 'SN_CNTCT_COATNG' '?' 'OFF'
+'Switch_Button' 'SN_L_DUTY_SEALCLSS' '?' 'OFF'
+'Switch_Button' 'SN_SW_BTTN_TYP' '?' 'OFF'
+#
+#
+'LF_Transistor' 'SN_CATEGORY' 'Transistor,*Low*Frequency' 'OFF'
+'LF_Transistor' 'SN_VIRT_JNCT_TMPRT' '?' 'OFF'
+'LF_Transistor' 'SN_DRFT_TYP' '?' 'OFF'
+'LF_Transistor' 'SN_INRMTT_OPRT_RTIO' '?' 'OFF'
+'LF_Transistor' 'SN_JNCT_TMPRT_CLC_MTHD' '?' 'OFF'
+'LF_Transistor' 'SN_OPRT_PWR_DSSP' '?' 'OFF'
+'LF_Transistor' 'SN_OPRT_VLTG' '?' 'OFF'
+'LF_Transistor' 'SN_TMPRT_RISE_SLF_HTNG' '?' 'OFF'
+'LF_Transistor' 'SN_LF_TRNSTR_TYP' '?' 'OFF'
+'LF_Transistor' 'SN_RTD_VLTG' '?' 'OFF'
+# Data end

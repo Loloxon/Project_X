@@ -1,0 +1,19 @@
+############################################################################
+##
+## Processing LOG
+##
+## Project : D:\My_Projects\Hyper-K\HK realiability\example_a\reliability_example_a.PrjPcb
+## Date    : 12.05.2023 15_34_06
+##
+############################################################################
+#  Config:D:\My_Projects\Hyper-K\HK realiability\example_a\scripts\RS_SN29500_test.txt
+##
+# Processing:D:\My_Projects\Hyper-K\HK realiability\example_a\ETHERNET.SchDoc
+#	For:D5
+#		Parameter:SN_CATEGORY
+# Processing:D:\My_Projects\Hyper-K\HK realiability\example_a\FTDI.SchDoc
+		Parameter:SN_CATEGORY
+
+
+## LOG end
+############################################################################

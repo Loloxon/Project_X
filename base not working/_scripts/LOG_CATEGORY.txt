@@ -1,0 +1,7 @@
+# ===================================================================
+# Log all config file 
+# After execution all recognised components and its all parameters with 'ML_CATT' 
+# will be logged to LOG file
+# ===================================================================
+"???" "ML_CATT" "?" "OFF"
+# Data end

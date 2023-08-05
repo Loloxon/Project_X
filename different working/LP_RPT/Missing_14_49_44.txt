@@ -1,0 +1,57 @@
+############################################################################
+##
+## Missing parameters report
+##
+## Project : D:\My_Projects\Hyper-K\HK realiability\example_a\reliability_example_a.PrjPcb
+## Date    : 12.05.2023 14_49_44
+##
+############################################################################
+#   BLM18PG221SN1D  #_  'FB3' 'SN_CATEGORY' 'Not defined' 'OFF'
+#   150R  #_  'R71' 'SN_CATEGORY' 'Not defined' 'OFF'
+#   150R  #_  'R72' 'SN_CATEGORY' 'Not defined' 'OFF'
+#   100n  #_  'C91' 'SN_CATEGORY' 'Not defined' 'OFF'
+#   4k99  #_  'R69' 'SN_CATEGORY' 'Not defined' 'OFF'
+#   10k  #_  'R70' 'SN_CATEGORY' 'Not defined' 'OFF'
+#   10u  #_  'C93' 'SN_CATEGORY' 'Not defined' 'OFF'
+#   100n  #_  'C94' 'SN_CATEGORY' 'Not defined' 'OFF'
+#   SI-61007-F  #_  'J3' 'SN_CATEGORY' 'Not defined' 'OFF'
+#   7B-25.000MEEQ-T  #_  'Y1' 'SN_CATEGORY' 'Not defined' 'OFF'
+#   27p  #_  'C96' 'SN_CATEGORY' 'Not defined' 'OFF'
+#   27p  #_  'C95' 'SN_CATEGORY' 'Not defined' 'OFF'
+#   BLM18PG221SN1D  #_  'FB4' 'SN_CATEGORY' 'Not defined' 'OFF'
+#   100n  #_  'C97' 'SN_CATEGORY' 'Not defined' 'OFF'
+#   100n  #_  'C98' 'SN_CATEGORY' 'Not defined' 'OFF'
+#   100n  #_  'C99' 'SN_CATEGORY' 'Not defined' 'OFF'
+#   10u  #_  'C100' 'SN_CATEGORY' 'Not defined' 'OFF'
+#   100n  #_  'C101' 'SN_CATEGORY' 'Not defined' 'OFF'
+#   100n  #_  'C102' 'SN_CATEGORY' 'Not defined' 'OFF'
+#   100n  #_  'C103' 'SN_CATEGORY' 'Not defined' 'OFF'
+#   100n  #_  'C104' 'SN_CATEGORY' 'Not defined' 'OFF'
+#   100n  #_  'C105' 'SN_CATEGORY' 'Not defined' 'OFF'
+#   100n  #_  'C106' 'SN_CATEGORY' 'Not defined' 'OFF'
+#   100n  #_  'C108' 'SN_CATEGORY' 'Not defined' 'OFF'
+#   100n  #_  'C109' 'SN_CATEGORY' 'Not defined' 'OFF'
+#   10u  #_  'C111' 'SN_CATEGORY' 'Not defined' 'OFF'
+#   10u  #_  'C112' 'SN_CATEGORY' 'Not defined' 'OFF'
+#   88E1518  #_  'U5' 'SN_CATEGORY' 'Not defined' 'OFF'
+#   LED RED  #_  'D12' 'SN_CATEGORY' 'Not defined' 'OFF'
+#   LED RED  #_  'D13' 'SN_CATEGORY' 'Not defined' 'OFF'
+#   220n  #_  'C92' 'SN_CATEGORY' 'Not defined' 'OFF'
+#   100n  #_  'C176' 'SN_CATEGORY' 'Not defined' 'OFF'
+#   10u  #_  'C178' 'SN_CATEGORY' 'Not defined' 'OFF'
+#   100n  #_  'C177' 'SN_CATEGORY' 'Not defined' 'OFF'
+#   FT234XD  #_  'U10' 'SN_CATEGORY' 'Not defined' 'OFF'
+#   27R  #_  'R85' 'SN_CATEGORY' 'Not defined' 'OFF'
+#   27R  #_  'R87' 'SN_CATEGORY' 'Not defined' 'OFF'
+#   47p  #_  'C182' 'SN_CATEGORY' 'Not defined' 'OFF'
+#   47p  #_  'C183' 'SN_CATEGORY' 'Not defined' 'OFF'
+#   100n  #_  'C181' 'SN_CATEGORY' 'Not defined' 'OFF'
+#   10u  #_  'C180' 'SN_CATEGORY' 'Not defined' 'OFF'
+#   100n  #_  'C179' 'SN_CATEGORY' 'Not defined' 'OFF'
+#   470R  #_  'R86' 'SN_CATEGORY' 'Not defined' 'OFF'
+#   BLM18PG221SN1D  #_  'FB9' 'SN_CATEGORY' 'Not defined' 'OFF'
+#   MOLEX 67503-1230  #_  'J5' 'SN_CATEGORY' 'Not defined' 'OFF'
+
+
+## Report end
+############################################################################

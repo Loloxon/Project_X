@@ -1,0 +1,26 @@
+############################################################################
+##
+## Processing LOG
+##
+## Project : D:\jobs\My_jobs_2023\praca_naukowa\projekt_Paw³a_Rajdy\materia³y_od_Paw³a_R\Pobrane_z_dysku\example_a\reliability_example_a.PrjPcb
+## Date    : 03.08.2023 22_35_08
+##
+############################################################################
+#  Config:D:\jobs\My_jobs_2023\praca_naukowa\projekt_Paw³a_Rajdy\materia³y_od_Paw³a_R\Pobrane_z_dysku\example_a\scripts\RS_SN29500_resistors_PK.txt
+##
+# Processing:D:\jobs\My_jobs_2023\praca_naukowa\projekt_Paw³a_Rajdy\materia³y_od_Paw³a_R\Pobrane_z_dysku\example_a\ETHERNET.SchDoc
+#	For:Resistor
+#		Parameter:SN_CATEGORY
+		Parameter:SN_ACT_SRFC_TMPRT
+		Parameter:SN_INRMTT_OPRT_RTIO
+		Parameter:SN_OPRT_PWR_DSSP
+		Parameter:SN_RES_TMPRT_CLC_MTHD
+		Parameter:SN_MAX_TMPRT
+		Parameter:SN_RTD_PWR_DSSP
+		Parameter:SN_RES_TYP
+# Processing:D:\jobs\My_jobs_2023\praca_naukowa\projekt_Paw³a_Rajdy\materia³y_od_Paw³a_R\Pobrane_z_dysku\example_a\FTDI.SchDoc
+		Parameter:SN_CATEGORY
+		Parameter:SN_ACT_SRFC_TMPRT
+		Parameter:SN_INRMTT_OPRT_RTIO
+		Parameter:SN_OPRT_PWR_DSSP
+		Pa

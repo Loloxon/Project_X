@@ -1,0 +1,44 @@
+############################################################################
+##
+## Processing LOG
+##
+## Project : D:\My_Projects\Hyper-K\HK realiability\example_a\reliability_example_a.PrjPcb
+## Date    : 12.05.2023 14_30_08
+##
+############################################################################
+#  Config:D:\My_Projects\Hyper-K\HK realiability\example_a\scripts\RS_SN29500_test.txt
+##
+# Processing:D:\My_Projects\Hyper-K\HK realiability\example_a\ETHERNET.SchDoc
+#	For:???
+#		Parameter:SN_CATEGORY
+Component:FB3:BLM18PG221SN1D not defined: SN_CATEGORY yet
+Component:R71:150R not defined: SN_CATEGORY yet
+Component:R72:150R not defined: SN_CATEGORY yet
+Component:C91:100n not defined: SN_CATEGORY yet
+Component:R69:4k99 not defined: SN_CATEGORY yet
+Component:R70:10k not defined: SN_CATEGORY yet
+Component:C93:10u not defined: SN_CATEGORY yet
+Component:C94:100n not defined: SN_CATEGORY yet
+Component:J3:SI-61007-F not defined: SN_CATEGORY yet
+Component:Y1:7B-25.000MEEQ-T not defined: SN_CATEGORY yet
+Component:C96:27p not defined: SN_CATEGORY yet
+Component:C95:27p not defined: SN_CATEGORY yet
+Component:FB4:BLM18PG221SN1D not defined: SN_CATEGORY yet
+Component:C97:100n not defined: SN_CATEGORY yet
+Component:C98:100n not defined: SN_CATEGORY yet
+Component:C99:100n not defined: SN_CATEGORY yet
+Component:C100:10u not defined: SN_CATEGORY yet
+Component:C101:100n not defined: SN_CATEGORY yet
+Component:C102:100n not defined: SN_CATEGORY yet
+Component:C103:100n not defined: SN_CATEGORY yet
+Component:C104:100n not defined: SN_CATEGORY yet
+Component:C105:100n not defined: SN_CATEGORY yet
+Component:C106:100n not defined: SN_CATEGORY yet
+Component:C108:100n not defined: SN_CATEGORY yet
+Component:C109:100n not defined: SN_CATEGORY yet
+Component:C111:10u not defined: SN_CATEGORY yet
+Component:C112:10u not defined: SN_CATEGORY yet
+Component:U5:88E1518 not defined: SN_CATEGORY yet
+Component:D12:LED RED not defined: SN_CATEGORY yet
+Component:D13:LED RED not defined: SN_CATEGORY yet
+Component:

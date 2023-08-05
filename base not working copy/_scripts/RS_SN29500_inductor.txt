@@ -1,0 +1,9 @@
+#
+'Ferrite' 'SN_CATEGORY' 'Inductor' 'OFF'
+'Ferrite' 'SN_ACT_IND_TMPRT' '?' 'OFF'
+'Ferrite' 'SN_INRMTT_OPRT_RTIO' '?' 'OFF'
+'Ferrite' 'SN_JNCT_TMPRT_CLC_MTHD' '?' 'OFF'
+'Ferrite' 'SN_OPRT_PWR_DSSP' '?' 'OFF'
+'Ferrite' 'SN_TMPRT_RISE_SLF_HTNG' '?' 'OFF'
+'Ferrite' 'SN_INDCTR_TYP' '?' 'OFF'
+#

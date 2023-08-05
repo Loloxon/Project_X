@@ -1,0 +1,82 @@
+#
+# Siemens 29500 standard
+#
+# Version 4.0 
+# Date 22.03.2018
+# kasperek@agh.edu.pl
+#
+#
+# Parameter configuration file for RS_ComponentParameters script
+# Syntax:
+# Line starting with # - its a comment line
+# Each line introduce one  parameter and should have exact four words (string type)
+#
+# First ASCII string is the Altium component type selector. 'All' denotes global ( for each component) parameter..#
+# Second ASCII string is the LambaPredict MILHBK217 Parameter Name
+# Third ASCII string is the Parameter Value
+# Fourth - (last one) ASCII string is the Visibility atribute (ON/OFF)
+#
+# Note that spaces are not allowed in "Altium component type" field! In "Parameter Value" field spaces are allowed but
+# should be coded by '*'
+# ===================================================================
+#
+#
+#
+'All' 'SN_ENVRNMT_CHR' '?' 'ON'
+'All' 'SN_ENVRNMT_DEP_FCTR' '?' 'ON'
+'All' 'SN_MEAN_AMBNT_TMPRT' '?' 'ON'
+'All' 'SN_WAIT_ST_TMPRT' '?' 'ON'
+'All' 'SN_ADJSTMNT_FCTR' '?' 'ON'
+#
+#
+'C' 'SN_ACT_CAP_TMPRT' '?' 'OFF'
+'C' 'SN_CAP_TMPRT_CLC_MTHD' '?' 'OFF'
+'C' 'SN_INRMTT_OPRT_RTIO' '?' 'OFF'
+'C' 'SN_OPRT_VLTG' '?' 'OFF'
+'C' 'SN_TMPRT_RISE_SLF_HTNG' '?' 'OFF'
+'C' 'SN_CAP_TYP' '?' 'OFF'
+'C' 'SN_QUAL_GRD' '?' 'OFF'
+'C' 'SN_RTD_VLTG' '?' 'OFF'
+#
+#
+'IC_Analog' 'SN_VIRT_JNCT_TMPRT' '?' 'OFF'
+'IC_Analog' 'SN_DRFT_TYP' '?' 'OFF'
+'IC_Analog' 'SN_INRMTT_OPRT_RTIO' '?' 'OFF'
+'IC_Analog' 'SN_JNCT_TMPRT_CLC_MTHD' '?' 'OFF'
+'IC_Analog' 'SN_OPRT_PWR_DSSP' '?' 'OFF'
+'IC_Analog' 'SN_OPRT_VLTG' '?' 'OFF'
+'IC_Analog' 'SN_TMPRT_RISE_SLF_HTNG' '?' 'OFF'
+'IC_Analog' 'SN_ANLG_IC_TYP' '?' 'OFF'
+'IC_Analog' 'SN_DEGR_INTGRT' '?' 'OFF'
+'IC_Analog' 'SN_RTD_VLTG' '?' 'OFF'
+#
+# Inductor
+'L' 'SN_ACT_IND_TMPRT' '?' 'OFF'
+'L' 'SN_INRMTT_OPRT_RTIO' '?' 'OFF'
+'L' 'SN_JNCT_TMPRT_CLC_MTHD' '?' 'OFF'
+'L' 'SN_OPRT_PWR_DSSP' '?' 'OFF'
+'L' 'SN_TMPRT_RISE_SLF_HTNG' '?' 'OFF'
+'L' 'SN_INDCTR_TYP' '?' 'OFF'
+#
+# Transformer => like Inductor
+'T' 'SN_ACT_IND_TMPRT' '?' 'OFF'
+'T' 'SN_INRMTT_OPRT_RTIO' '?' 'OFF'
+'T' 'SN_JNCT_TMPRT_CLC_MTHD' '?' 'OFF'
+'T' 'SN_OPRT_PWR_DSSP' '?' 'OFF'
+'T' 'SN_TMPRT_RISE_SLF_HTNG' '?' 'OFF'
+'T' 'SN_INDCTR_TYP' '?' 'OFF'
+#
+#
+'B' 'SN_INRMTT_OPRT_RTIO' '?' 'OFF'
+'B' 'SN_PSSV_TYP' '?' 'OFF'
+#
+#
+'R' 'SN_ACT_SRFC_TMPRT' '?' 'OFF'
+'R' 'SN_INRMTT_OPRT_RTIO' '?' 'OFF'
+'R' 'SN_OPRT_PWR_DSSP' '?' 'OFF'
+'R' 'SN_RES_TMPRT_CLC_MTHD' '?' 'OFF'
+'R' 'SN_MAX_TMPRT' '?' 'OFF'
+'R' 'SN_RTD_PWR_DSSP' '?' 'OFF'
+'R' 'SN_RES_TYP' '?' 'OFF'
+#
+# Data end

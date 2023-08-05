@@ -1,0 +1,121 @@
+############################################################################
+##
+## Processing LOG
+##
+## Project : D:\My_Projects\Hyper-K\HK realiability\example_a\reliability_example_a.PrjPcb
+## Date    : 12.05.2023 13_56_28
+##
+############################################################################
+#  Config:D:\My_Projects\Hyper-K\HK realiability\example_a\scripts\RS_SN29500_test.txt
+##
+# Processing:D:\My_Projects\Hyper-K\HK realiability\example_a\ETHERNET.SchDoc
+#	For:All
+#		Parameter:SN_CATEGORY
+#	For:Capacitor
+#		Parameter:SN_CATEGORY
+#	For:???
+#		Parameter:???
+# FB3:BLM18PG221SN1D
+'FB3' 'SN_CATEGORY' '?' 'ON'
+# R71:150R
+'R71' 'SN_CATEGORY' '?' 'ON'
+# R72:150R
+'R72' 'SN_CATEGORY' '?' 'ON'
+# C91:100n
+'C91' 'SN_CATEGORY' 'Capacitor' 'OFF'
+# R69:4k99
+'R69' 'SN_CATEGORY' '?' 'ON'
+# R70:10k
+'R70' 'SN_CATEGORY' '?' 'ON'
+# C93:10u
+'C93' 'SN_CATEGORY' 'Capacitor' 'OFF'
+# C94:100n
+'C94' 'SN_CATEGORY' 'Capacitor' 'OFF'
+# J3:SI-61007-F
+'J3' 'SN_CATEGORY' '?' 'ON'
+# Y1:7B-25.000MEEQ-T
+'Y1' 'SN_CATEGORY' '?' 'ON'
+# C96:27p
+'C96' 'SN_CATEGORY' 'Capacitor' 'OFF'
+# C95:27p
+'C95' 'SN_CATEGORY' 'Capacitor' 'OFF'
+# FB4:BLM18PG221SN1D
+'FB4' 'SN_CATEGORY' '?' 'ON'
+# C97:100n
+'C97' 'SN_CATEGORY' 'Capacitor' 'OFF'
+# C98:100n
+'C98' 'SN_CATEGORY' 'Capacitor' 'OFF'
+# C99:100n
+'C99' 'SN_CATEGORY' 'Capacitor' 'OFF'
+# C100:10u
+'C100' 'SN_CATEGORY' 'Capacitor' 'OFF'
+# C101:100n
+'C101' 'SN_CATEGORY' 'Capacitor' 'OFF'
+# C102:100n
+'C102' 'SN_CATEGORY' 'Capacitor' 'OFF'
+# C103:100n
+'C103' 'SN_CATEGORY' 'Capacitor' 'OFF'
+# C104:100n
+'C104' 'SN_CATEGORY' 'Capacitor' 'OFF'
+# C105:100n
+'C105' 'SN_CATEGORY' 'Capacitor' 'OFF'
+# C106:100n
+'C106' 'SN_CATEGORY' 'Capacitor' 'OFF'
+# C108:100n
+'C108' 'SN_CATEGORY' 'Capacitor' 'OFF'
+# C109:100n
+'C109' 'SN_CATEGORY' 'Capacitor' 'OFF'
+# C111:10u
+'C111' 'SN_CATEGORY' 'Capacitor' 'OFF'
+# C112:10u
+'C112' 'SN_CATEGORY' 'Capacitor' 'OFF'
+# U5:88E1518
+'U5' 'SN_CATEGORY' '?' 'ON'
+# D12:LED RED
+'D12' 'SN_CATEGORY' '?' 'ON'
+# D13:LED RED
+'D13' 'SN_CATEGORY' '?' 'ON'
+# C92:220n
+'C92' 'SN_CATEGORY' 'Capacitor' 'OFF'
+# Processing:D:\My_Projects\Hyper-K\HK realiability\example_a\FTDI.SchDoc
+#	For:All
+#		Parameter:SN_CATEGORY
+#	For:Capacitor
+#		Parameter:SN_CATEGORY
+#	For:???
+#		Parameter:???
+# C176:100n
+'C176' 'SN_CATEGORY' 'Capacitor' 'OFF'
+# C178:10u
+'C178' 'SN_CATEGORY' 'Capacitor' 'OFF'
+# C177:100n
+'C177' 'SN_CATEGORY' 'Capacitor' 'OFF'
+# U10:FT234XD
+'U10' 'SN_CATEGORY' '?' 'ON'
+# R85:27R
+'R85' 'SN_CATEGORY' '?' 'ON'
+# R87:27R
+'R87' 'SN_CATEGORY' '?' 'ON'
+# C182:47p
+'C182' 'SN_CATEGORY' 'Capacitor' 'OFF'
+# C183:47p
+'C183' 'SN_CATEGORY' 'Capacitor' 'OFF'
+# C181:100n
+'C181' 'SN_CATEGORY' 'Capacitor' 'OFF'
+# C180:10u
+'C180' 'SN_CATEGORY' 'Capacitor' 'OFF'
+# C179:100n
+'C179' 'SN_CATEGORY' 'Capacitor' 'OFF'
+# D5:LED RED
+'D5' 'SN_CATEGORY' '?' 'ON'
+# R86:470R
+'R86' 'SN_CATEGORY' '?' 'ON'
+# FB9:BLM18PG221SN1D
+'FB9' 'SN_CATEGORY' '?' 'ON'
+# J5:MOLEX 67503-1230
+'J5' 'PCB_Layout' 'Complies with manufacturer's recommendation.' 'OFF'
+'J5' 'SN_CATEGORY' 'Capacitor' 'OFF'
+
+
+## LOG end
+############################################################################

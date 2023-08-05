@@ -1,0 +1,42 @@
+############################################################################
+##
+## Processing LOG
+##
+## Project : D:\jobs\My_jobs_2023\praca_naukowa\projekt_Paw³a_Rajdy\materia³y_od_Paw³a_R\Pobrane_z_dysku\Relia_test_2\Relia test.PrjPcb
+## Date    : 04.08.2023 20_46_39
+##
+############################################################################
+#  Config:D:\jobs\My_jobs_2023\praca_naukowa\projekt_Paw³a_Rajdy\materia³y_od_Paw³a_R\Pobrane_z_dysku\Relia test\_scripts\mPMT\Add Parameters to Resistors.txt
+##
+# Processing:D:\jobs\My_jobs_2023\praca_naukowa\projekt_Paw³a_Rajdy\materia³y_od_Paw³a_R\Pobrane_z_dysku\Relia_test_2\NuPrism_MCPMT - QUAD ADC - Rev2.SchDoc
+#	For:R
+#		Parameter:SN_CATEGORY
+		Parameter:SN_ACT_SRFC_TMPRT
+		Parameter:SN_INRMTT_OPRT_RTIO
+		Parameter:SN_OPRT_PWR_DSSP
+		Parameter:SN_RES_TMPRT_CLC_MTHD
+		Parameter:SN_MAX_TMPRT
+		Parameter:SN_RTD_PWR_DSSP
+		Parameter:SN_RES_TYP
+# Processing:D:\jobs\My_jobs_2023\praca_naukowa\projekt_Paw³a_Rajdy\materia³y_od_Paw³a_R\Pobrane_z_dysku\Relia_test_2\NuPrism_MCPMT - ADA4945-1 and Filter - Rev2.SchDoc
+		Parameter:SN_CATEGORY
+		Parameter:SN_ACT_SRFC_TMPRT
+		Parameter:SN_INRMTT_OPRT_RTIO
+		Parameter:SN_OPRT_PWR_DSSP
+		Parameter:SN_RES_TMPRT_CLC_MTHD
+		Parameter:SN_MAX_TMPRT
+		Parameter:SN_RTD_PWR_DSSP
+		Parameter:SN_RES_TYP
+# Processing:D:\jobs\My_jobs_2023\praca_naukowa\projekt_Paw³a_Rajdy\materia³y_od_Paw³a_R\Pobrane_z_dysku\Relia_test_2\NuPrism_MCPMT - ADC and Amplifier ADA4945-1 - Rev2.SchDoc
+		Parameter:SN_CATEGORY
+		Parameter:SN_ACT_SRFC_TMPRT
+		Parameter:SN_INRMTT_OPRT_RTIO
+		Parameter:SN_OPRT_PWR_DSSP
+		Parameter:SN_RES_TMPRT_CLC_MTHD
+		Parameter:SN_MAX_TMPRT
+		Parameter:SN_RTD_PWR_DSSP
+		Parameter:SN_RES_TYP
+
+
+## LOG end
+############################################################################

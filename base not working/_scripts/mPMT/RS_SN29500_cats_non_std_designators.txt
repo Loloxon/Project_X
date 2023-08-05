@@ -1,0 +1,27 @@
+#
+# Siemens 29500 standard
+#
+# Version 4.0 
+# Date 22.03.2018
+# kasperek@agh.edu.pl
+#
+#
+# Parameter configuration file for RS_ComponentParameters script
+# Syntax:
+# Line starting with # - its a comment line
+# Each line introduce one  parameter and should have exact four words (string type)
+#
+# First ASCII string is the Altium component type selector. 'All' denotes global ( for each component) parameter..#
+# Second ASCII string is the LambaPredict MILHBK217 Parameter Name
+# Third ASCII string is the Parameter Value
+# Fourth - (last one) ASCII string is the Visibility atribute (ON/OFF)
+#
+# Note that spaces are not allowed in "Altium component type" field! In "Parameter Value" field spaces are allowed but
+# should be coded by '*'
+# ===================================================================
+#
+#
+# NuPrism_MCPMT - ADA4945-1 and Filter - Rev2.SchDoc
+#
+'AMP1' 'SN_CATEGORY' 'IC,*Analog' 'OFF'
+# Data end
