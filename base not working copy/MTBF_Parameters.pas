@@ -151,7 +151,7 @@ end ;
 {======================================================================================================================================================}
 { Auxiliary function - removes spaces from input string            }
 {======================================================================================================================================================}
-Function RemoveSpaces(StringToFormat:string):string ;
+{Function RemoveSpaces(StringToFormat:string):string ;
 var
 Space_position : integer;
 begin
@@ -166,7 +166,7 @@ end ;
 {======================================================================================================================================================}
 { Auxiliary function - removes single quotes from input string            }
 {======================================================================================================================================================}
-Function RemoveQuotes(StringToFormat:string):string ;
+{Function RemoveQuotes(StringToFormat:string):string ;
 var
 Space_position : integer;
 begin
@@ -175,6 +175,21 @@ Space_position := pos('''', StringToFormat);
 while Space_position > 0 do begin
   Delete(StringToFormat,Space_position,1);
   Space_position := pos('''', StringToFormat);
+end;
+Result := StringToFormat;
+end ;
+{======================================================================================================================================================}
+{ Auxiliary function - removes character from input string            }
+{======================================================================================================================================================}
+Function RemoveChar(StringToFormat:string;CharToDelete:string):string ;
+var
+Space_position : integer;
+begin
+
+Char_position := pos(CharToDelete, StringToFormat);
+while Space_position > 0 do begin
+  Delete(StringToFormat,Char_position,1);
+  Space_position := pos(CharToDelete, StringToFormat);
 end;
 Result := StringToFormat;
 end ;
@@ -199,7 +214,7 @@ end ;
 {  and need to be recovered
 {   Function to be removed - use  ReplaceCharString !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 {======================================================================================================================================================}
-Function RestoreSpaces(StringToFormat:string):string ;
+{Function RestoreSpaces(StringToFormat:string):string ;
 var
 Star_position : integer;
 begin
@@ -402,7 +417,7 @@ Begin
            While Component <> Nil Do
            Begin
              // Check if got proper componenet
-             ComponentDscriptNoSpaces := RemoveSpaces(Component.ComponentDescription);
+             ComponentDscriptNoSpaces := RemoveChar(Component.ComponentDescription, ' ');
              ALTIUM_Lenght := GetStringLenght(New_Component[ALTIUM_NAME]);
              FirstDesignatorDigit := GetDesignatorFirstDigit(Component.Designator.Text); // find first digit
               if(
@@ -441,7 +456,7 @@ Begin
                         Param     := SchServer.SchObjectFactory (eParameter , eCreate_Default);
                         Param.Name     := New_Component[RS_PAR_NAME];
                         Param.ShowName := False;
-                        Param.Text     := RestoreSpaces(New_Component[RS_PAR_VALUE]);
+                        Param.Text     := ReplaceCharString(New_Component[RS_PAR_VALUE], '*', ' ');
                         if( New_Component[RS_PAR_VISIBLE] = 'ON') then
                             Param.IsHidden := False
                         else
@@ -453,7 +468,7 @@ Begin
                         end        //no coma since else
                     else       // if exist modify value
                         begin
-                        NewValue := RestoreSpaces(New_Component[RS_PAR_VALUE]);
+                        NewValue := ReplaceCharString(New_Component[RS_PAR_VALUE], '*', ' ');
                         if( New_Component[RS_PAR_VISIBLE] = 'ON') then   // if exist modify visibility if required
                             NewValueIsHidden := False
                         else
@@ -507,7 +522,7 @@ Begin
            While Component <> Nil Do
            Begin
              // Check if got proper componenet
-             ComponentDscriptNoSpaces := RemoveSpaces(Component.ComponentDescription);
+             ComponentDscriptNoSpaces := RemoveChar(Component.ComponentDescription, ' ');
              ALTIUM_Lenght := GetStringLenght(New_Component[ALTIUM_NAME]);
              FirstDesignatorDigit := GetDesignatorFirstDigit(Component.Designator.Text); // find first digit
              if(
@@ -1013,15 +1028,15 @@ ProjectName:=Project.DM_ProjectFileName;
                                    if (Parameter_Array.Count = 4 ) then
                                       begin
                                       NextComponent := false;
-                                      NextComponentName := RemoveQuotes(Parameter_Array[0]);//AnsiExtractQuotedStr(Parameter_Array[0],'''');
+                                      NextComponentName := RemoveChar(Parameter_Array[0], '''');//AnsiExtractQuotedStr(Parameter_Array[0],'''');
                                       if(ComponentPAR[ALTIUM_NAME] <> NextComponentName) then
                                          begin
                                          ComponentPAR[ALTIUM_NAME] := NextComponentName;
                                          NextComponent := true;
                                          end;
-                                      ComponentPAR[RS_PAR_NAME] := RemoveQuotes(Parameter_Array[1]);//AnsiExtractQuotedStr(Parameter_Array[1],'''');
-                                      ComponentPAR[RS_PAR_VALUE] := RemoveQuotes(Parameter_Array[2]);//AnsiExtractQuotedStr(Parameter_Array[2],'''');
-                                      ComponentPAR[RS_PAR_VISIBLE] := RemoveQuotes(Parameter_Array[3]);//AnsiExtractQuotedStr(Parameter_Array[3],'''');
+                                      ComponentPAR[RS_PAR_NAME] := RemoveChar(Parameter_Array[1], '''');//AnsiExtractQuotedStr(Parameter_Array[1],'''');
+                                      ComponentPAR[RS_PAR_VALUE] := RemoveChar(Parameter_Array[2], '''');//AnsiExtractQuotedStr(Parameter_Array[2],'''');
+                                      ComponentPAR[RS_PAR_VISIBLE] := RemoveChar(Parameter_Array[3], '''');//AnsiExtractQuotedStr(Parameter_Array[3],'''');
 
                                       if(NextComponent = true) then
                                          begin
