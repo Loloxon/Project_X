@@ -4,50 +4,50 @@ interface
     {======================================================================================================================================================}
     // Open LOG file
     {======================================================================================================================================================}
-    Function OpenLogFile(FileName: String):TextFile; end;
+    Function OpenLogFile(FileName: String): TextFile; end;
 
     {======================================================================================================================================================}
     // Close LOG file
     {======================================================================================================================================================}
-    Procedure CloseLogFile(WrkLogFile: TextFile);end;
+    Procedure CloseLogFile(WrkLogFile: TextFile); end;
 
     {======================================================================================================================================================}
     // Write log file
     {======================================================================================================================================================}
-    Procedure WriteLogFileMessage(TextMessage : String, WrkLogFile: TextFile);end;
+    Procedure WriteLogFileMessage(TextMessage: String; WrkLogFile: TextFile); end;
 
     {======================================================================================================================================================}
     // Open Report file
     {======================================================================================================================================================}
-    Function OpenRaportFile(FileName : String):TextFile;end;
+    Function OpenRaportFile(FileName : String):TextFile; end;
 
     {======================================================================================================================================================}
     // Close Report file
     {======================================================================================================================================================}
-    Procedure CloseReportFile(WrkRepFile: TextFile);end;
+    Procedure CloseReportFile(WrkRepFile: TextFile); end;
 
     {======================================================================================================================================================}
     // Write LOG  procedures
     {======================================================================================================================================================}
-    Procedure LogUnrecognisedComponent(SCH_CMP_CMMNT: String; ComponentDesignator: String; RptParameterName: String ;Comment: String, WrkRepFile: TextFile);end;
+    Procedure LogUnrecognisedComponent(SCH_CMP_CMMNT: String; ComponentDesignator: String; RptParameterName: String; Comment: String; WrkRepFile: TextFile); end;
 
     {======================================================================================================================================================}
     // Get file path
     //  start to browse (with filter) from current project
     {======================================================================================================================================================}
-    Function GetFile(InitFlag) : string;end;
+    Function GetFile(InitFlag): string;end;
 
 
 implementation
 
-    Function GetFile(InitFlag) : string;
+    Function GetFile(InitFlag): string;
     var
-      OpenDialog : TOpenDialog;
+      OpenDialog: TOpenDialog;
       DirName: String;
     begin
-         DirName:= GetWorkspace.DM_WorkspaceFullPath;
+         DirName := GetWorkspace.DM_WorkspaceFullPath;
          OpenDialog := TOpenDialog.Create(nil);
-         OpenDialog.InitialDir :=   DirName;
+         OpenDialog.InitialDir := DirName;
          OpenDialog.Filter := 'Config files (*.txt)|*.TXT';
          // Display the OpenDialog component
          OpenDialog.Execute;
@@ -58,23 +58,23 @@ implementation
     end;
 
 
-    Function OpenLogFile(FileName : String):TextFile;
+    Function OpenLogFile(FileName: String):TextFile;
     var
-         Project         : IProject;
-         ProjectName     : String;
-         ProjectNamePos  : Integer;
-         ProjectFullPath : String;
-         ProjectDirPath  : String;
-         DateStr         : String;
-         TimeStr         : String;
-         VarFilename     : String;
-         WrkLogFile      : TextFile;
+         Project: IProject;
+         ProjectName: String;
+         ProjectNamePos: Integer;
+         ProjectFullPath: String;
+         ProjectDirPath: String;
+         DateStr: String;
+         TimeStr: String;
+         VarFilename: String;
+         WrkLogFile: TextFile;
 
     begin
          Project := GetWorkspace.DM_FocusedProject;
 
          If Project = Nil Then Exit;
-         ProjectName     := Project.DM_ProjectFileName;
+         ProjectName := Project.DM_ProjectFileName;
          ProjectFullPath := Project.DM_ProjectFullPath;
 
          DateStr := GetCurrentDateString;
@@ -82,10 +82,10 @@ implementation
 
          ProjectNamePos := AnsiPos(ProjectName, ProjectFullPath);
          ProjectDirPath := copy(ProjectFullPath, 1, ProjectNamePos - 1);
-         TimeStr        := ReplaceCharString(TimeStr,':','_');
-         VarFilename    := FileName + TimeStr + '.txt';
+         TimeStr := ReplaceCharString(TimeStr,':','_');
+         VarFilename := FileName + TimeStr + '.txt';
 
-         ProjectDirPath := ProjectDirPath  +  Log_file_folder ;
+         ProjectDirPath := ProjectDirPath + Log_file_folder ;
          If(not directoryexists(ProjectDirPath)) then
             CreateDir(ProjectDirPath);
          If(not directoryexists(ProjectDirPath)) then
@@ -97,13 +97,13 @@ implementation
          AssignFile(WrkLogFile, ProjectDirPath + '\' + VarFilename);
          Rewrite(WrkLogFile);
 
-         Writeln(WrkLogFile, '############################################################################'+sLineBreak+
-                             '##'+sLineBreak+
-                             '## Processing LOG'+sLineBreak+
-                             '##'+sLineBreak+
-                             '## Project : ' + ProjectFullPath+sLineBreak+
-                             '## Date    : ' + DateStr + ' ' + TimeStr+sLineBreak+
-                             '##'+sLineBreak+
+         Writeln(WrkLogFile, '############################################################################' + sLineBreak +
+                             '##' + sLineBreak +
+                             '## Processing LOG' + sLineBreak +
+                             '##' + sLineBreak +
+                             '## Project : ' + ProjectFullPath + sLineBreak +
+                             '## Date    : ' + DateStr + ' ' + TimeStr + sLineBreak +
+                             '##' + sLineBreak +
                              '############################################################################');
          Result := WrkLogFile;
     end;
@@ -112,37 +112,37 @@ implementation
     Procedure CloseLogFile(WrkLogFile: TextFile);
     begin
          Append(WrkLogFile);
-         Writeln(WrkLogFile, sLineBreak+sLineBreak+
-                             '## LOG end'+sLineBreak+
+         Writeln(WrkLogFile, sLineBreak + sLineBreak +
+                             '## LOG end' + sLineBreak +
                              '############################################################################');
 
          CloseFile(WrkLogFile);
     end;
 
-    Procedure WriteLogFileMessage(TextMessage : String, WrkLogFile: TextFile);
+    Procedure WriteLogFileMessage(TextMessage: String, WrkLogFile: TextFile);
     begin
          Append(WrkLogFile);
          Writeln(WrkLogFile, TextMessage);
          CloseFile(WrkLogFile);
     end;
 
-    Function OpenRaportFile(FileName : String):TextFile;
+    Function OpenRaportFile(FileName: String): TextFile;
     var
-         Project         : IProject;
-         ProjectName     : String;
-         ProjectNamePos  : Integer;
-         ProjectFullPath : String;
-         ProjectDirPath  : String;
-         DateStr         : String;
-         TimeStr         : String;
-         VarFilename     : String;
-         WrkRepFile      : TextFile;
+         Project: IProject;
+         ProjectName: String;
+         ProjectNamePos: Integer;
+         ProjectFullPath: String;
+         ProjectDirPath: String;
+         DateStr: String;
+         TimeStr: String;
+         VarFilename: String;
+         WrkRepFile: TextFile;
 
     begin
          Project := GetWorkspace.DM_FocusedProject;
 
          If Project = Nil Then Exit;
-         ProjectName     := Project.DM_ProjectFileName;
+         ProjectName := Project.DM_ProjectFileName;
          ProjectFullPath := Project.DM_ProjectFullPath;
 
          DateStr := GetCurrentDateString;
@@ -150,9 +150,9 @@ implementation
 
          ProjectNamePos := AnsiPos(ProjectName, ProjectFullPath);
          ProjectDirPath := copy(ProjectFullPath, 1, ProjectNamePos - 1);
-         TimeStr        := ReplaceCharString(TimeStr,':','_');
-         VarFilename    := FileName + TimeStr + '.txt';
-         ProjectDirPath := ProjectDirPath  +  Report_file_folder ;
+         TimeStr := ReplaceCharString(TimeStr,':','_');
+         VarFilename := FileName + TimeStr + '.txt';
+         ProjectDirPath := ProjectDirPath + Report_file_folder;
          If(not directoryexists(ProjectDirPath)) then
             CreateDir(ProjectDirPath);
          If(not directoryexists(ProjectDirPath)) then
@@ -164,13 +164,13 @@ implementation
          AssignFile(WrkRepFile, ProjectDirPath + '\' + VarFilename);
          Rewrite(WrkRepFile);
 
-         Writeln(WrkRepFile, '############################################################################'+sLineBreak+
-                             '##'+sLineBreak+
-                             '## Missing parameters report'+sLineBreak+
-                             '##'+sLineBreak+
-                             '## Project : ' + ProjectFullPath+sLineBreak+
-                             '## Date    : ' + DateStr + ' ' + TimeStr+sLineBreak+
-                             '##'+sLineBreak+
+         Writeln(WrkRepFile, '############################################################################' + sLineBreak +
+                             '##' + sLineBreak +
+                             '## Missing parameters report' + sLineBreak +
+                             '##' + sLineBreak +
+                             '## Project : ' + ProjectFullPath + sLineBreak +
+                             '## Date    : ' + DateStr + ' ' + TimeStr + sLineBreak +
+                             '##' + sLineBreak +
                              '############################################################################');
 
          Result := WrkRepFile;
@@ -178,16 +178,16 @@ implementation
 
     Procedure CloseReportFile(WrkRepFile: TextFile);
     begin
-         Writeln(WrkRepFile, sLineBreak+sLineBreak+
-                             '## LOG end'+sLineBreak+
+         Writeln(WrkRepFile, sLineBreak + sLineBreak +
+                             '## LOG end' + sLineBreak +
                              '############################################################################');
          CloseFile(WrkRepFile);
     end;
 
 
-    Procedure LogUnrecognisedComponent(SCH_CMP_CMMNT : String; ComponentDesignator : String; RptParameterName :String ; Comment :String, WrkRepFile: TextFile);
+    Procedure LogUnrecognisedComponent(SCH_CMP_CMMNT: String; ComponentDesignator: String; RptParameterName: String; Comment: String, WrkRepFile: TextFile);
     begin
-         TxTMessage:='#   ' + SCH_CMP_CMMNT +'  ' + '#_  ' + '''' + ComponentDesignator + '''' + ' ' + '''' + RptParameterName + ''' ''' + Comment + '''' + ' ''OFF''';
+         TxTMessage:='#   ' + SCH_CMP_CMMNT + '  ' + '#_  ' + '''' + ComponentDesignator + '''' + ' ' + '''' + RptParameterName + ''' ''' + Comment + '''' + ' ''OFF''';
          Writeln(WrkRepFile,TxTMessage);
     end;
 
