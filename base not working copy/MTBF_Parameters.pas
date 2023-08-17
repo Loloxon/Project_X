@@ -1,3 +1,5 @@
+uses Utils, Utils_logs;
+
 Const
     ALTIUM_NAME = 0;       // pointers to   ComponentPAR  :  array[0..3] of string ;
     RS_PAR_NAME = 1;
@@ -25,231 +27,6 @@ Var
     LastUsedDesignator :string;
 
 
-{======================================================================================================================================================}
-{ Auxiliary function, used in component maching - C1A, D23 returns 1 REL2XXX returns 3 etc... }
-{======================================================================================================================================================}
-Function GetDesignatorFirstDigit(InString:string):integer ;
-var
-DigPosition : Integer;
-LastPosition : Integer;
-Digit_char  : Integer;
-Search_char : Character;
-Begin
-LastPosition := 9999; // stupid big value
-For  Digit_char := 49 to 57 do                    // '1' ....'9'
-     begin
-     Search_char := Chr(Digit_char);
-     DigPosition:=AnsiPos(Search_char,InString);
-     if((DigPosition <> 0) and (DigPosition < LastPosition)) then
-        LastPosition := DigPosition;
-     end;
-Result:=LastPosition;
-end;
-{======================================================================================================================================================}
-{ Auxiliary function, DELPHI LENGHT unfortunately not implemented in ALTIUM DELPHI            }
-{======================================================================================================================================================}
-Function GetStringLenght(InString:string):integer ;
-var
-Counter : integer;
-DoCount : boolean;
-begin
-Counter:= 1;
-DoCount:= true;
-while (DoCount) do begin
-  if( InString[Counter] = '') then
-    DoCount:=false
-  else
-    inc(Counter);
-end;
-Result := Counter-1;
-end ;
-{======================================================================================================================================================}
-{ Auxiliary function - removes character from input string            }
-{======================================================================================================================================================}
-Function RemoveChar(StringToFormat:string;CharToDelete:char):string ;
-var
-Char_position : integer;
-begin
-
-Char_position := pos(CharToDelete, StringToFormat);
-while Char_position > 0 do begin
-  Delete(StringToFormat,Char_position,1);
-  Char_position := pos(CharToDelete, StringToFormat);
-end;
-Result := StringToFormat;
-end ;
-{======================================================================================================================================================}
-{ Log file takes current time to its filename . Char : is converted with this function to '_'
-{======================================================================================================================================================}
-Function ReplaceCharString(StringToFormat:string;OldChar:char;NewChar:char):string ;
-var
-Char_position : integer;
-begin
-
-Char_position := pos(OldChar, StringToFormat);
-while Char_position > 0 do begin
-  StringToFormat[Char_position]:=NewChar;
-  Char_position := pos(OldChar, StringToFormat);
-end;
-Result := StringToFormat;
-end ;
-{======================================================================================================================================================}
-// Get file path
-//  start to browse (with filter) from current project
-{======================================================================================================================================================}
-Function GetFile(InitFlag) : string;
-var
-  OpenDialog : TOpenDialog;
-  DirName: String;
-begin
-     Result := '';
-     DirName:= GetWorkspace.DM_WorkspaceFullPath;
-     OpenDialog := TOpenDialog.Create(nil);
-     OpenDialog.InitialDir :=   DirName;
-     OpenDialog.Filter := 'Config files (*.txt)|*.TXT';
-     // Display the OpenDialog component
-     OpenDialog.Execute;
-
-     // Obtain the file name of the selected file.
-     Result := OpenDialog.Filename;
-     OpenDialog.Free;
-end;
-{======================================================================================================================================================}
-// Open LOG file
-Procedure OpenLogFile(FileName : String);
-var
-     Project         : IProject;
-     ProjectName     : String;
-     ProjectNamePos  : Integer;
-     ProjectFullPath : String;
-     ProjectDirPath  : String;
-     DateStr         : String;
-     TimeStr         : String;
-     VarFilename     : String;
-
-begin
-     Project := GetWorkspace.DM_FocusedProject;
-
-     If Project = Nil Then Exit;
-     ProjectName     := Project.DM_ProjectFileName;
-     ProjectFullPath := Project.DM_ProjectFullPath;
-
-     DateStr := GetCurrentDateString;
-     TimeStr := GetCurrentTimeString;
-
-     ProjectNamePos := AnsiPos(ProjectName, ProjectFullPath);
-     ProjectDirPath := copy(ProjectFullPath, 1, ProjectNamePos - 1);
-     TimeStr        := ReplaceCharString(TimeStr,':','_');
-     VarFilename    := FileName + TimeStr + '.txt';
-
-     ProjectDirPath := ProjectDirPath  +  Log_file_folder ;
-     If(not directoryexists(ProjectDirPath)) then
-        CreateDir(ProjectDirPath);
-     If(not directoryexists(ProjectDirPath)) then
-        begin
-        ShowInfo ('Can not create folder' + ProjectDirPath);
-        Exit;
-        end;
-
-     AssignFile(WrkLogFile, ProjectDirPath + '\' + VarFilename);
-     Rewrite(WrkLogFile);
-
-     Writeln(WrkLogFile, '############################################################################');
-     Writeln(WrkLogFile, '##');
-     Writeln(WrkLogFile, '## Processing LOG');
-     Writeln(WrkLogFile, '##');
-     Writeln(WrkLogFile, '## Project : ' + ProjectFullPath);
-     Writeln(WrkLogFile, '## Date    : ' + DateStr + ' ' + TimeStr);
-     Writeln(WrkLogFile, '##');
-     Writeln(WrkLogFile, '############################################################################');
-
-end;
-{======================================================================================================================================================}
-// Close LOG file
-Procedure CloseLogFile();
-begin
-     Writeln(WrkLogFile, '');
-     Writeln(WrkLogFile, '');
-     Writeln(WrkLogFile, '## LOG end');
-     Writeln(WrkLogFile, '############################################################################');
-
-     CloseFile(WrkLogFile);
-end;
-{======================================================================================================================================================}
-Procedure WriteLogFileMessage(TextMessage : String);
-begin
-     Writeln(WrkLogFile,TextMessage);
-end;
-{======================================================================================================================================================}
-// Open Report file
-Procedure OpenRaportFile(FileName : String);
-var
-     Project         : IProject;
-     ProjectName     : String;
-     ProjectNamePos  : Integer;
-     ProjectFullPath : String;
-     ProjectDirPath  : String;
-     DateStr         : String;
-     TimeStr         : String;
-     VarFilename     : String;
-
-begin
-     Project := GetWorkspace.DM_FocusedProject;
-
-     If Project = Nil Then Exit;
-     ProjectName     := Project.DM_ProjectFileName;
-     ProjectFullPath := Project.DM_ProjectFullPath;
-
-     DateStr := GetCurrentDateString;
-     TimeStr := GetCurrentTimeString;
-
-     ProjectNamePos := AnsiPos(ProjectName, ProjectFullPath);
-     ProjectDirPath := copy(ProjectFullPath, 1, ProjectNamePos - 1);
-     TimeStr        := ReplaceCharString(TimeStr,':','_');
-     VarFilename    := FileName + TimeStr + '.txt';
-     ProjectDirPath := ProjectDirPath  +  Report_file_folder ;
-     If(not directoryexists(ProjectDirPath)) then
-        CreateDir(ProjectDirPath);
-     If(not directoryexists(ProjectDirPath)) then
-        begin
-        ShowInfo ('Can not create folder' + ProjectDirPath);
-        Exit;
-        end;
-
-     AssignFile(WrkRepFile, ProjectDirPath + '\' + VarFilename);
-     Rewrite(WrkRepFile);
-
-     Writeln(WrkRepFile, '############################################################################');
-     Writeln(WrkRepFile, '##');
-     Writeln(WrkRepFile, '## Missing parameters report');
-     Writeln(WrkRepFile, '##');
-     Writeln(WrkRepFile, '## Project : ' + ProjectFullPath);
-     Writeln(WrkRepFile, '## Date    : ' + DateStr + ' ' + TimeStr);
-     Writeln(WrkRepFile, '##');
-     Writeln(WrkRepFile, '############################################################################');
-
-end;
-{======================================================================================================================================================}
-// Close Report file
-Procedure CloseReportFile();
-begin
-     Writeln(WrkRepFile, '');
-     Writeln(WrkRepFile, '');
-     Writeln(WrkRepFile, '## Report end');
-     Writeln(WrkRepFile, '############################################################################');
-
-     CloseFile(WrkRepFile);
-end;
-
-{======================================================================================================================================================}
-// Write LOG  procedures
-Procedure LogUnrecognisedComponent(SCH_CMP_CMMNT : String; ComponentDesignator : String; RptParameterName :String ; Comment :String);
-begin
-     TxTMessage:='#   ' + SCH_CMP_CMMNT +'  ' ;
-     TxTMessage:= TxTMessage + '#_  ' + '''' + ComponentDesignator + '''' + ' ';
-     TxTMessage:= TxTMessage + '''' + RptParameterName + ''' ''' + Comment + '''' + ' ''OFF''';
-     Writeln(WrkRepFile,TxTMessage);
-end;
 {======================================================================================================================================================}
 // The main work horse
 {======================================================================================================================================================}
@@ -526,7 +303,7 @@ Begin
                            if(LastUsedDesignator <> Component.Designator.Text) then
                               begin
                               TxTMessage := 'Component:' + Component.Designator.Text + ':' + Component.Comment.Text + ' not defined: ' + UserDefined + ' yet';
-                              WriteLogFileMessage(TxTMessage);
+                              WriteLogFileMessage(TxTMessage, WrkLogFile);
                               LogUnrecognisedComponent(Component.Comment.Text,Component.Designator.Text,UserDefined,'Not defined');
                               LastUsedDesignator := Component.Designator.Text;
                               end;
@@ -539,7 +316,7 @@ Begin
                            if(LastUsedDesignator <> Component.Designator.Text) then
                                begin
                                TxTMessage := 'Component:' + Component.Designator.Text + ' not assigned:' + UserDefined ;
-                               WriteLogFileMessage(TxTMessage);
+                               WriteLogFileMessage(TxTMessage, WrkLogFile);
                                LogUnrecognisedComponent(Component.Comment.Text,Component.Designator.Text,UserDefined,'Not existed');
                                LastUsedDesignator := Component.Designator.Text;
                            end;
@@ -594,7 +371,7 @@ Begin
                     if (ComponentNameLogged = false) then // mark new component
                        begin
                        TxTMessage := '# ' + Component.Designator.Text + ':' + Component.Comment.Text ;
-                       WriteLogFileMessage(TxTMessage);
+                       WriteLogFileMessage(TxTMessage, WrkLogFile);
                        ComponentNameLogged := true;
                        end;
                     if (AnsiPos('_',Parameter.Name) <> 0) then
@@ -604,7 +381,7 @@ Begin
                        else
                           Par_Visibility:= 'ON';
                        TxTMessage := '''' + Component.Designator.Text + ''' ''' + Parameter.Name + ''' ''' + Parameter.Text + ''' ''' + Par_Visibility + '''';
-                       WriteLogFileMessage(TxTMessage);
+                       WriteLogFileMessage(TxTMessage, WrkLogFile);
                     end;
                     Parameter := PIterator.NextSchObject;
                 End;
@@ -820,15 +597,15 @@ ProjectName:=Project.DM_ProjectFileName;
 //-------------------------------------------------------
 
 // Open log file
-    OpenLogFile(LogFileName);
+    WrkLogFile := OpenLogFile(LogFileName);
     TxTMessage := '#  Config:' + ParamFilePath;
-    WriteLogFileMessage(TxTMessage);
+    WriteLogFileMessage(TxTMessage, WrkLogFile);
     TxTMessage := '##';
-    WriteLogFileMessage(TxTMessage);
+    WriteLogFileMessage(TxTMessage, WrkLogFile);
 
 //-------------------------------------------------------
 // Open raport file
-    OpenRaportFile(NewCfgFileName);
+    WrkRepFile := OpenRaportFile(NewCfgFileName);
 //-------------------------------------------------------
     If Project = Nil Then Exit;
     Project.DM_Compile;
@@ -856,7 +633,7 @@ ProjectName:=Project.DM_ProjectFileName;
                If CurrentSch = Nil Then Exit;
 
                TxTMessage := '# Processing:' + CurrentSch.DocumentName;
-               WriteLogFileMessage(TxTMessage);
+               WriteLogFileMessage(TxTMessage, WrkLogFile);
 
                // read config file line by line
                Reset(cfgFile);
@@ -907,14 +684,14 @@ ProjectName:=Project.DM_ProjectFileName;
                                       if(NextComponent = true) then
                                          begin
                                          TxTMessage := '#' + chr(9) + 'For:' + ComponentPAR[ALTIUM_NAME];
-                                         WriteLogFileMessage(TxTMessage);
+                                         WriteLogFileMessage(TxTMessage, WrkLogFile);
                                          TxTMessage := '#' + chr(9) + chr(9) + 'Parameter:' + ComponentPAR[RS_PAR_NAME];
-                                         WriteLogFileMessage(TxTMessage);
+                                         WriteLogFileMessage(TxTMessage, WrkLogFile);
                                          end
                                       else
                                          begin
                                          TxTMessage := chr(9) + chr(9) +  'Parameter:' + ComponentPAR[RS_PAR_NAME];
-                                         WriteLogFileMessage(TxTMessage);
+                                         WriteLogFileMessage(TxTMessage, WrkLogFile);
                                          end;
                                       // now, do the job
                                       if(ComponentPAR[ALTIUM_NAME]<> '???') then
@@ -932,11 +709,11 @@ ProjectName:=Project.DM_ProjectFileName;
                                    if (Parameter_Array.Count <> 4 ) then
                                       begin
                                       TxTMessage := 'Syntax error in config ' + ParamFileName + ' file in line nr:' + IntToStr(cfgFileline_nr);
-                                      WriteLogFileMessage(TxTMessage);
+                                      WriteLogFileMessage(TxTMessage, WrkLogFile);
                                       ShowInfo (TxTMessage);
                                       Reset(cfgFile);
                                       CloseFile(cfgFile);
-                                      CloseLogFile();
+                                      CloseLogFile(WrkLogFile);
                                       Exit;
                                       end;
                                end;
@@ -951,8 +728,8 @@ ProjectName:=Project.DM_ProjectFileName;
 
     Reset(cfgFile);
     CloseFile(cfgFile);
-    CloseLogFile();
-    CloseReportFile();
+    CloseLogFile(WrkLogFile);
+    CloseReportFile(WrkRepFile);
     TxTMessage := 'Processing ' + ProjectName + ' done. Processed ' + IntToStr(Schematic_processed) + ' sheets';
     ShowInfo (TxTMessage);
     Exit;
