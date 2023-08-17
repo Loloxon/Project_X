@@ -1,0 +1,42 @@
+############################################################################
+##
+## Processing LOG
+##
+## Project : C:\Users\Loloxon\OneDrive\Desktop\Project_X\base not working copy\Relia test.PrjPcb
+## Date    : 08.08.2023 10_20_13
+##
+############################################################################
+#  Config:C:\Users\Loloxon\OneDrive\Desktop\Project_X\base not working copy\_scripts\mPMT\Add Parameters to Resistors.txt
+##
+# Processing:C:\Users\Loloxon\OneDrive\Desktop\Project_X\base not working copy\NuPrism_MCPMT - QUAD ADC - Rev2.SchDoc
+#	For:R
+#		Parameter:SN_CATEGORY
+		Parameter:SN_ACT_SRFC_TMPRT
+		Parameter:SN_INRMTT_OPRT_RTIO
+		Parameter:SN_OPRT_PWR_DSSP
+		Parameter:SN_RES_TMPRT_CLC_MTHD
+		Parameter:SN_MAX_TMPRT
+		Parameter:SN_RTD_PWR_DSSP
+		Parameter:SN_RES_TYP
+# Processing:C:\Users\Loloxon\OneDrive\Desktop\Project_X\base not working copy\NuPrism_MCPMT - ADA4945-1 and Filter - Rev2.SchDoc
+		Parameter:SN_CATEGORY
+		Parameter:SN_ACT_SRFC_TMPRT
+		Parameter:SN_INRMTT_OPRT_RTIO
+		Parameter:SN_OPRT_PWR_DSSP
+		Parameter:SN_RES_TMPRT_CLC_MTHD
+		Parameter:SN_MAX_TMPRT
+		Parameter:SN_RTD_PWR_DSSP
+		Parameter:SN_RES_TYP
+# Processing:C:\Users\Loloxon\OneDrive\Desktop\Project_X\base not working copy\NuPrism_MCPMT - ADC and Amplifier ADA4945-1 - Rev2.SchDoc
+		Parameter:SN_CATEGORY
+		Parameter:SN_ACT_SRFC_TMPRT
+		Parameter:SN_INRMTT_OPRT_RTIO
+		Parameter:SN_OPRT_PWR_DSSP
+		Parameter:SN_RES_TMPRT_CLC_MTHD
+		Parameter:SN_MAX_TMPRT
+		Parameter:SN_RTD_PWR_DSSP
+		Parameter:SN_RES_TYP
+
+
+## LOG end
+############################################################################

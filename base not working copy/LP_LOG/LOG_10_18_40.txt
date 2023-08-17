@@ -1,0 +1,11 @@
+############################################################################
+##
+## Processing LOG
+##
+## Project : C:\Users\Loloxon\OneDrive\Desktop\Project_X\base not working copy\Relia test.PrjPcb
+## Date    : 08.08.2023 10_18_40
+##
+############################################################################
+#  Config:C:\Users\Loloxon\OneDrive\Desktop\Project_X\base not working copy\_scripts\mPMT\Add Parameters to Capacitors.txt
+##
+# Processing:C:\Users\Loloxon\OneDrive\Desktop\Project_X\base not
