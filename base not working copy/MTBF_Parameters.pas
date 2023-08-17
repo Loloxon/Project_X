@@ -183,13 +183,13 @@ end ;
 {======================================================================================================================================================}
 Function RemoveChar(StringToFormat:string;CharToDelete:string):string ;
 var
-Space_position : integer;
+Char_position : integer;
 begin
 
 Char_position := pos(CharToDelete, StringToFormat);
-while Space_position > 0 do begin
+while Char_position > 0 do begin
   Delete(StringToFormat,Char_position,1);
-  Space_position := pos(CharToDelete, StringToFormat);
+  Char_position := pos(CharToDelete, StringToFormat);
 end;
 Result := StringToFormat;
 end ;
