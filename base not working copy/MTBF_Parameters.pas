@@ -64,36 +64,6 @@ end;
 Result := Counter-1;
 end ;
 {======================================================================================================================================================}
-{ Auxiliary function - removes spaces from input string            }
-{======================================================================================================================================================}
-{Function RemoveSpaces(StringToFormat:string):string ;
-var
-Space_position : integer;
-begin
-
-Space_position := pos(' ', StringToFormat);
-while Space_position > 0 do begin
-  Delete(StringToFormat,Space_position,1);
-  Space_position := pos(' ', StringToFormat);
-end;
-Result := StringToFormat;
-end ;
-{======================================================================================================================================================}
-{ Auxiliary function - removes single quotes from input string            }
-{======================================================================================================================================================}
-{Function RemoveQuotes(StringToFormat:string):string ;
-var
-Space_position : integer;
-begin
-
-Space_position := pos('''', StringToFormat);
-while Space_position > 0 do begin
-  Delete(StringToFormat,Space_position,1);
-  Space_position := pos('''', StringToFormat);
-end;
-Result := StringToFormat;
-end ;
-{======================================================================================================================================================}
 { Auxiliary function - removes character from input string            }
 {======================================================================================================================================================}
 Function RemoveChar(StringToFormat:string;CharToDelete:char):string ;
@@ -120,25 +90,6 @@ Char_position := pos(OldChar, StringToFormat);
 while Char_position > 0 do begin
   StringToFormat[Char_position]:=NewChar;
   Char_position := pos(OldChar, StringToFormat);
-end;
-Result := StringToFormat;
-end ;
-
-{=====================================================================================================================================================}
-{  Script uses config script with spaces as the fields separator.Hence no space is allowed in Altium parameter value field. So spaces are coded with *
-{  and need to be recovered
-{   Function to be removed - use  ReplaceCharString !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-{======================================================================================================================================================}
-{Function RestoreSpaces(StringToFormat:string):string ;
-var
-Star_position : integer;
-begin
-
-Star_position := pos('*', StringToFormat);
-while Star_position > 0 do begin
-  Delete(StringToFormat,Star_position,1);
-  Insert(' ',StringToFormat,Star_position);
-  Star_position := pos('*', StringToFormat);
 end;
 Result := StringToFormat;
 end ;
