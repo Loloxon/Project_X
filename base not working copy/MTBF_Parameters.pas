@@ -138,7 +138,7 @@ var
 Counter : integer;
 DoCount : boolean;
 begin
-Counter:= 0;
+Counter:= 1;
 DoCount:= true;
 while (DoCount) do begin
   if( InString[Counter] = '') then
@@ -146,7 +146,7 @@ while (DoCount) do begin
   else
     inc(Counter);
 end;
-Result := Counter;
+Result := Counter-1;
 end ;
 {======================================================================================================================================================}
 { Auxiliary function - removes spaces from input string            }
@@ -181,7 +181,7 @@ end ;
 {======================================================================================================================================================}
 { Auxiliary function - removes character from input string            }
 {======================================================================================================================================================}
-Function RemoveChar(StringToFormat:string;CharToDelete:string):string ;
+Function RemoveChar(StringToFormat:string;CharToDelete:char):string ;
 var
 Char_position : integer;
 begin
@@ -578,7 +578,7 @@ Begin
                         Finally
                             Component.SchIterator_Destroy(PIterator);
                         End;
-                        if(DstParameter_Exist = False) then 
+                        if(DstParameter_Exist = False) then
                             begin
                             // Add the parameter to the pin with undo stack also enabled
                             Param         := SchServer.SchObjectFactory (eParameter , eCreate_Default);
@@ -601,7 +601,7 @@ Begin
                                 Parameter.IsHidden := VisibilityToCopy;
                                 SchServer.RobotManager.SendMessage(Parameter.I_ObjectAddress, c_BroadCast, SCHM_EndModify  , c_NoEventData);
                                 end;
-                            end;       
+                            end;
                 End;
             end;
             Component := Iterator.NextSchObject;
@@ -842,7 +842,7 @@ Var
     PIterator     : ISch_Iterator;
     I             : Integer;
     ParameterList : TInterfaceList;
-    Name2change   :string; 
+    Name2change   :string;
 Begin
     // Initialize the robots in Schematic editor.
     SchServer.ProcessControl.PreProcess(SchDoc, '');
