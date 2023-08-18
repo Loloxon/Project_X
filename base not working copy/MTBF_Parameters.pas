@@ -7,46 +7,46 @@ Const
     RS_PAR_VISIBLE = 3;
 
 // LOG file name start timestamp will be added
-    LogFileName     = 'LOG_';
-    NewCfgFileName  = 'Missing_';
-    Report_file_folder = 'LP_RPT';
+// consts for logs and reports (name of folders and files)
+    LogFileName = 'LOG_';
+    NewCfgFileName = 'Missing_';
     Log_file_folder = 'LP_LOG';
+    Report_file_folder = 'LP_REP';
 
 Var
-    I           : Integer;
-    Doc         : IDocument;
-    CurrentSch  : ISch_Document;
-    SchDocument : IServerDocument;
-    Project     : IProject;
+    I: Integer;
+    Doc: IDocument;
+    CurrentSch: ISch_Document;
+    SchDocument: IServerDocument;
+    Project: IProject;
 
-    ConfigPAR   : IDocument;
-    ParamFileName : String;
-    WrkLogFile : TextFile;
-    WrkRepFile : TextFile;
-    TxTMessage : String;
-    LastUsedDesignator :string;
-
+    ConfigPAR: IDocument;
+    ParamFileName: String;
+    WrkLogFile: TextFile;
+    WrkRepFile: TextFile;
+    TxTMessage: String;
+    LastUsedDesignator: String;
 
 {======================================================================================================================================================}
 // The main work horse
 {======================================================================================================================================================}
-Procedure MTBF_AddUserDefinedParametersToComponents(SchDoc : ISch_Document; New_Component);
+Procedure MTBF_AddUserDefinedParametersToComponents(SchDoc: ISch_Document; New_Component);
 Var
-    Component       : ISch_Component;
-    Param           : ISch_Parameter;
-    Parameter       : ISch_Parameter;
-    Iterator        : ISch_Iterator;
-    PIterator       : ISch_Iterator;
+    Component: ISch_Component;
+    Param: ISch_Parameter;
+    Parameter: ISch_Parameter;
+    Iterator: ISch_Iterator;
+    PIterator: ISch_Iterator;
 
-    ALTIUM_Lenght            : Integer;
-    ComponentDscriptNoSpaces : String;
-    Parameter_Exist          : Boolean;
-    NewValue                 : String;
-    NewValueIsHidden         : Boolean;
-    FirstDesignatorDigit     : Integer;
-Begin
+    ALTIUM_Lenght: Integer;
+    ComponentDscriptNoSpaces: String;
+    Parameter_Exist: Boolean;
+    NewValue: String;
+    NewValueIsHidden: Boolean;
+    FirstDesignatorDigit: Integer;
+begin
     // init value - only one line for given parameters missing in one component
-    LastUsedDesignator :='?';
+    LastUsedDesignator := '?';
 
     // Create a user defined parameter object and add it to all components.
     // Look for components only
@@ -57,12 +57,12 @@ Begin
        SchServer.ProcessControl.PreProcess(SchDoc, '');
        Try
            Component := Iterator.FirstSchObject;
-           While Component <> Nil Do
-           Begin
+           while(Component <> Nil) do
+           begin
              // Check if got proper componenet
              ComponentDscriptNoSpaces := RemoveCharFromString(Component.ComponentDescription, ' ');
              ALTIUM_Lenght := GetStringLenght(New_Component[ALTIUM_NAME]);
-             FirstDesignatorDigit := GetDesignatorFirstDigit(Component.Designator.Text); // find first digit
+             FirstDesignatorDigit := GetFirstDigitInString(Component.Designator.Text); // find first digit
               if(
                  // check designator
                  (UpperCase(New_Component[ALTIUM_NAME]) = UpperCase(Component.Designator.Text)) or
@@ -74,7 +74,7 @@ Begin
                  (New_Component[ALTIUM_NAME]='All')  or
                  //component selected ?
                  (Component.Selection = true)
-              )then
+              ) then
                begin
                     // check if parameter already exist?
                     Parameter_Exist := False;
@@ -82,24 +82,25 @@ Begin
                      PIterator := Component.SchIterator_Create;
                      PIterator.AddFilter_ObjectSet(MkSet(eParameter));
                      Parameter := PIterator.FirstSchObject;
-                     While(( Parameter <> Nil) and (Parameter_Exist = False)) Do
-                       Begin
+                     while(( Parameter <> Nil) and (Parameter_Exist = False)) Do
+                       begin
                          // Check for parameters that have the UserDefinedName Name.
-                       If Parameter.Name = New_Component[RS_PAR_NAME] then //UserDefinedName
+                       if Parameter.Name = New_Component[RS_PAR_NAME] then //UserDefinedName
                          Parameter_Exist := True
                        else
                          Parameter := PIterator.NextSchObject;
-                       End;
+                       end;
                      Finally
                        Component.SchIterator_Destroy(PIterator);
-                     End;
+                     end;
                      if (Parameter_Exist = False ) then
                         begin
                         // Add the parameter to the pin with undo stack also enabled
-                        Param     := SchServer.SchObjectFactory (eParameter , eCreate_Default);
-                        Param.Name     := New_Component[RS_PAR_NAME];
+                        Param := SchServer.SchObjectFactory (eParameter , eCreate_Default);
+                        Param.Name := New_Component[RS_PAR_NAME];
                         Param.ShowName := False;
-                        Param.Text     := ReplaceCharInString(New_Component[RS_PAR_VALUE], '*', ' ');
+                        Param.Text := ReplaceCharInString(New_Component[RS_PAR_VALUE], '*', ' ');
+
                         if( New_Component[RS_PAR_VISIBLE] = 'ON') then
                             Param.IsHidden := False
                         else
@@ -124,35 +125,35 @@ Begin
                             Parameter.IsHidden := NewValueIsHidden;
                             SchServer.RobotManager.SendMessage(Parameter.I_ObjectAddress, c_BroadCast, SCHM_EndModify  , c_NoEventData);
                             end;
-                    End;
+                    end;
               end;
               Component := Iterator.NextSchObject;
-           End;
+           end;
 
         Finally
            SchDoc.SchIterator_Destroy(Iterator);
-        End;
+        end;
     Finally
         SchServer.ProcessControl.PostProcess(SchDoc, '');
-    End;
-End;
+    end;
+end;
 {======================================================================================================================================================}
-Procedure MTBF_CopyDefinedParametersValue(SchDoc : ISch_Document; New_Component);
+Procedure MTBF_CopyDefinedParametersValue(SchDoc: ISch_Document; New_Component);
 Var
-    Component       : ISch_Component;
-    Param           : ISch_Parameter;
-    Parameter       : ISch_Parameter;
-    Iterator        : ISch_Iterator;
-    PIterator       : ISch_Iterator;
+    Component: ISch_Component;
+    Param: ISch_Parameter;
+    Parameter: ISch_Parameter;
+    Iterator: ISch_Iterator;
+    PIterator: ISch_Iterator;
 
-    ALTIUM_Lenght            : Integer;
-    ComponentDscriptNoSpaces : String;
-    SrcParameter_Exist       : Boolean;
-    DstParameter_Exist       : Boolean;
-    ValueToCopy              : String;
- VisibilityToCopy   : Boolean;
-    FirstDesignatorDigit     : Integer;
-Begin
+    ALTIUM_Lenght: Integer;
+    ComponentDscriptNoSpaces: String;
+    SrcParameter_Exist: Boolean;
+    DstParameter_Exist: Boolean;
+    ValueToCopy: String;
+    VisibilityToCopy: Boolean;
+    FirstDesignatorDigit: Integer;
+begin
     // Create a user defined parameter object and add it to all components.
     // Look for components only
     Iterator := SchDoc.SchIterator_Create;
@@ -162,12 +163,12 @@ Begin
        SchServer.ProcessControl.PreProcess(SchDoc, '');
         Try
            Component := Iterator.FirstSchObject;
-           While Component <> Nil Do
-           Begin
+           while Component <> Nil Do
+           begin
              // Check if got proper componenet
              ComponentDscriptNoSpaces := RemoveCharFromString(Component.ComponentDescription, ' ');
              ALTIUM_Lenght := GetStringLenght(New_Component[ALTIUM_NAME]);
-             FirstDesignatorDigit := GetDesignatorFirstDigit(Component.Designator.Text); // find first digit
+             FirstDesignatorDigit := GetFirstDigitInString(Component.Designator.Text); // find first digit
              if(
                  // check designator
                  (UpperCase(New_Component[ALTIUM_NAME]) = UpperCase(Component.Designator.Text)) or
@@ -180,15 +181,15 @@ Begin
                  //component selected ?
                  (Component.Selection = true)
              )then
-                Begin
+                begin
                     // check if source parameter already exist?
                     SrcParameter_Exist := False;
                     Try
                     PIterator := Component.SchIterator_Create;
                     PIterator.AddFilter_ObjectSet(MkSet(eParameter));
                     Parameter := PIterator.FirstSchObject;
-                    While(( Parameter <> Nil) and (SrcParameter_Exist = False)) Do
-                        Begin
+                    while(( Parameter <> Nil) and (SrcParameter_Exist = False)) Do
+                        begin
                          // Check for parameters that have the source data.
                         if Parameter.Name = New_Component[2] then
                             begin
@@ -198,36 +199,36 @@ Begin
                             end
                         else
                             Parameter := PIterator.NextSchObject;
-                    End;
+                    end;
                     Finally
                        Component.SchIterator_Destroy(PIterator);
-                    End;
+                    end;
                     if (SrcParameter_Exist = True ) then
                       // find destination parametr
-                        Begin
+                        begin
                         DstParameter_Exist := False;
                         Try
                         PIterator := Component.SchIterator_Create;
                         PIterator.AddFilter_ObjectSet(MkSet(eParameter));
                         Parameter := PIterator.FirstSchObject;
-                        While(( Parameter <> Nil) and (DstParameter_Exist = False)) Do
-                            Begin
+                        while(( Parameter <> Nil) and (DstParameter_Exist = False)) Do
+                            begin
                             // Check for parameters that have the destination data.
-                            If Parameter.Name = New_Component[RS_PAR_VISIBLE] then
+                            if Parameter.Name = New_Component[RS_PAR_VISIBLE] then
                                 DstParameter_Exist := True
                             else
                                 Parameter := PIterator.NextSchObject;
-                        End;
+                        end;
                         Finally
                             Component.SchIterator_Destroy(PIterator);
-                        End;
+                        end;
                         if(DstParameter_Exist = False) then
                             begin
                             // Add the parameter to the pin with undo stack also enabled
-                            Param         := SchServer.SchObjectFactory (eParameter , eCreate_Default);
-                            Param.Name     := New_Component[RS_PAR_VISIBLE];
+                            Param := SchServer.SchObjectFactory (eParameter , eCreate_Default);
+                            Param.Name := New_Component[RS_PAR_VISIBLE];
                             Param.ShowName := False;
-                            Param.Text     := ValueToCopy;
+                            Param.Text := ValueToCopy;
                             Param.IsHidden := VisibilityToCopy;
                             // Param object is placed 0.1 Dxp Units above the component.
                             Param.Location := Point(Component.Location.X, Component.Location.Y + DxpsToCoord(0.1));
@@ -245,32 +246,32 @@ Begin
                                 SchServer.RobotManager.SendMessage(Parameter.I_ObjectAddress, c_BroadCast, SCHM_EndModify  , c_NoEventData);
                                 end;
                             end;
-                End;
+                end;
             end;
             Component := Iterator.NextSchObject;
-        End;
+        end;
 
         Finally
            SchDoc.SchIterator_Destroy(Iterator);
-        End;
+        end;
     Finally
         SchServer.ProcessControl.PostProcess(SchDoc, '');
-    End;
-End;
+    end;
+end;
 {======================================================================================================================================================}
 {======================================================================================================================================================}
 // Raport utility - logs not categorised components
 {======================================================================================================================================================}
-Procedure MTBF_VerifyUSerDefinedParametersOfComponents(Sheet : ISch_Document; UserDefined : String);
+Procedure MTBF_VerifyUSerDefinedParametersOfComponents(Sheet: ISch_Document; UserDefined: String);
 Var
-    Component     : ISch_Component;
-    Parameter     : ISch_Parameter;
-    Iterator      : ISch_Iterator;
-    PIterator     : ISch_Iterator;
-    ParameterFound :boolean;
+    Component: ISch_Component;
+    Parameter: ISch_Parameter;
+    Iterator: ISch_Iterator;
+    PIterator: ISch_Iterator;
+    ParameterFound: Boolean;
 
-Begin
-    If Sheet = Nil Then Exit;
+begin
+    if Sheet = Nil Then Exit;
 
 
 
@@ -283,8 +284,8 @@ Begin
     Try
         Component := Iterator.FirstSchObject;
 
-        While Component <> Nil Do
-        Begin
+        while Component <> Nil Do
+        begin
             Try
                 PIterator := Component.SchIterator_Create;
                 PIterator.AddFilter_ObjectSet(MkSet(eParameter));
@@ -292,8 +293,8 @@ Begin
                 Parameter := PIterator.FirstSchObject;
                 ParameterFound := false;
 
-                While ((Parameter <> Nil)  and (ParameterFound = false)) Do
-                Begin
+                while ((Parameter <> Nil)  and (ParameterFound = false)) Do
+                begin
                     // Check for UserDefined parameter
                     if (Parameter.Name = UserDefined) then
                        begin
@@ -308,9 +309,9 @@ Begin
                               LastUsedDesignator := Component.Designator.Text;
                               end;
                            end;
-                       End;
+                       end;
                     Parameter := PIterator.NextSchObject;
-                End;
+                end;
                 if(ParameterFound = false) then
                        begin
                            if(LastUsedDesignator <> Component.Designator.Text) then
@@ -320,36 +321,36 @@ Begin
                                LogUnrecognisedComponent(Component.Comment.Text,Component.Designator.Text,UserDefined,'Not existed');
                                LastUsedDesignator := Component.Designator.Text;
                            end;
-                       End;
+                       end;
 
             Finally
                 Component.SchIterator_Destroy(PIterator);
-            End;
+            end;
             Component := Iterator.NextSchObject;
-        End;
+        end;
     Finally
         Sheet.SchIterator_Destroy(Iterator);
-    End;
+    end;
 
     // Clean up robots in Schematic editor.
     SchServer.ProcessControl.PostProcess(Sheet, '');
     // Refresh the screen
     Sheet.GraphicallyInvalidate;
-End;
+end;
 
 {======================================================================================================================================================}
 // Raport utility - logs all  categories and thei values for all components
 {======================================================================================================================================================}
-Procedure MTBF_LogUSerDefinedParametersOfComponents(Sheet : ISch_Document);
+Procedure MTBF_LogUSerDefinedParametersOfComponents(Sheet: ISch_Document);
 Var
-    Component       : ISch_Component;
-    Parameter       : ISch_Parameter;
-    Iterator        : ISch_Iterator;
-    PIterator       : ISch_Iterator;
-    Par_Visibility  : String;
-    ComponentNameLogged :boolean;
-Begin
-    If Sheet = Nil Then Exit;
+    Component: ISch_Component;
+    Parameter: ISch_Parameter;
+    Iterator: ISch_Iterator;
+    PIterator: ISch_Iterator;
+    Par_Visibility: String;
+    ComponentNameLogged: Boolean;
+begin
+    if Sheet = Nil Then Exit;
 
     // Look for components only
     Iterator := Sheet.SchIterator_Create;
@@ -359,15 +360,15 @@ Begin
     SchServer.ProcessControl.PreProcess(Sheet, '');
     Try
         Component := Iterator.FirstSchObject;
-        While Component <> Nil Do
-        Begin
+        while Component <> Nil Do
+        begin
              ComponentNameLogged:=false;
              Try
                 PIterator := Component.SchIterator_Create;
                 PIterator.AddFilter_ObjectSet(MkSet(eParameter));
                 Parameter := PIterator.FirstSchObject;
-                While (Parameter <> Nil ) Do            // log reliability parameters
-                Begin
+                while (Parameter <> Nil ) Do            // log reliability parameters
+                begin
                     if (ComponentNameLogged = false) then // mark new component
                        begin
                        TxTMessage := '# ' + Component.Designator.Text + ':' + Component.Comment.Text ;
@@ -384,21 +385,21 @@ Begin
                        WriteLogFileMessage(TxTMessage, WrkLogFile);
                     end;
                     Parameter := PIterator.NextSchObject;
-                End;
+                end;
             Finally
                 Component.SchIterator_Destroy(PIterator);
-            End;
+            end;
             Component := Iterator.NextSchObject;
-        End;
+        end;
     Finally
         Sheet.SchIterator_Destroy(Iterator);
-    End;
+    end;
 
     // Clean up robots in Schematic editor.
     SchServer.ProcessControl.PostProcess(Sheet, '');
     // Refresh the screen
     Sheet.GraphicallyInvalidate;
-End;
+end;
 
 
 {======================================================================================================================================================}
@@ -407,14 +408,14 @@ End;
 
 Procedure MTBF_DeleteUserDefinedParametersOfComponents(SchDoc : ISch_Document; Prefix:String);
 Var
-    Component     : ISch_Component;
-    OldParameter  : ISch_Parameter;
-    Parameter     : ISch_Parameter;
-    Iterator      : ISch_Iterator;
-    PIterator     : ISch_Iterator;
-    I             : Integer;
-    ParameterList : TInterfaceList;
-Begin
+    Component: ISch_Component;
+    OldParameter: ISch_Parameter;
+    Parameter: ISch_Parameter;
+    Iterator: ISch_Iterator;
+    PIterator: ISch_Iterator;
+    I: Integer;
+    ParameterList: TInterfaceList;
+begin
     // Initialize the robots in Schematic editor.
     SchServer.ProcessControl.PreProcess(SchDoc, '');
 
@@ -425,33 +426,33 @@ Begin
     ParameterList := TInterfaceList.Create;
     Try
         Component := Iterator.FirstSchObject;
-        While Component <> Nil Do
-        Begin
+        while Component <> Nil Do
+        begin
             Try
                 PIterator := Component.SchIterator_Create;
                 PIterator.AddFilter_ObjectSet(MkSet(eParameter));
 
                 Parameter := PIterator.FirstSchObject;
-                While Parameter <> Nil Do
-                Begin
+                while Parameter <> Nil Do
+                begin
                  //delete parameters starting with given prefix
-                    If (Ansipos(Prefix,Parameter.Name) = 1) Then
+                    if (Ansipos(Prefix,Parameter.Name) = 1) Then
                          ParameterList.Add(Parameter);
                     Parameter := PIterator.NextSChObject;
-                End;
+                end;
             Finally
                Component.SchIterator_Destroy(PIterator);
-            End;
+            end;
             Component := Iterator.NextSchObject;
-        End;
+        end;
     Finally
         SchDoc.SchIterator_Destroy(Iterator);
-    End;
+    end;
 
     // Remove Parameters from their components
     Try
-        For I := 0 to ParameterList.Count - 1 Do
-        Begin
+        for I := 0 to ParameterList.Count - 1 Do
+        begin
             Parameter := ParameterList.items[i];
 
             // Obtain the parent object which is the component
@@ -460,33 +461,33 @@ Begin
             Component.RemoveSchObject(Parameter);
 
             SchServer.RobotManager.SendMessage(Component.I_ObjectAddress,c_BroadCast,SCHM_PrimitiveRegistration,Parameter.I_ObjectAddress);
-        End;
+        end;
     Finally
         ParameterList.Free;
-    End;
+    end;
 
     // Clean up robots in Schematic editor.
     SchServer.ProcessControl.PostProcess(SchDoc, '');
 
     // Refresh the screen
     SchDoc.GraphicallyInvalidate;
-End;
+end;
 
 {======================================================================================================================================================}
 // Utility engine for renaming all parameters Prefix with new Prefix
 {======================================================================================================================================================}
 
-Procedure MTBF_RenameParametersPrefixOfComponents(SchDoc : ISch_Document; OldPrefix:String;NewPrefix:String);
+Procedure MTBF_RenameParametersPrefixOfComponents(SchDoc: ISch_Document; OldPrefix: String; NewPrefix: String);
 Var
-    Component     : ISch_Component;
-    OldParameter  : ISch_Parameter;
-    Parameter     : ISch_Parameter;
-    Iterator      : ISch_Iterator;
-    PIterator     : ISch_Iterator;
-    I             : Integer;
-    ParameterList : TInterfaceList;
-    Name2change   :string;
-Begin
+    Component: ISch_Component;
+    OldParameter: ISch_Parameter;
+    Parameter: ISch_Parameter;
+    Iterator: ISch_Iterator;
+    PIterator: ISch_Iterator;
+    I: Integer;
+    ParameterList: TInterfaceList;
+    Name2change: String;
+begin
     // Initialize the robots in Schematic editor.
     SchServer.ProcessControl.PreProcess(SchDoc, '');
 
@@ -496,18 +497,18 @@ Begin
 
     Try
         Component := Iterator.FirstSchObject;
-        While Component <> Nil Do
-        Begin
+        while Component <> Nil Do
+        begin
             Try
                 PIterator := Component.SchIterator_Create;
                 PIterator.AddFilter_ObjectSet(MkSet(eParameter));
 
                 Parameter := PIterator.FirstSchObject;
-                While Parameter <> Nil Do
-                Begin
+                while Parameter <> Nil Do
+                begin
                  //find parameters starting with given prefix
-                    If (Ansipos(OldPrefix,Parameter.Name) = 1) Then
-                        Begin
+                    if (Ansipos(OldPrefix,Parameter.Name) = 1) Then
+                        begin
 
                            SchServer.RobotManager.SendMessage(Parameter.I_ObjectAddress, c_BroadCast, SCHM_BeginModify, c_NoEventData);
                             Name2change := copy(Parameter.Name,GetStringLenght(OldPrefix),(GetStringLenght(Parameter.Name)-GetStringLenght(OldPrefix)));
@@ -515,15 +516,15 @@ Begin
                             SchServer.RobotManager.SendMessage(Parameter.I_ObjectAddress, c_BroadCast, SCHM_EndModify  , c_NoEventData);
    end;
                     Parameter := PIterator.NextSChObject;
-                End;
+                end;
             Finally
                Component.SchIterator_Destroy(PIterator);
-            End;
+            end;
             Component := Iterator.NextSchObject;
-        End;
+        end;
     Finally
         SchDoc.SchIterator_Destroy(Iterator);
-    End;
+    end;
 
 
     // Clean up robots in Schematic editor.
@@ -531,7 +532,7 @@ Begin
 
     // Refresh the screen
     SchDoc.GraphicallyInvalidate;
-End;
+end;
 
 {*******************************************************************************************************************************************************}
 {*******************************************************************************************************************************************************}
@@ -540,30 +541,30 @@ End;
 {*******************************************************************************************************************************************************}
 Procedure MTBF_AddComponentUserParameters;
 var
-    I             : Integer;
-    Doc           : IDocument;
-    CurrentSch    : ISch_Document;
-    SchDocument   : IServerDocument;
-    Project       : IProject;
+    I: Integer;
+    Doc: IDocument;
+    CurrentSch: ISch_Document;
+    SchDocument: IServerDocument;
+    Project: IProject;
 
-    ProjectName   : String;
-    ProjectFullPath :  String;
-    ParamFilePath : String;
+    ProjectName : String;
+    ProjectFullPath:  String;
+    ParamFilePath: String;
 
-    ComponentPAR  :  array[0..3] of string ;
-    cfgFile       : TextFile;
+    ComponentPAR:  array[0..3] of String ;
+    cfgFile: TextFile;
 
-    Parameter_List       : TStringList;
-    Parameter_Array      : TStringList;
-    cfgFileline_nr       : integer;
-    line_first_char      : character;
-    Schematic_processed  : integer;
+    Parameter_List: TStringList;
+    Parameter_Array: TStringList;
+    cfgFileline_nr: Integer;
+    line_first_char: Char;
+    Schematic_processed: Integer;
 
-    RdResult             : boolean;
-    NextComponent        : boolean;
-    NextComponentName    : String;
+    RdResult: Boolean;
+    NextComponent: Boolean;
+    NextComponentName: String;
 
-Begin
+begin
 
 
 Project := GetWorkspace.DM_FocusedProject;
@@ -575,10 +576,10 @@ ProjectName:=Project.DM_ProjectFileName;
 
     TxTMessage:=ParamFilePath;
     while (AnsiPos('\',TxTMessage)<> 0)do
-    Begin
+    begin
        I:= AnsiPos('\',TxTMessage)+1;
        TxTMessage := Copy(TxTMessage,I,100);
-    End;
+    end;
     ParamFileName := TxTMessage;
 
   if FileExists(ParamFilePath) then
@@ -597,7 +598,9 @@ ProjectName:=Project.DM_ProjectFileName;
 //-------------------------------------------------------
 
 // Open log file
-    WrkLogFile := OpenMyFile(LogFileName, 'LOG');
+
+    WrkLogFile := OpenMyFile(LogFileName, 'LOG', Log_file_folder);
+
     TxTMessage := '#  Config:' + ParamFilePath;
     WriteLogFileMessage(TxTMessage, WrkLogFile);
     TxTMessage := '##';
@@ -605,32 +608,32 @@ ProjectName:=Project.DM_ProjectFileName;
 
 //-------------------------------------------------------
 // Open raport file
-    WrkRepFile := OpenMyFile(NewCfgFileName, 'REP');
+    WrkRepFile := OpenMyFile(NewCfgFileName, 'REP', Report_file_folder);
+
 //-------------------------------------------------------
-    If Project = Nil Then Exit;
+    if Project = Nil Then Exit;
     Project.DM_Compile;
 
     AssignFile(cfgFile, ParamFilePath);
 
     Schematic_processed:=0;
 
-    Parameter_Array:= TStringList.Create  ;
-    Parameter_List:= TStringList.Create  ;
+    Parameter_Array:= TStringList.Create;
+    Parameter_List:= TStringList.Create;
 
     // selected or all documents within the project
-    For I := 0 to Project.DM_LogicalDocumentCount - 1 Do
-    Begin
+    for I := 0 to Project.DM_LogicalDocumentCount - 1 Do
+    begin
         Doc := Project.DM_LogicalDocuments(I);
-        If (Doc.DM_DocumentKind = 'SCH') Then
-        Begin
+        if (Doc.DM_DocumentKind = 'SCH') Then
+        begin
            Inc(Schematic_processed);
            SchDocument := Client.OpenDocument('Sch', Doc.DM_FullPath);
-           If (SchDocument <> Nil) Then
-           Begin
-
+           if (SchDocument <> Nil) Then
+           begin
                Client.ShowDocument(SchDocument);
                CurrentSch := SchServer.GetCurrentSchDocument;
-               If CurrentSch = Nil Then Exit;
+               if CurrentSch = Nil Then Exit;
 
                TxTMessage := '# Processing:' + CurrentSch.DocumentName;
                WriteLogFileMessage(TxTMessage, WrkLogFile);
@@ -641,7 +644,7 @@ ProjectName:=Project.DM_ProjectFileName;
 
                RdResult:= true;
                while (not Eof(cfgFile) and RdResult) do
-               Begin
+               begin
                   Try
                       RdResult:=ReadLn(cfgFile, Parameter_List);
                   except
@@ -734,7 +737,7 @@ ProjectName:=Project.DM_ProjectFileName;
     ShowInfo (TxTMessage);
     Exit;
 
-End;
+end;
 {======================================================================================================================================================}
 // Utility for removing all parameters with names starts with prefix
 // Scans all SCH files with  MTBF_DeleteUserDefinedParametersOfComponents engine
@@ -745,37 +748,37 @@ Procedure MTBF_DeleteComponentUserParameters;
 Const
     ParamPrefix = 'SN_';
 Var
-    I           : Integer;
-    Project     : IProject;
-    Doc         : IDocument;
-    CurrentSch  : ISch_Document;
-    SchDocument : IServerDocument;
-    ProjectName : String;
-Begin
+    I: Integer;
+    Project: IProject;
+    Doc: IDocument;
+    CurrentSch: ISch_Document;
+    SchDocument: IServerDocument;
+    ProjectName: String;
+begin
     Project := GetWorkspace.DM_FocusedProject;
     If Project = Nil Then Exit;
     Project.DM_Compile;
 
     ProjectName:=Project.DM_ProjectFileName;
     // selected or all documents within the project
-    For I := 0 to Project.DM_LogicalDocumentCount - 1 Do
-    Begin
+    for I := 0 to Project.DM_LogicalDocumentCount - 1 Do
+    begin
         Doc := Project.DM_LogicalDocuments(I);
         If Doc.DM_DocumentKind = 'SCH' Then
-           Begin
+           begin
            SchDocument := Client.OpenDocument('Sch', Doc.DM_FullPath);
            If SchDocument <> Nil Then
-           Begin
+           begin
                Client.ShowDocument(SchDocument);
                CurrentSch := SchServer.GetCurrentSchDocument;
                If CurrentSch = Nil Then Exit;
                MTBF_DeleteUserDefinedParametersOfComponents(CurrentSch,ParamPrefix);
-           End;
-        End;
-    End;
+           end;
+        end;
+    end;
     ShowInfo ('Deleting parameters with name prefix:' + '''' + ParamPrefix + '''' + ' done');
     Exit;
-End;
+end;
 {======================================================================================================================================================}
 {======================================================================================================================================================}
 // Utility for renaming all parameters prefix
@@ -788,37 +791,37 @@ Const
     OldPrefix = 'SN_';
     NewPrefix = 'ML_';
 Var
-    I           : Integer;
-    Project     : IProject;
-    Doc         : IDocument;
-    CurrentSch  : ISch_Document;
-    SchDocument : IServerDocument;
-    ProjectName : String;
-Begin
+    I: Integer;
+    Project: IProject;
+    Doc: IDocument;
+    CurrentSch: ISch_Document;
+    SchDocument: IServerDocument;
+    ProjectName: String;
+begin
     Project := GetWorkspace.DM_FocusedProject;
     If Project = Nil Then Exit;
     Project.DM_Compile;
 
     ProjectName:=Project.DM_ProjectFileName;
     // selected or all documents within the project
-    For I := 0 to Project.DM_LogicalDocumentCount - 1 Do
-    Begin
+    for I := 0 to Project.DM_LogicalDocumentCount - 1 Do
+    begin
         Doc := Project.DM_LogicalDocuments(I);
         If Doc.DM_DocumentKind = 'SCH' Then
-           Begin
+           begin
            SchDocument := Client.OpenDocument('Sch', Doc.DM_FullPath);
            If SchDocument <> Nil Then
-           Begin
+           begin
                Client.ShowDocument(SchDocument);
                CurrentSch := SchServer.GetCurrentSchDocument;
                If CurrentSch = Nil Then Exit;
                MTBF_RenameParametersPrefixOfComponents(CurrentSch,OldPrefix,NewPrefix);
-           End;
-        End;
-    End;
+           end;
+        end;
+    end;
     ShowInfo ('Renaming parameters with name prefix:' + '''' + OldPrefix + '''' + 'with' + '''' + NewPrefix + '''' + ' done');
     Exit;
-End;
+end;
 {======================================================================================================================================================}
 
 
