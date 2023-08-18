@@ -1,8 +1,0 @@
-############################################################################
-##
-## Missing parameters report
-##
-## Project : C:\Users\Loloxon\OneDrive\Desktop\Project_X\base not working copy\Relia test.PrjPcb
-## Date    : 17.08.2023 21_17_17
-##
-####
