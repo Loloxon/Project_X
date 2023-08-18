@@ -2,79 +2,72 @@ unit Utils;
 
 interface
 
-    // Function returns place of first digit in string (C1A, D23 returns 1 REL2XXX returns 3 etc.)
-    Function GetFirstDigitInString(InString: String): Integer; end;
-
-    Function GetStringLenght(InString: String): Integer; end;
-
-    Function RemoveCharFromString(StringToFormat: String; CharToDelete: Char): String; end;
-
-    Function ReplaceCharInString(StringToFormat: String; OldChar: Char; NewChar: Char): String; end;
-
+  function GetFirstDigitInString(InString: String): Integer; end;
+  function GetStringLength(InString: String): Integer; end;
+  function RemoveCharFromString(StringToFormat: String; CharToDelete: Char): String; end;
+  function ReplaceCharInString(StringToFormat: String; OldChar: Char; NewChar: Char): String; end;
 
 implementation
 
-    Function GetFirstDigitInString(InString: String): Integer;
-    var
-         DigPosition: Integer;
-         LastPosition: Integer;
-         Digit_char: Integer;
-         Search_char: Character;
+  function GetFirstDigitInString(InString: String): Integer;
+  var
+    DigPosition: Integer;
+    LastPosition: Integer;
+    DigitChar: Integer;
+    SearchChar: Char;
+  begin
+    LastPosition := 9999; // A large value
+    for DigitChar := 49 to 57 do // '1' ....'9'
     begin
-         LastPosition := 9999; // stupid big value
-         for Digit_char := 49 to 57 do                    // '1' ....'9'
-         begin
-              Search_char := Chr(Digit_char);
-              DigPosition := AnsiPos(Search_char, InString);
-              if((DigPosition <> 0) and (DigPosition < LastPosition)) then
-                   LastPosition := DigPosition;
-         end;
-         Result := LastPosition;
+      SearchChar := Chr(DigitChar);
+      DigPosition := AnsiPos(SearchChar, InString);
+      if (DigPosition <> 0) and (DigPosition < LastPosition) then
+        LastPosition := DigPosition;
     end;
+    Result := LastPosition;
+  end;
 
-    Function GetStringLenght(InString: String): Integer;
-    var
-         Counter: Integer;
-         DoCount: Boolean;
+  function GetStringLenght(InString: String): Integer;
+  var
+    Counter: Integer;
+    DoCount: Boolean;
+  begin
+    Counter := 1;
+    DoCount := True;
+    while DoCount do
     begin
-         Counter := 1;
-         DoCount := true;
-         while (DoCount) do
-         begin
-              if(InString[Counter] = '') then
-                   DoCount := false
-              else
-                   inc(Counter);
-         end;
-         Result := Counter-1;
+      if InString[Counter] = '' then
+        DoCount := False
+      else
+        Inc(Counter);
     end;
+    Result := Counter - 1;
+  end;
 
-    Function RemoveCharFromString(StringToFormat: String; CharToDelete: Char): String ;
-    var
-         Char_position: Integer;
+  function RemoveCharFromString(StringToFormat: String; CharToDelete: Char): String;
+  var
+    CharPosition: Integer;
+  begin
+    CharPosition := Pos(CharToDelete, StringToFormat);
+    while CharPosition > 0 do
     begin
-         Char_position := pos(CharToDelete, StringToFormat);
-         while Char_position > 0 do
-         begin
-              Delete(StringToFormat, Char_position, 1);
-              Char_position := pos(CharToDelete, StringToFormat);
-         end;
-         Result := StringToFormat;
+      Delete(StringToFormat, CharPosition, 1);
+      CharPosition := Pos(CharToDelete, StringToFormat);
     end;
+    Result := StringToFormat;
+  end;
 
-    Function ReplaceCharInString(StringToFormat: String; OldChar: Char; NewChar: Char): String ;
-    var
-         Char_position: Integer;
+  function ReplaceCharInString(StringToFormat: String; OldChar: Char; NewChar: Char): String;
+  var
+    CharPosition: Integer;
+  begin
+    CharPosition := Pos(OldChar, StringToFormat);
+    while CharPosition > 0 do
     begin
-         Char_position := pos(OldChar, StringToFormat);
-         while Char_position > 0 do
-         begin
-              StringToFormat[Char_position] := NewChar;
-              Char_position := pos(OldChar, StringToFormat);
-         end;
-         Result := StringToFormat;
+      StringToFormat[CharPosition] := NewChar;
+      CharPosition := Pos(OldChar, StringToFormat);
     end;
-
-
+    Result := StringToFormat;
+  end;
 
 
