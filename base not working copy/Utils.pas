@@ -3,18 +3,18 @@ unit Utils;
 interface
 
     // Function returns place of first digit in string (C1A, D23 returns 1 REL2XXX returns 3 etc.)
-    Function GetDesignatorFirstDigit(InString: string): integer; end;
+    Function GetFirstDigitInString(InString: String): Integer; end;
 
-    Function GetStringLenght(InString: string): integer; end;
+    Function GetStringLenght(InString: String): Integer; end;
 
-    Function RemoveCharFromString(StringToFormat: string; CharToDelete: char): string; end;
+    Function RemoveCharFromString(StringToFormat: String; CharToDelete: Char): String; end;
 
-    Function ReplaceCharInString(StringToFormat: string; OldChar: char; NewChar: char): string; end;
+    Function ReplaceCharInString(StringToFormat: String; OldChar: Char; NewChar: Char): String; end;
 
 
 implementation
 
-    Function GetDesignatorFirstDigit(InString: string): integer;
+    Function GetFirstDigitInString(InString: String): Integer;
     var
          DigPosition: Integer;
          LastPosition: Integer;
@@ -22,7 +22,7 @@ implementation
          Search_char: Character;
     begin
          LastPosition := 9999; // stupid big value
-         For Digit_char := 49 to 57 do                    // '1' ....'9'
+         for Digit_char := 49 to 57 do                    // '1' ....'9'
          begin
               Search_char := Chr(Digit_char);
               DigPosition := AnsiPos(Search_char, InString);
@@ -32,10 +32,10 @@ implementation
          Result := LastPosition;
     end;
 
-    Function GetStringLenght(InString: string): integer;
+    Function GetStringLenght(InString: String): Integer;
     var
-         Counter: integer;
-         DoCount: boolean;
+         Counter: Integer;
+         DoCount: Boolean;
     begin
          Counter := 1;
          DoCount := true;
@@ -49,9 +49,9 @@ implementation
          Result := Counter-1;
     end;
 
-    Function RemoveCharFromString(StringToFormat: string; CharToDelete: char): string ;
+    Function RemoveCharFromString(StringToFormat: String; CharToDelete: Char): String ;
     var
-         Char_position: integer;
+         Char_position: Integer;
     begin
          Char_position := pos(CharToDelete, StringToFormat);
          while Char_position > 0 do
@@ -62,9 +62,9 @@ implementation
          Result := StringToFormat;
     end;
 
-    Function ReplaceCharInString(StringToFormat: string; OldChar: char; NewChar: char): string ;
+    Function ReplaceCharInString(StringToFormat: String; OldChar: Char; NewChar: Char): String ;
     var
-         Char_position: integer;
+         Char_position: Integer;
     begin
          Char_position := pos(OldChar, StringToFormat);
          while Char_position > 0 do

@@ -4,9 +4,9 @@ interface
 
     // Get file path
     // start to browse (with filter) from current project
-    Function GetFile(InitFlag): string;end;
+    Function GetFile(InitFlag): String; end;
 
-    Function OpenMyFile(FileName: String; FileType: String): TextFile; end;
+    Function OpenMyFile(FileName: String; FileType: String; FileFolder: String): TextFile; end;
 
     Procedure WriteLogFileMessage(TextMessage: String; WrkLogFile: TextFile); end;
 
@@ -17,7 +17,7 @@ interface
 
 implementation
 
-    Function GetFile(InitFlag): string;
+    Function GetFile(InitFlag): String;
     var
          OpenDialog: TOpenDialog;
          DirName: String;
@@ -35,7 +35,7 @@ implementation
     end;
 
 
-    Function OpenMyFile(FileName: String; FileType: String):TextFile;
+    Function OpenMyFile(FileName: String; FileType: String; FileFolder: String): TextFile;
     var
          Project: IProject;
          ProjectName: String;
@@ -59,14 +59,9 @@ implementation
          TimeStr := GetCurrentTimeString;
 
          ProjectNamePos := AnsiPos(ProjectName, ProjectFullPath);
-         ProjectDirPath := copy(ProjectFullPath, 1, ProjectNamePos - 1);
+         ProjectDirPath := copy(ProjectFullPath, 1, ProjectNamePos - 1) + FileFolder;
          TimeStr := ReplaceCharInString(TimeStr,':','_');
          VarFilename := FileName + TimeStr + '.txt';
-
-         if(FileType = 'LOG') then
-            ProjectDirPath := ProjectDirPath + Log_file_folder
-         else
-            ProjectDirPath := ProjectDirPath + Report_file_folder;
 
          if(not directoryexists(ProjectDirPath)) then
             CreateDir(ProjectDirPath);
