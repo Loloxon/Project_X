@@ -27,7 +27,6 @@ Var
     TxTMessage: String;
     LastUsedDesignator: String;
 
-
 {======================================================================================================================================================}
 // The main work horse
 {======================================================================================================================================================}
@@ -101,6 +100,7 @@ begin
                         Param.Name := New_Component[RS_PAR_NAME];
                         Param.ShowName := False;
                         Param.Text := ReplaceCharInString(New_Component[RS_PAR_VALUE], '*', ' ');
+
                         if( New_Component[RS_PAR_VISIBLE] = 'ON') then
                             Param.IsHidden := False
                         else
@@ -598,7 +598,9 @@ ProjectName:=Project.DM_ProjectFileName;
 //-------------------------------------------------------
 
 // Open log file
+
     WrkLogFile := OpenMyFile(LogFileName, 'LOG', Log_file_folder);
+
     TxTMessage := '#  Config:' + ParamFilePath;
     WriteLogFileMessage(TxTMessage, WrkLogFile);
     TxTMessage := '##';
@@ -607,6 +609,7 @@ ProjectName:=Project.DM_ProjectFileName;
 //-------------------------------------------------------
 // Open raport file
     WrkRepFile := OpenMyFile(NewCfgFileName, 'REP', Report_file_folder);
+
 //-------------------------------------------------------
     if Project = Nil Then Exit;
     Project.DM_Compile;

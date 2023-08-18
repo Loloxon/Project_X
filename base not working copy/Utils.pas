@@ -70,4 +70,3 @@ implementation
     Result := StringToFormat;
   end;
 
-
