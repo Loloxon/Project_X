@@ -1,87 +1,4 @@
-{ Main concept and core functions Jerzy Kasperek kasperek@agh.edu.pl
-{ Auxiliary functions £ukasz Smolarek (lukasz.smolarek@e-vertigo.com)
-{======================================================================================================================================================}
-{
-Version 7.1
-Date 20.11.2018
-
-Change log
-1. New functions MTBF_LogUSerDefinedParametersOfComponents - logs all...
-2. New functions MTBF_CopyDefinedParametersValue - OK
-3. LP_LOG directory is required in Project folder
-4. Missing raport correction
-5. Added selection criteria to add components for actions...
-6. New function - replace header
-7. All supported usage examples
-8. Missing part raport formatting changed - each component data in one line to easy sorting + no duplicates
-}
-{======================================================================================================================================================}
-{ Based on Altium scripts ( as below) for MTBF evaluation with Reliasoft Lambda Predict Software
-{ Main function:
-( MTBF_AddComponentUserParameters opens FileOpen dialog. User should open dedicated format config txt file.
-{
-# Syntax:
-# Line starting with # - its a comment line
-# Each line introduce one  parameter and should have exact four words (string type)
-# First ASCII string is the Altium component type selector. 'All' denotes global ( for each component) parameter.
-# Second ASCII string is the LambdaPredict given methodology Parameter Name
-# Third ASCII string is the Parameter Value assigned
-# Fourth - (last one) ASCII string is the Visibility atribute (ON/OFF)
-#
-# Note that spaces are not allowed in "Altium component type" field! In "Parameter Value" field spaces are allowed but
-# should be coded by '*'  Scipt will recover spaces
-# Also note that EXACT one space is required between strings!
-
-Main functionality:
-The main MTBF_AddComponentUserParameters procedure reads config file line by line and than
-for each parameter found scans current design for SchDoc document.
-Then calls the main engine: procedure MTBF_AddUserDefinedParametersToComponents with two parameters:
-current SchDoc and parameter. Then each SchDoc component is checked if there is a match with given parameter.
-If so, the parameter is attached to the component with its new value and given visibility aspect.
-So for, there are four match criteria defined.
-1. Config line example:
-  'All' 'RS_CATT' '?' 'ON'
-   First string = 'All' will define an attachment with given parameter ('RS_CAT' in this example) to every component and will set its value to
-   the second string ('?' in this example). Also the visibility for this parameter will be set to 'ON'.
-   Category 'RS_CAT' defines component category. This is the most important categorisation - and must be set for each component.
-2. Config line example:
-   'Capacitor' 'RS_CATT' 'Capacitor' 'OFF'
-   First string = 'Capacitor' will define an attachment with given parameter ('RS_CATT' in this example) to every component with the word 'Capacitor'
-   in his ALTIUM decription field. Also will sets its value to secong string ('Capacitor' in this example).
-   Also visibility for this parameter is set to 'OFF'.
-3. Config lines example:
-   'U21' 'RS_CATT' 'Microprocessor,*Digital' 'OFF'
-   'U21' 'RS_NMBR_BITS' '16' 'OFF'
-   After these two lines as above processing,  component U21 (if found) with will receive parameter RS_CATT = 'Microprocessor, Digital',
-   and  RS_NMBR_BITS = 16
-   ( '*' symbols are coverted into spaces).Also visibility for this parameter is set to 'OFF'.
-4. Config line example:
-   'R' 'RS_RTD_PWR' '0.1' 'OFF'
-   First string = 'R' (one letter) will define an attachment with given parameter group ('RS_RTD_PWR' - rated power in this example) to every component with
-   his ALTIUM designator field starting with 'R' letter. So, R1,R3,R41 in this example will receive parameter RS_RTD_PWR = 0.1 (Watt).
-   Also visibility for this parameter is set to 'OFF'.
-
-Special raport utility
-5. Config line example:
-   '???' 'RS_CATT' 'any' 'any' generates report for any component checking if given parameter name is set and/or contain '?'.
-   So this config line shall be used at the end...
-
-Special raport utility     (version 4.0 +)
-6. Config line example:
-   '???' '???' 'any' 'any' generates report for an every parameter used in every ny component
-   So this config line shall be used as the last one...
-
-The log file records the work in text file named with the current time stamp.
-}
-
-// Copyright notice from ALTIUM
-{======================================================================================================================================================}
-{ Summary                                                                      }
-{ Demo how to add, modify and delete the user parameters for components        }
-{                                                                              }
-{ Version 1.0                                                                  }
-{ Copyright (c) 2008 by Altium Limited                                         }
-{======================================================================================================================================================}
+uses Utils, Utils_logs;
 
 Const
     ALTIUM_NAME = 0;       // pointers to   ComponentPAR  :  array[0..3] of string ;
@@ -110,280 +27,6 @@ Var
     LastUsedDesignator :string;
 
 
-{======================================================================================================================================================}
-{ Auxiliary function, used in component maching - C1A, D23 returns 1 REL2XXX returns 3 etc... }
-{======================================================================================================================================================}
-Function GetDesignatorFirstDigit(InString:string):integer ;
-var
-DigPosition : Integer;
-LastPosition : Integer;
-Digit_char  : Integer;
-Search_char : Character;
-Begin
-LastPosition := 9999; // stupid big value
-For  Digit_char := 49 to 57 do                    // '1' ....'9'
-     begin
-     Search_char := Chr(Digit_char);
-     DigPosition:=AnsiPos(Search_char,InString);
-     if((DigPosition <> 0) and (DigPosition < LastPosition)) then
-        LastPosition := DigPosition;
-     end;
-Result:=LastPosition;
-end;
-{======================================================================================================================================================}
-{ Auxiliary function, DELPHI LENGHT unfortunately not implemented in ALTIUM DELPHI            }
-{======================================================================================================================================================}
-Function GetStringLenght(InString:string):integer ;
-var
-Counter : integer;
-DoCount : boolean;
-begin
-Counter:= 1;
-DoCount:= true;
-while (DoCount) do begin
-  if( InString[Counter] = '') then
-    DoCount:=false
-  else
-    inc(Counter);
-end;
-Result := Counter-1;
-end ;
-{======================================================================================================================================================}
-{ Auxiliary function - removes spaces from input string            }
-{======================================================================================================================================================}
-{Function RemoveSpaces(StringToFormat:string):string ;
-var
-Space_position : integer;
-begin
-
-Space_position := pos(' ', StringToFormat);
-while Space_position > 0 do begin
-  Delete(StringToFormat,Space_position,1);
-  Space_position := pos(' ', StringToFormat);
-end;
-Result := StringToFormat;
-end ;
-{======================================================================================================================================================}
-{ Auxiliary function - removes single quotes from input string            }
-{======================================================================================================================================================}
-{Function RemoveQuotes(StringToFormat:string):string ;
-var
-Space_position : integer;
-begin
-
-Space_position := pos('''', StringToFormat);
-while Space_position > 0 do begin
-  Delete(StringToFormat,Space_position,1);
-  Space_position := pos('''', StringToFormat);
-end;
-Result := StringToFormat;
-end ;
-{======================================================================================================================================================}
-{ Auxiliary function - removes character from input string            }
-{======================================================================================================================================================}
-Function RemoveChar(StringToFormat:string;CharToDelete:char):string ;
-var
-Char_position : integer;
-begin
-
-Char_position := pos(CharToDelete, StringToFormat);
-while Char_position > 0 do begin
-  Delete(StringToFormat,Char_position,1);
-  Char_position := pos(CharToDelete, StringToFormat);
-end;
-Result := StringToFormat;
-end ;
-{======================================================================================================================================================}
-{ Log file takes current time to its filename . Char : is converted with this function to '_'
-{======================================================================================================================================================}
-Function ReplaceCharString(StringToFormat:string;OldChar:char;NewChar:char):string ;
-var
-Char_position : integer;
-begin
-
-Char_position := pos(OldChar, StringToFormat);
-while Char_position > 0 do begin
-  StringToFormat[Char_position]:=NewChar;
-  Char_position := pos(OldChar, StringToFormat);
-end;
-Result := StringToFormat;
-end ;
-
-{=====================================================================================================================================================}
-{  Script uses config script with spaces as the fields separator.Hence no space is allowed in Altium parameter value field. So spaces are coded with *
-{  and need to be recovered
-{   Function to be removed - use  ReplaceCharString !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-{======================================================================================================================================================}
-{Function RestoreSpaces(StringToFormat:string):string ;
-var
-Star_position : integer;
-begin
-
-Star_position := pos('*', StringToFormat);
-while Star_position > 0 do begin
-  Delete(StringToFormat,Star_position,1);
-  Insert(' ',StringToFormat,Star_position);
-  Star_position := pos('*', StringToFormat);
-end;
-Result := StringToFormat;
-end ;
-{======================================================================================================================================================}
-// Get file path
-//  start to browse (with filter) from current project
-{======================================================================================================================================================}
-Function GetFile(InitFlag) : string;
-var
-  OpenDialog : TOpenDialog;
-  DirName: String;
-begin
-     Result := '';
-     DirName:= GetWorkspace.DM_WorkspaceFullPath;
-     OpenDialog := TOpenDialog.Create(nil);
-     OpenDialog.InitialDir :=   DirName;
-     OpenDialog.Filter := 'Config files (*.txt)|*.TXT';
-     // Display the OpenDialog component
-     OpenDialog.Execute;
-
-     // Obtain the file name of the selected file.
-     Result := OpenDialog.Filename;
-     OpenDialog.Free;
-end;
-{======================================================================================================================================================}
-// Open LOG file
-Procedure OpenLogFile(FileName : String);
-var
-     Project         : IProject;
-     ProjectName     : String;
-     ProjectNamePos  : Integer;
-     ProjectFullPath : String;
-     ProjectDirPath  : String;
-     DateStr         : String;
-     TimeStr         : String;
-     VarFilename     : String;
-
-begin
-     Project := GetWorkspace.DM_FocusedProject;
-
-     If Project = Nil Then Exit;
-     ProjectName     := Project.DM_ProjectFileName;
-     ProjectFullPath := Project.DM_ProjectFullPath;
-
-     DateStr := GetCurrentDateString;
-     TimeStr := GetCurrentTimeString;
-
-     ProjectNamePos := AnsiPos(ProjectName, ProjectFullPath);
-     ProjectDirPath := copy(ProjectFullPath, 1, ProjectNamePos - 1);
-     TimeStr        := ReplaceCharString(TimeStr,':','_');
-     VarFilename    := FileName + TimeStr + '.txt';
-
-     ProjectDirPath := ProjectDirPath  +  Log_file_folder ;
-     If(not directoryexists(ProjectDirPath)) then
-        CreateDir(ProjectDirPath);
-     If(not directoryexists(ProjectDirPath)) then
-        begin
-        ShowInfo ('Can not create folder' + ProjectDirPath);
-        Exit;
-        end;
-
-     AssignFile(WrkLogFile, ProjectDirPath + '\' + VarFilename);
-     Rewrite(WrkLogFile);
-
-     Writeln(WrkLogFile, '############################################################################');
-     Writeln(WrkLogFile, '##');
-     Writeln(WrkLogFile, '## Processing LOG');
-     Writeln(WrkLogFile, '##');
-     Writeln(WrkLogFile, '## Project : ' + ProjectFullPath);
-     Writeln(WrkLogFile, '## Date    : ' + DateStr + ' ' + TimeStr);
-     Writeln(WrkLogFile, '##');
-     Writeln(WrkLogFile, '############################################################################');
-
-end;
-{======================================================================================================================================================}
-// Close LOG file
-Procedure CloseLogFile();
-begin
-     Writeln(WrkLogFile, '');
-     Writeln(WrkLogFile, '');
-     Writeln(WrkLogFile, '## LOG end');
-     Writeln(WrkLogFile, '############################################################################');
-
-     CloseFile(WrkLogFile);
-end;
-{======================================================================================================================================================}
-Procedure WriteLogFileMessage(TextMessage : String);
-begin
-     Writeln(WrkLogFile,TextMessage);
-end;
-{======================================================================================================================================================}
-// Open Report file
-Procedure OpenRaportFile(FileName : String);
-var
-     Project         : IProject;
-     ProjectName     : String;
-     ProjectNamePos  : Integer;
-     ProjectFullPath : String;
-     ProjectDirPath  : String;
-     DateStr         : String;
-     TimeStr         : String;
-     VarFilename     : String;
-
-begin
-     Project := GetWorkspace.DM_FocusedProject;
-
-     If Project = Nil Then Exit;
-     ProjectName     := Project.DM_ProjectFileName;
-     ProjectFullPath := Project.DM_ProjectFullPath;
-
-     DateStr := GetCurrentDateString;
-     TimeStr := GetCurrentTimeString;
-
-     ProjectNamePos := AnsiPos(ProjectName, ProjectFullPath);
-     ProjectDirPath := copy(ProjectFullPath, 1, ProjectNamePos - 1);
-     TimeStr        := ReplaceCharString(TimeStr,':','_');
-     VarFilename    := FileName + TimeStr + '.txt';
-     ProjectDirPath := ProjectDirPath  +  Report_file_folder ;
-     If(not directoryexists(ProjectDirPath)) then
-        CreateDir(ProjectDirPath);
-     If(not directoryexists(ProjectDirPath)) then
-        begin
-        ShowInfo ('Can not create folder' + ProjectDirPath);
-        Exit;
-        end;
-
-     AssignFile(WrkRepFile, ProjectDirPath + '\' + VarFilename);
-     Rewrite(WrkRepFile);
-
-     Writeln(WrkRepFile, '############################################################################');
-     Writeln(WrkRepFile, '##');
-     Writeln(WrkRepFile, '## Missing parameters report');
-     Writeln(WrkRepFile, '##');
-     Writeln(WrkRepFile, '## Project : ' + ProjectFullPath);
-     Writeln(WrkRepFile, '## Date    : ' + DateStr + ' ' + TimeStr);
-     Writeln(WrkRepFile, '##');
-     Writeln(WrkRepFile, '############################################################################');
-
-end;
-{======================================================================================================================================================}
-// Close Report file
-Procedure CloseReportFile();
-begin
-     Writeln(WrkRepFile, '');
-     Writeln(WrkRepFile, '');
-     Writeln(WrkRepFile, '## Report end');
-     Writeln(WrkRepFile, '############################################################################');
-
-     CloseFile(WrkRepFile);
-end;
-
-{======================================================================================================================================================}
-// Write LOG  procedures
-Procedure LogUnrecognisedComponent(SCH_CMP_CMMNT : String; ComponentDesignator : String; RptParameterName :String ; Comment :String);
-begin
-     TxTMessage:='#   ' + SCH_CMP_CMMNT +'  ' ;
-     TxTMessage:= TxTMessage + '#_  ' + '''' + ComponentDesignator + '''' + ' ';
-     TxTMessage:= TxTMessage + '''' + RptParameterName + ''' ''' + Comment + '''' + ' ''OFF''';
-     Writeln(WrkRepFile,TxTMessage);
-end;
 {======================================================================================================================================================}
 // The main work horse
 {======================================================================================================================================================}
@@ -417,7 +60,7 @@ Begin
            While Component <> Nil Do
            Begin
              // Check if got proper componenet
-             ComponentDscriptNoSpaces := RemoveChar(Component.ComponentDescription, ' ');
+             ComponentDscriptNoSpaces := RemoveCharFromString(Component.ComponentDescription, ' ');
              ALTIUM_Lenght := GetStringLenght(New_Component[ALTIUM_NAME]);
              FirstDesignatorDigit := GetDesignatorFirstDigit(Component.Designator.Text); // find first digit
               if(
@@ -456,7 +99,7 @@ Begin
                         Param     := SchServer.SchObjectFactory (eParameter , eCreate_Default);
                         Param.Name     := New_Component[RS_PAR_NAME];
                         Param.ShowName := False;
-                        Param.Text     := ReplaceCharString(New_Component[RS_PAR_VALUE], '*', ' ');
+                        Param.Text     := ReplaceCharInString(New_Component[RS_PAR_VALUE], '*', ' ');
                         if( New_Component[RS_PAR_VISIBLE] = 'ON') then
                             Param.IsHidden := False
                         else
@@ -468,7 +111,7 @@ Begin
                         end        //no coma since else
                     else       // if exist modify value
                         begin
-                        NewValue := ReplaceCharString(New_Component[RS_PAR_VALUE], '*', ' ');
+                        NewValue := ReplaceCharInString(New_Component[RS_PAR_VALUE], '*', ' ');
                         if( New_Component[RS_PAR_VISIBLE] = 'ON') then   // if exist modify visibility if required
                             NewValueIsHidden := False
                         else
@@ -522,7 +165,7 @@ Begin
            While Component <> Nil Do
            Begin
              // Check if got proper componenet
-             ComponentDscriptNoSpaces := RemoveChar(Component.ComponentDescription, ' ');
+             ComponentDscriptNoSpaces := RemoveCharFromString(Component.ComponentDescription, ' ');
              ALTIUM_Lenght := GetStringLenght(New_Component[ALTIUM_NAME]);
              FirstDesignatorDigit := GetDesignatorFirstDigit(Component.Designator.Text); // find first digit
              if(
@@ -660,7 +303,7 @@ Begin
                            if(LastUsedDesignator <> Component.Designator.Text) then
                               begin
                               TxTMessage := 'Component:' + Component.Designator.Text + ':' + Component.Comment.Text + ' not defined: ' + UserDefined + ' yet';
-                              WriteLogFileMessage(TxTMessage);
+                              WriteLogFileMessage(TxTMessage, WrkLogFile);
                               LogUnrecognisedComponent(Component.Comment.Text,Component.Designator.Text,UserDefined,'Not defined');
                               LastUsedDesignator := Component.Designator.Text;
                               end;
@@ -673,7 +316,7 @@ Begin
                            if(LastUsedDesignator <> Component.Designator.Text) then
                                begin
                                TxTMessage := 'Component:' + Component.Designator.Text + ' not assigned:' + UserDefined ;
-                               WriteLogFileMessage(TxTMessage);
+                               WriteLogFileMessage(TxTMessage, WrkLogFile);
                                LogUnrecognisedComponent(Component.Comment.Text,Component.Designator.Text,UserDefined,'Not existed');
                                LastUsedDesignator := Component.Designator.Text;
                            end;
@@ -728,7 +371,7 @@ Begin
                     if (ComponentNameLogged = false) then // mark new component
                        begin
                        TxTMessage := '# ' + Component.Designator.Text + ':' + Component.Comment.Text ;
-                       WriteLogFileMessage(TxTMessage);
+                       WriteLogFileMessage(TxTMessage, WrkLogFile);
                        ComponentNameLogged := true;
                        end;
                     if (AnsiPos('_',Parameter.Name) <> 0) then
@@ -738,7 +381,7 @@ Begin
                        else
                           Par_Visibility:= 'ON';
                        TxTMessage := '''' + Component.Designator.Text + ''' ''' + Parameter.Name + ''' ''' + Parameter.Text + ''' ''' + Par_Visibility + '''';
-                       WriteLogFileMessage(TxTMessage);
+                       WriteLogFileMessage(TxTMessage, WrkLogFile);
                     end;
                     Parameter := PIterator.NextSchObject;
                 End;
@@ -954,15 +597,15 @@ ProjectName:=Project.DM_ProjectFileName;
 //-------------------------------------------------------
 
 // Open log file
-    OpenLogFile(LogFileName);
+    WrkLogFile := OpenMyFile(LogFileName, 'LOG');
     TxTMessage := '#  Config:' + ParamFilePath;
-    WriteLogFileMessage(TxTMessage);
+    WriteLogFileMessage(TxTMessage, WrkLogFile);
     TxTMessage := '##';
-    WriteLogFileMessage(TxTMessage);
+    WriteLogFileMessage(TxTMessage, WrkLogFile);
 
 //-------------------------------------------------------
 // Open raport file
-    OpenRaportFile(NewCfgFileName);
+    WrkRepFile := OpenMyFile(NewCfgFileName, 'REP');
 //-------------------------------------------------------
     If Project = Nil Then Exit;
     Project.DM_Compile;
@@ -990,7 +633,7 @@ ProjectName:=Project.DM_ProjectFileName;
                If CurrentSch = Nil Then Exit;
 
                TxTMessage := '# Processing:' + CurrentSch.DocumentName;
-               WriteLogFileMessage(TxTMessage);
+               WriteLogFileMessage(TxTMessage, WrkLogFile);
 
                // read config file line by line
                Reset(cfgFile);
@@ -1028,27 +671,27 @@ ProjectName:=Project.DM_ProjectFileName;
                                    if (Parameter_Array.Count = 4 ) then
                                       begin
                                       NextComponent := false;
-                                      NextComponentName := RemoveChar(Parameter_Array[0], '''');//AnsiExtractQuotedStr(Parameter_Array[0],'''');
+                                      NextComponentName := RemoveCharFromString(Parameter_Array[0], '''');//AnsiExtractQuotedStr(Parameter_Array[0],'''');
                                       if(ComponentPAR[ALTIUM_NAME] <> NextComponentName) then
                                          begin
                                          ComponentPAR[ALTIUM_NAME] := NextComponentName;
                                          NextComponent := true;
                                          end;
-                                      ComponentPAR[RS_PAR_NAME] := RemoveChar(Parameter_Array[1], '''');//AnsiExtractQuotedStr(Parameter_Array[1],'''');
-                                      ComponentPAR[RS_PAR_VALUE] := RemoveChar(Parameter_Array[2], '''');//AnsiExtractQuotedStr(Parameter_Array[2],'''');
-                                      ComponentPAR[RS_PAR_VISIBLE] := RemoveChar(Parameter_Array[3], '''');//AnsiExtractQuotedStr(Parameter_Array[3],'''');
+                                      ComponentPAR[RS_PAR_NAME] := RemoveCharFromString(Parameter_Array[1], '''');//AnsiExtractQuotedStr(Parameter_Array[1],'''');
+                                      ComponentPAR[RS_PAR_VALUE] := RemoveCharFromString(Parameter_Array[2], '''');//AnsiExtractQuotedStr(Parameter_Array[2],'''');
+                                      ComponentPAR[RS_PAR_VISIBLE] := RemoveCharFromString(Parameter_Array[3], '''');//AnsiExtractQuotedStr(Parameter_Array[3],'''');
 
                                       if(NextComponent = true) then
                                          begin
                                          TxTMessage := '#' + chr(9) + 'For:' + ComponentPAR[ALTIUM_NAME];
-                                         WriteLogFileMessage(TxTMessage);
+                                         WriteLogFileMessage(TxTMessage, WrkLogFile);
                                          TxTMessage := '#' + chr(9) + chr(9) + 'Parameter:' + ComponentPAR[RS_PAR_NAME];
-                                         WriteLogFileMessage(TxTMessage);
+                                         WriteLogFileMessage(TxTMessage, WrkLogFile);
                                          end
                                       else
                                          begin
                                          TxTMessage := chr(9) + chr(9) +  'Parameter:' + ComponentPAR[RS_PAR_NAME];
-                                         WriteLogFileMessage(TxTMessage);
+                                         WriteLogFileMessage(TxTMessage, WrkLogFile);
                                          end;
                                       // now, do the job
                                       if(ComponentPAR[ALTIUM_NAME]<> '???') then
@@ -1066,11 +709,11 @@ ProjectName:=Project.DM_ProjectFileName;
                                    if (Parameter_Array.Count <> 4 ) then
                                       begin
                                       TxTMessage := 'Syntax error in config ' + ParamFileName + ' file in line nr:' + IntToStr(cfgFileline_nr);
-                                      WriteLogFileMessage(TxTMessage);
+                                      WriteLogFileMessage(TxTMessage, WrkLogFile);
                                       ShowInfo (TxTMessage);
                                       Reset(cfgFile);
                                       CloseFile(cfgFile);
-                                      CloseLogFile();
+                                      CloseMyFile(WrkLogFile);
                                       Exit;
                                       end;
                                end;
@@ -1085,8 +728,8 @@ ProjectName:=Project.DM_ProjectFileName;
 
     Reset(cfgFile);
     CloseFile(cfgFile);
-    CloseLogFile();
-    CloseReportFile();
+    CloseMyFile(WrkLogFile);
+    CloseMyFile(WrkRepFile);
     TxTMessage := 'Processing ' + ProjectName + ' done. Processed ' + IntToStr(Schematic_processed) + ' sheets';
     ShowInfo (TxTMessage);
     Exit;
