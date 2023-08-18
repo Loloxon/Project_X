@@ -60,7 +60,7 @@ Begin
            While Component <> Nil Do
            Begin
              // Check if got proper componenet
-             ComponentDscriptNoSpaces := RemoveChar(Component.ComponentDescription, ' ');
+             ComponentDscriptNoSpaces := RemoveCharFromString(Component.ComponentDescription, ' ');
              ALTIUM_Lenght := GetStringLenght(New_Component[ALTIUM_NAME]);
              FirstDesignatorDigit := GetDesignatorFirstDigit(Component.Designator.Text); // find first digit
               if(
@@ -99,7 +99,7 @@ Begin
                         Param     := SchServer.SchObjectFactory (eParameter , eCreate_Default);
                         Param.Name     := New_Component[RS_PAR_NAME];
                         Param.ShowName := False;
-                        Param.Text     := ReplaceCharString(New_Component[RS_PAR_VALUE], '*', ' ');
+                        Param.Text     := ReplaceCharInString(New_Component[RS_PAR_VALUE], '*', ' ');
                         if( New_Component[RS_PAR_VISIBLE] = 'ON') then
                             Param.IsHidden := False
                         else
@@ -111,7 +111,7 @@ Begin
                         end        //no coma since else
                     else       // if exist modify value
                         begin
-                        NewValue := ReplaceCharString(New_Component[RS_PAR_VALUE], '*', ' ');
+                        NewValue := ReplaceCharInString(New_Component[RS_PAR_VALUE], '*', ' ');
                         if( New_Component[RS_PAR_VISIBLE] = 'ON') then   // if exist modify visibility if required
                             NewValueIsHidden := False
                         else
@@ -165,7 +165,7 @@ Begin
            While Component <> Nil Do
            Begin
              // Check if got proper componenet
-             ComponentDscriptNoSpaces := RemoveChar(Component.ComponentDescription, ' ');
+             ComponentDscriptNoSpaces := RemoveCharFromString(Component.ComponentDescription, ' ');
              ALTIUM_Lenght := GetStringLenght(New_Component[ALTIUM_NAME]);
              FirstDesignatorDigit := GetDesignatorFirstDigit(Component.Designator.Text); // find first digit
              if(
@@ -671,15 +671,15 @@ ProjectName:=Project.DM_ProjectFileName;
                                    if (Parameter_Array.Count = 4 ) then
                                       begin
                                       NextComponent := false;
-                                      NextComponentName := RemoveChar(Parameter_Array[0], '''');//AnsiExtractQuotedStr(Parameter_Array[0],'''');
+                                      NextComponentName := RemoveCharFromString(Parameter_Array[0], '''');//AnsiExtractQuotedStr(Parameter_Array[0],'''');
                                       if(ComponentPAR[ALTIUM_NAME] <> NextComponentName) then
                                          begin
                                          ComponentPAR[ALTIUM_NAME] := NextComponentName;
                                          NextComponent := true;
                                          end;
-                                      ComponentPAR[RS_PAR_NAME] := RemoveChar(Parameter_Array[1], '''');//AnsiExtractQuotedStr(Parameter_Array[1],'''');
-                                      ComponentPAR[RS_PAR_VALUE] := RemoveChar(Parameter_Array[2], '''');//AnsiExtractQuotedStr(Parameter_Array[2],'''');
-                                      ComponentPAR[RS_PAR_VISIBLE] := RemoveChar(Parameter_Array[3], '''');//AnsiExtractQuotedStr(Parameter_Array[3],'''');
+                                      ComponentPAR[RS_PAR_NAME] := RemoveCharFromString(Parameter_Array[1], '''');//AnsiExtractQuotedStr(Parameter_Array[1],'''');
+                                      ComponentPAR[RS_PAR_VALUE] := RemoveCharFromString(Parameter_Array[2], '''');//AnsiExtractQuotedStr(Parameter_Array[2],'''');
+                                      ComponentPAR[RS_PAR_VISIBLE] := RemoveCharFromString(Parameter_Array[3], '''');//AnsiExtractQuotedStr(Parameter_Array[3],'''');
 
                                       if(NextComponent = true) then
                                          begin

@@ -51,7 +51,7 @@ implementation
     begin
          Project := GetWorkspace.DM_FocusedProject;
 
-         If Project = Nil Then Exit;
+         if(Project = Nil) then Exit;
          ProjectName := Project.DM_ProjectFileName;
          ProjectFullPath := Project.DM_ProjectFullPath;
 
@@ -60,17 +60,17 @@ implementation
 
          ProjectNamePos := AnsiPos(ProjectName, ProjectFullPath);
          ProjectDirPath := copy(ProjectFullPath, 1, ProjectNamePos - 1);
-         TimeStr := ReplaceCharString(TimeStr,':','_');
+         TimeStr := ReplaceCharInString(TimeStr,':','_');
          VarFilename := FileName + TimeStr + '.txt';
 
-         If(FileType = 'LOG') then
-            ProjectDirPath := ProjectDirPath + Log_file_folder;
-         If(FileType = 'REP') then
+         if(FileType = 'LOG') then
+            ProjectDirPath := ProjectDirPath + Log_file_folder
+         else
             ProjectDirPath := ProjectDirPath + Report_file_folder;
 
-         If(not directoryexists(ProjectDirPath)) then
+         if(not directoryexists(ProjectDirPath)) then
             CreateDir(ProjectDirPath);
-         If(not directoryexists(ProjectDirPath)) then
+         if(not directoryexists(ProjectDirPath)) then
             begin
                ShowInfo ('Can not create folder' + ProjectDirPath);
                Exit;
@@ -82,16 +82,16 @@ implementation
          TxTMessage := '############################################################################' + sLineBreak +
                        '##' + sLineBreak;
 
-         If(FileType = 'LOG') then
-            TxTMessage := TxTMessage + '## Processing LOG' + sLineBreak;
-         If(FileType = 'REP') then
+         if(FileType = 'LOG') then
+            TxTMessage := TxTMessage + '## Processing LOG' + sLineBreak
+         else
             TxTMessage := TxTMessage + '## Missing parameters report' + sLineBreak;
 
          Writeln(WrkFile, TxTMessage + '##' + sLineBreak +
-                                          '## Project : ' + ProjectFullPath + sLineBreak +
-                                          '## Date    : ' + DateStr + ' ' + TimeStr + sLineBreak +
-                                          '##' + sLineBreak +
-                                          '############################################################################');
+                                       '## Project : ' + ProjectFullPath + sLineBreak +
+                                       '## Date    : ' + DateStr + ' ' + TimeStr + sLineBreak +
+                                       '##' + sLineBreak +
+                                       '############################################################################');
          Result := WrkFile;
     end;
 
