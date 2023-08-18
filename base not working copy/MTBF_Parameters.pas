@@ -597,7 +597,7 @@ ProjectName:=Project.DM_ProjectFileName;
 //-------------------------------------------------------
 
 // Open log file
-    WrkLogFile := OpenLogFile(LogFileName);
+    WrkLogFile := OpenMyFile(LogFileName, 'LOG');
     TxTMessage := '#  Config:' + ParamFilePath;
     WriteLogFileMessage(TxTMessage, WrkLogFile);
     TxTMessage := '##';
@@ -605,7 +605,7 @@ ProjectName:=Project.DM_ProjectFileName;
 
 //-------------------------------------------------------
 // Open raport file
-    WrkRepFile := OpenRaportFile(NewCfgFileName);
+    WrkRepFile := OpenMyFile(NewCfgFileName, 'REP');
 //-------------------------------------------------------
     If Project = Nil Then Exit;
     Project.DM_Compile;
@@ -713,7 +713,7 @@ ProjectName:=Project.DM_ProjectFileName;
                                       ShowInfo (TxTMessage);
                                       Reset(cfgFile);
                                       CloseFile(cfgFile);
-                                      CloseLogFile(WrkLogFile);
+                                      CloseMyFile(WrkLogFile);
                                       Exit;
                                       end;
                                end;
@@ -728,8 +728,8 @@ ProjectName:=Project.DM_ProjectFileName;
 
     Reset(cfgFile);
     CloseFile(cfgFile);
-    CloseLogFile(WrkLogFile);
-    CloseReportFile(WrkRepFile);
+    CloseMyFile(WrkLogFile);
+    CloseMyFile(WrkRepFile);
     TxTMessage := 'Processing ' + ProjectName + ' done. Processed ' + IntToStr(Schematic_processed) + ' sheets';
     ShowInfo (TxTMessage);
     Exit;
