@@ -5,7 +5,7 @@ interface
   function GetFirstDigitInString(InString: String): Integer; end;
   function GetStringLength(InString: String): Integer; end;
   function RemoveCharFromString(StringToFormat: String; CharToDelete: Char): String; end;
-  function ReplaceCharInString(StringToFormat: String; OldChar: Char; NewChar: Char): String; end;
+  function ReplaceCharInString(StringToFormat: String; OldChar, NewChar: Char): String; end;
 
 implementation
 
@@ -57,7 +57,7 @@ implementation
     Result := StringToFormat;
   end;
 
-  function ReplaceCharInString(StringToFormat: String; OldChar: Char; NewChar: Char): String;
+  function ReplaceCharInString(StringToFormat: String; OldChar, NewChar: Char): String;
   var
     CharPosition: Integer;
   begin
