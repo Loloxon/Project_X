@@ -1,0 +1,26 @@
+#
+# Version 1.0 
+# Date 28.07.2023
+# pjrajda@agh.edu.pl
+#
+#
+# Parameter configuration file for MTBF_Parameters script
+# Syntax:
+# Line starting with # is a comment line
+# Each line introduce one  parameter and should have exact four words (string type)
+#
+# First  ASCII string is the "Altium component type" selector. 'All' denotes global parameter (for all components)
+# Second ASCII string is the LambdaPredict MILHBK217 / SN29500 "Parameter Name"
+# Third  ASCII string is the "Parameter Value"
+# Fourth ASCII string is the "Parameter Visibility" atribute (ON/OFF)
+#
+# Note that spaces are not allowed in "Altium component type" field!
+# In "Parameter Value" field spaces are allowed but should be coded by '*'
+# ===================================================================
+#
+'CATEGORY' 'R1' 'SN_CATEGORY' 'Resistor' 'OFF'
+'CATEGORY' 'R2' 'SN_CATEGORY' 'Resistor' 'OFF'
+'CATEGORY' 'B' 'SN_CATEGORY' 'Resistor' 'OFF'
+'CATEGORY' 'R' 'SN_RES_TYP' '?' 'OFF'
+'VALUE' 'Resistor' 'SN_RES_TYP' '10' 'OFF'
+#

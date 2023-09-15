@@ -1,10 +1,11 @@
-uses Utils, Utils_logs;
+uses Utils, Utils_logs, SysUtils;
 
 const
-  ALTIUM_NAME = 0;     // pointers to   ComponentPAR  :  array[0..3] of string ;
-  RS_PAR_NAME = 1;
-  RS_PAR_VALUE = 2;
-  RS_PAR_VISIBLE = 3;
+  OPERATION_TYPE = 0;
+  ALTIUM_NAME = 1;     // pointers to   ComponentPAR  :  array[0..4] of string ;
+  RS_PAR_NAME = 2;
+  RS_PAR_VALUE = 3;
+  RS_PAR_VISIBLE = 4;
 
 // LOG file name start timestamp will be added
 // consts for logs and reports (name of folders and files)
@@ -30,10 +31,117 @@ var
 {======================================================================================================================================================}
 // The main work horse
 {======================================================================================================================================================}
-Procedure MTBF_AddUserDefinedParametersToComponents(SchDoc: ISch_Document; New_Component);
+Procedure MTBF_AddUserDefinedParametersToComponentsByCategory(SchDoc: ISch_Document; New_Component);
 var
   Component: ISch_Component;
-  Param: ISch_Parameter; 
+  Component_Child: ISch_Component;
+  Param: ISch_Parameter;
+  Parameter: ISch_Parameter;
+  Iterator: ISch_Iterator;
+  Component_Iterator: ISch_Iterator;
+  PIterator: ISch_Iterator;
+
+  ALTIUM_Lenght: Integer;
+  ComponentDscriptNoSpaces: String;
+  Parameter_Exist: Boolean;
+  NewValue: String;
+  NewValueIsHidden: Boolean;
+  FirstDesignatorDigit: Integer;
+  Boolean1: Boolean;
+begin
+  // init value - only one line for given parameters missing in one component
+  LastUsedDesignator := '?';
+
+  // Create a user defined parameter object and add it to all components.
+  // Look for components only
+  Iterator := SchDoc.SchIterator_Create;
+  Iterator.AddFilter_ObjectSet(MkSet(eSchComponent));
+  try
+      SchServer.ProcessControl.PreProcess(SchDoc, '');
+      try
+        Component := Iterator.FirstSchObject;
+        while Component <> Nil do
+        begin
+          Boolean1 := False;
+          Component_Iterator := Component.SchIterator_Create;
+          Component_Iterator.AddFilter_ObjectSet(MkSet(eParameter));
+          Component_Child := Component_Iterator.FirstSchObject;
+          while Component_Child <> Nil do
+          begin
+            if (Component_Child.Name = 'SN_CATEGORY') and (Component_Child.Text = New_Component[ALTIUM_NAME]) then
+            begin
+              Boolean1 := True;
+              break;
+            end;
+            Component_Child := Component_Iterator.NextSchObject;
+          end;
+          if Boolean1 then
+          begin
+            // check if parameter already exist?
+            Parameter_Exist := False;
+            try
+            PIterator := Component.SchIterator_Create;
+            PIterator.AddFilter_ObjectSet(MkSet(eParameter));
+            Parameter := PIterator.FirstSchObject;
+            while (Parameter <> Nil) and (Parameter_Exist = False) do
+            begin
+              // Check for parameters that have the UserDefinedName Name.
+              if Parameter.Name = New_Component[RS_PAR_NAME] then //UserDefinedName
+              Parameter_Exist := True
+              else
+              Parameter := PIterator.NextSchObject;
+              end;
+            finally
+              Component.SchIterator_Destroy(PIterator);
+            end;
+            if Parameter_Exist = False then
+            begin
+              // Add the parameter to the pin with undo stack also enabled
+              Param := SchServer.SchObjectFactory (eParameter , eCreate_Default);
+              Param.Name := New_Component[RS_PAR_NAME];
+              Param.ShowName := False;
+              Param.Text := ReplaceCharInString(New_Component[RS_PAR_VALUE], '*', ' ');
+
+              if New_Component[RS_PAR_VISIBLE] = 'ON' then
+                Param.IsHidden := False
+              else
+                Param.IsHidden := True;
+              // Param object is placed 0.1 Dxp Units above the component.
+              Param.Location := Point(Component.Location.X, Component.Location.Y + DxpsToCoord(0.1));
+              Component.AddSchObject(Param);
+              SchServer.RobotManager.SendMessage(Component.I_ObjectAddress, c_BroadCast, SCHM_PrimitiveRegistration, Param.I_ObjectAddress);
+              end    //no coma since else
+            else     // if exist modify value
+              begin
+              NewValue := ReplaceCharInString(New_Component[RS_PAR_VALUE], '*', ' ');
+              if New_Component[RS_PAR_VISIBLE] = 'ON' then   // if exist modify visibility if required
+                NewValueIsHidden := False
+              else
+                NewValueIsHidden := True;
+                                      // check if something new
+              if (Parameter.Text <> NewValue) or (Parameter.IsHidden xor NewValueIsHidden) then
+                begin
+                SchServer.RobotManager.SendMessage(Parameter.I_ObjectAddress, c_BroadCast, SCHM_BeginModify, c_NoEventData);
+                Parameter.Text := NewValue;
+                Parameter.IsHidden := NewValueIsHidden;
+                SchServer.RobotManager.SendMessage(Parameter.I_ObjectAddress, c_BroadCast, SCHM_EndModify  , c_NoEventData);
+                end;
+            end;
+          end;
+          Component := Iterator.NextSchObject;
+        end;
+    finally
+      SchDoc.SchIterator_Destroy(Iterator);
+    end;
+  finally
+    SchServer.ProcessControl.PostProcess(SchDoc, '');
+  end;
+end;
+
+Procedure MTBF_AddUserDefinedParametersToComponentsByName(SchDoc: ISch_Document; New_Component);
+var
+  Component: ISch_Component;
+  Param: ISch_Parameter;
   Parameter: ISch_Parameter;
   Iterator: ISch_Iterator;
   PIterator: ISch_Iterator;
@@ -64,79 +172,67 @@ begin
         Component := Iterator.FirstSchObject;
         while Component <> Nil do
         begin
-        // Check if got proper componenet
-        ComponentDscriptNoSpaces := RemoveCharFromString(Component.ComponentDescription, ' ');
-        ALTIUM_Lenght := GetStringLenght(New_Component[ALTIUM_NAME]);
-        FirstDesignatorDigit := GetFirstDigitInString(Component.Designator.Text); // find first digit
+          // Check if got proper componenet
+          ComponentDscriptNoSpaces := RemoveCharFromString(Component.ComponentDescription, ' ');
+          ALTIUM_Lenght := GetStringLenght(New_Component[ALTIUM_NAME]);
+          FirstDesignatorDigit := GetFirstDigitInString(Component.Designator.Text); // find first digit
 
+          Boolean1 := AnsiStartsStr(UpperCase(New_Component[ALTIUM_NAME]), UpperCase(Component.Designator.Text));
 
-        // check designator
-        Boolean1 := UpperCase(New_Component[ALTIUM_NAME]) = UpperCase(Component.Designator.Text);
-        // check description
-        Boolean2 := (AnsiPos(UpperCase(New_Component[ALTIUM_NAME]),UpperCase(ComponentDscriptNoSpaces)) <> 0) and 
-                    (ALTIUM_Lenght<>1);
-        // check group
-        Boolean3 := (AnsiPos(UpperCase(New_Component[ALTIUM_NAME]),UpperCase(Component.Designator.Text)) = 1) and 
-                    (ALTIUM_Lenght = (FirstDesignatorDigit-1));
-        // ALL components?
-        Boolean4 := New_Component[ALTIUM_NAME]='All';
-        //component selected ?
-        Boolean5 := Component.Selection = True;
-
-        if Boolean1 or Boolean2 or Boolean3 or Boolean4 or Boolean5 then
-        begin
-          // check if parameter already exist?
-          Parameter_Exist := False;
-          try
-          PIterator := Component.SchIterator_Create;
-          PIterator.AddFilter_ObjectSet(MkSet(eParameter));
-          Parameter := PIterator.FirstSchObject;
-          while (Parameter <> Nil) and (Parameter_Exist = False) do
-            begin
-            // Check for parameters that have the UserDefinedName Name.
-            if Parameter.Name = New_Component[RS_PAR_NAME] then //UserDefinedName
-            Parameter_Exist := True
-            else
-            Parameter := PIterator.NextSchObject;
-            end;
-          finally
-            Component.SchIterator_Destroy(PIterator);
-          end;
-          if Parameter_Exist = False then
-            begin
-            // Add the parameter to the pin with undo stack also enabled
-            Param := SchServer.SchObjectFactory (eParameter , eCreate_Default);
-            Param.Name := New_Component[RS_PAR_NAME];
-            Param.ShowName := False;
-            Param.Text := ReplaceCharInString(New_Component[RS_PAR_VALUE], '*', ' ');
-
-            if New_Component[RS_PAR_VISIBLE] = 'ON' then
-              Param.IsHidden := False
-            else
-              Param.IsHidden := True;
-            // Param object is placed 0.1 Dxp Units above the component.
-            Param.Location := Point(Component.Location.X, Component.Location.Y + DxpsToCoord(0.1));
-            Component.AddSchObject(Param);
-            SchServer.RobotManager.SendMessage(Component.I_ObjectAddress, c_BroadCast, SCHM_PrimitiveRegistration, Param.I_ObjectAddress);
-            end    //no coma since else
-          else     // if exist modify value
-            begin
-            NewValue := ReplaceCharInString(New_Component[RS_PAR_VALUE], '*', ' ');
-            if New_Component[RS_PAR_VISIBLE] = 'ON' then   // if exist modify visibility if required
-              NewValueIsHidden := False
-            else
-              NewValueIsHidden := True;
-                                    // check if something new
-            if (Parameter.Text <> NewValue) or (Parameter.IsHidden xor NewValueIsHidden) then
+          if Boolean1 then
+          begin
+            // check if parameter already exist?
+            Parameter_Exist := False;
+            try
+            PIterator := Component.SchIterator_Create;
+            PIterator.AddFilter_ObjectSet(MkSet(eParameter));
+            Parameter := PIterator.FirstSchObject;
+            while (Parameter <> Nil) and (Parameter_Exist = False) do
               begin
-              SchServer.RobotManager.SendMessage(Parameter.I_ObjectAddress, c_BroadCast, SCHM_BeginModify, c_NoEventData);
-              Parameter.Text := NewValue;
-              Parameter.IsHidden := NewValueIsHidden;
-              SchServer.RobotManager.SendMessage(Parameter.I_ObjectAddress, c_BroadCast, SCHM_EndModify  , c_NoEventData);
+              // Check for parameters that have the UserDefinedName Name.
+              if Parameter.Name = New_Component[RS_PAR_NAME] then //UserDefinedName
+              Parameter_Exist := True
+              else
+              Parameter := PIterator.NextSchObject;
               end;
+            finally
+              Component.SchIterator_Destroy(PIterator);
+            end;
+            if Parameter_Exist = False then
+              begin
+              // Add the parameter to the pin with undo stack also enabled
+              Param := SchServer.SchObjectFactory (eParameter , eCreate_Default);
+              Param.Name := New_Component[RS_PAR_NAME];
+              Param.ShowName := False;
+              Param.Text := ReplaceCharInString(New_Component[RS_PAR_VALUE], '*', ' ');
+
+              if New_Component[RS_PAR_VISIBLE] = 'ON' then
+                Param.IsHidden := False
+              else
+                Param.IsHidden := True;
+              // Param object is placed 0.1 Dxp Units above the component.
+              Param.Location := Point(Component.Location.X, Component.Location.Y + DxpsToCoord(0.1));
+              Component.AddSchObject(Param);
+              SchServer.RobotManager.SendMessage(Component.I_ObjectAddress, c_BroadCast, SCHM_PrimitiveRegistration, Param.I_ObjectAddress);
+              end    //no coma since else
+            else     // if exist modify value
+              begin
+              NewValue := ReplaceCharInString(New_Component[RS_PAR_VALUE], '*', ' ');
+              if New_Component[RS_PAR_VISIBLE] = 'ON' then   // if exist modify visibility if required
+                NewValueIsHidden := False
+              else
+                NewValueIsHidden := True;
+                                      // check if something new
+              if (Parameter.Text <> NewValue) or (Parameter.IsHidden xor NewValueIsHidden) then
+                begin
+                SchServer.RobotManager.SendMessage(Parameter.I_ObjectAddress, c_BroadCast, SCHM_BeginModify, c_NoEventData);
+                Parameter.Text := NewValue;
+                Parameter.IsHidden := NewValueIsHidden;
+                SchServer.RobotManager.SendMessage(Parameter.I_ObjectAddress, c_BroadCast, SCHM_EndModify  , c_NoEventData);
+                end;
+            end;
           end;
-        end;
-        Component := Iterator.NextSchObject;
+          Component := Iterator.NextSchObject;
         end;
     finally
       SchDoc.SchIterator_Destroy(Iterator);
@@ -185,10 +281,10 @@ begin
         // check designator
         Boolean1 := UpperCase(New_Component[ALTIUM_NAME]) = UpperCase(Component.Designator.Text);
         // check description
-        Boolean2 := (AnsiPos(UpperCase(New_Component[ALTIUM_NAME]),UpperCase(ComponentDscriptNoSpaces)) <> 0) and 
+        Boolean2 := (AnsiPos(UpperCase(New_Component[ALTIUM_NAME]),UpperCase(ComponentDscriptNoSpaces)) <> 0) and
                     (ALTIUM_Lenght<>1);
         // check group
-        Boolean3 := (AnsiPos(UpperCase(New_Component[ALTIUM_NAME]),UpperCase(Component.Designator.Text)) = 1) and 
+        Boolean3 := (AnsiPos(UpperCase(New_Component[ALTIUM_NAME]),UpperCase(Component.Designator.Text)) = 1) and
                     (ALTIUM_Lenght = (FirstDesignatorDigit-1));
         // ALL components?
         Boolean4 := New_Component[ALTIUM_NAME]='All';
@@ -277,7 +373,7 @@ end;
 {======================================================================================================================================================}
 // Raport utility - logs not categorised components
 {======================================================================================================================================================}
-Procedure MTBF_VerifyUSerDefinedParametersOfComponents(Sheet: ISch_Document; UserDefined: String);
+Procedure MTBF_VerifyUserDefinedParametersOfComponents(Sheet: ISch_Document; UserDefined: String);
 var
   Component: ISch_Component;
   Parameter: ISch_Parameter;
@@ -355,7 +451,7 @@ end;
 {======================================================================================================================================================}
 // Raport utility - logs all  categories and thei values for all components
 {======================================================================================================================================================}
-Procedure MTBF_LogUSerDefinedParametersOfComponents(Sheet: ISch_Document);
+Procedure MTBF_LogUserDefinedParametersOfComponents(Sheet: ISch_Document);
 var
   Component: ISch_Component;
   Parameter: ISch_Parameter;
@@ -563,7 +659,7 @@ var
   ProjectFullPath: String;
   ParamFilePath: String;
 
-  ComponentPAR: array[0..3] of String ;
+  ComponentPAR: array[0..4] of String ;
   cfgFile: TextFile;
 
   Parameter_List: TStringList;
@@ -623,7 +719,7 @@ ProjectName:=Project.DM_ProjectFileName;
   WrkRptFile := OpenMyFile(NewCfgFileName, 'RPT', Report_file_folder);
 
 //-------------------------------------------------------
-  if Project = Nil then 
+  if Project = Nil then
     Exit;
   Project.DM_Compile;
 
@@ -646,7 +742,7 @@ ProjectName:=Project.DM_ProjectFileName;
       begin
         Client.ShowDocument(SchDocument);
         CurrentSch := SchServer.GetCurrentSchDocument;
-        if CurrentSch = Nil then 
+        if CurrentSch = Nil then
           Exit;
         TxTMessage := '# Processing:' + CurrentSch.DocumentName;
         WriteLogFileMessage(TxTMessage, WrkLogFile);
@@ -682,18 +778,19 @@ ProjectName:=Project.DM_ProjectFileName;
                 Parameter_Array.StrictDelimiter := True; // Requires D2006 or newer.
                 Parameter_Array.DelimitedText := Parameter_list;
                 // check if 4 fields read
-                if Parameter_Array.Count = 4 then
+                if Parameter_Array.Count = 5 then
                 begin
                   NextComponent := False;
-                  NextComponentName := RemoveCharFromString(Parameter_Array[0], '''');//AnsiExtractQuotedStr(Parameter_Array[0],'''');
+                  NextComponentName := RemoveCharFromString(Parameter_Array[1], '''');//AnsiExtractQuotedStr(Parameter_Array[0],'''');
                   if ComponentPAR[ALTIUM_NAME] <> NextComponentName then
                   begin
                     ComponentPAR[ALTIUM_NAME] := NextComponentName;
                     NextComponent := True;
                   end;
-                  ComponentPAR[RS_PAR_NAME] := RemoveCharFromString(Parameter_Array[1], '''');//AnsiExtractQuotedStr(Parameter_Array[1],'''');
-                  ComponentPAR[RS_PAR_VALUE] := RemoveCharFromString(Parameter_Array[2], '''');//AnsiExtractQuotedStr(Parameter_Array[2],'''');
-                  ComponentPAR[RS_PAR_VISIBLE] := RemoveCharFromString(Parameter_Array[3], '''');//AnsiExtractQuotedStr(Parameter_Array[3],'''');
+                  ComponentPAR[OPERATION_TYPE] := RemoveCharFromString(Parameter_Array[0], '''');//AnsiExtractQuotedStr(Parameter_Array[1],'''');
+                  ComponentPAR[RS_PAR_NAME] := RemoveCharFromString(Parameter_Array[2], '''');//AnsiExtractQuotedStr(Parameter_Array[1],'''');
+                  ComponentPAR[RS_PAR_VALUE] := RemoveCharFromString(Parameter_Array[3], '''');//AnsiExtractQuotedStr(Parameter_Array[2],'''');
+                  ComponentPAR[RS_PAR_VISIBLE] := RemoveCharFromString(Parameter_Array[4], '''');//AnsiExtractQuotedStr(Parameter_Array[3],'''');
 
                   if NextComponent = True then
                   begin
@@ -708,19 +805,23 @@ ProjectName:=Project.DM_ProjectFileName;
                     WriteLogFileMessage(TxTMessage, WrkLogFile);
                   end;
                   // now, do the job
-                  if ComponentPAR[ALTIUM_NAME]<> '???' then
-                    if ComponentPAR[RS_PAR_NAME]<> '>>>' then
-                      MTBF_AddUserDefinedParametersToComponents(CurrentSch,ComponentPAR)
+                  if ComponentPAR[ALTIUM_NAME] <> '???' then
+                    if ComponentPAR[RS_PAR_NAME] <> '>>>' then
+                      if ComponentPAR[OPERATION_TYPE] = 'CATEGORY' then
+                        MTBF_AddUserDefinedParametersToComponentsByName(CurrentSch,ComponentPAR)
+                      else
+                        if ComponentPAR[OPERATION_TYPE] = 'VALUE' then
+                          MTBF_AddUserDefinedParametersToComponentsByCategory(CurrentSch,ComponentPAR)
                     else
                       MTBF_CopyDefinedParametersValue(CurrentSch,ComponentPAR)
                   else
-                    if ComponentPAR[RS_PAR_NAME]<> '???' then
-                      MTBF_VerifyUSerDefinedParametersOfComponents(CurrentSch,ComponentPAR[RS_PAR_NAME])
+                    if ComponentPAR[RS_PAR_NAME] <> '???' then
+                        MTBF_VerifyUserDefinedParametersOfComponents(CurrentSch,ComponentPAR[RS_PAR_NAME])
                     else
-                      MTBF_LogUSerDefinedParametersOfComponents(CurrentSch);
+                      MTBF_LogUserDefinedParametersOfComponents(CurrentSch);
                 end;
                 // handle different than 4 fields read
-                if Parameter_Array.Count <> 4 then
+                if Parameter_Array.Count <> 5 then
                 begin
                   TxTMessage := 'Syntax error in config ' + ParamFileName + ' file in line nr:' + IntToStr(cfgFileline_nr);
                   WriteLogFileMessage(TxTMessage, WrkLogFile);

@@ -1,0 +1,47 @@
+############################################################################
+##
+## Processing LOG
+##
+## Project : C:\Users\Loloxon\OneDrive\Desktop\Tata\Project_X\base not working copy\Relia test.PrjPcb
+## Date    : 2023-09-15 21:01:02
+##
+############################################################################
+#  Config:C:\Users\Loloxon\OneDrive\Desktop\Tata\Project_X\base not working copy\_scripts\mPMT\Testing new input.txt
+##
+# Processing:C:\Users\Loloxon\OneDrive\Desktop\Tata\Project_X\base not working copy\NuPrism_MCPMT - QUAD ADC - Rev2.SchDoc
+#	For:R1
+#		Parameter:SN_CATEGORY
+#	For:R2
+#		Parameter:SN_CATEGORY
+#	For:B
+#		Parameter:SN_CATEGORY
+#	For:R
+#		Parameter:SN_RES_TYP
+#	For:Resistor
+#		Parameter:SN_RES_TYP
+# Processing:C:\Users\Loloxon\OneDrive\Desktop\Tata\Project_X\base not working copy\NuPrism_MCPMT - ADA4945-1 and Filter - Rev2.SchDoc
+#	For:R1
+#		Parameter:SN_CATEGORY
+#	For:R2
+#		Parameter:SN_CATEGORY
+#	For:B
+#		Parameter:SN_CATEGORY
+#	For:R
+#		Parameter:SN_RES_TYP
+#	For:Resistor
+#		Parameter:SN_RES_TYP
+# Processing:C:\Users\Loloxon\OneDrive\Desktop\Tata\Project_X\base not working copy\NuPrism_MCPMT - ADC and Amplifier ADA4945-1 - Rev2.SchDoc
+#	For:R1
+#		Parameter:SN_CATEGORY
+#	For:R2
+#		Parameter:SN_CATEGORY
+#	For:B
+#		Parameter:SN_CATEGORY
+#	For:R
+#		Parameter:SN_RES_TYP
+#	For:Resistor
+#		Parameter:SN_RES_TYP
+
+
+## LOG end
+############################################################################
